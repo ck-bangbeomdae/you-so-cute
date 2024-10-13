@@ -1,5 +1,33 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8176970311796925865
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
+  m_Name: LensDistortion
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.12
+  xMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  yMultiplier:
+    m_OverrideState: 0
+    m_Value: 1
+  center:
+    m_OverrideState: 0
+    m_Value: {x: 0.5, y: 0.5}
+  scale:
+    m_OverrideState: 0
+    m_Value: 1
 --- !u!114 &-7863870611254813479
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -12,21 +40,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899c54efeace73346a0a16faa3afe726, type: 3}
   m_Name: Vignette
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.07221875, g: 0.06666667, b: 0.23529412, a: 1}
+    m_Value: {r: 0.10557817, g: 0.089444645, b: 0.2830189, a: 1}
   center:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.869
+    m_Value: 0.773
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.413
+    m_Value: 0.401
   rounded:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
 --- !u!114 &-5345434071963200022
 MonoBehaviour:
@@ -91,6 +119,7 @@ MonoBehaviour:
   - {fileID: -5345434071963200022}
   - {fileID: 4469525853570644315}
   - {fileID: -7863870611254813479}
+  - {fileID: -8176970311796925865}
 --- !u!114 &4469525853570644315
 MonoBehaviour:
   m_ObjectHideFlags: 3
