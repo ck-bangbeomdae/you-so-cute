@@ -25,19 +25,7 @@ public class Player : MonoBehaviour
     public Vector2 currentMoveDirection;
     public float currentSpeed;
 
-    private bool isGrounded;
-    public bool IsGrounded
-    {
-        get => isGrounded;
-        set
-        {
-            isGrounded = value;
-            if (isGrounded)
-            {
-                lastGravityFlip = null;
-            }
-        }
-    }
+    public bool isGrounded;
 
     private bool isGravityFlipped;
     public bool IsGravityFlipped
@@ -62,10 +50,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool isCollidingWithGravityFlip;
+
     public Transform currentPlatform;
     public Vector3 lastPlatformPosition;
-
-    public GravityFlip lastGravityFlip;
 
     // 상호작용
     public IInteractable closestInteractable;
@@ -123,7 +111,7 @@ public class Player : MonoBehaviour
         rb2d.velocity = velocity;
 
         // 레이캐스트를 사용하여 땅과의 충돌 감지
-        IsGrounded = Physics2D.Raycast(transform.position, IsGravityFlipped ? Vector2.up : Vector2.down, groundCheckDistance, groundLayer);
+        isGrounded = Physics2D.Raycast(transform.position, IsGravityFlipped ? Vector2.up : Vector2.down, groundCheckDistance, groundLayer);
     }
 
     private void Update()
@@ -153,7 +141,7 @@ public class Player : MonoBehaviour
         // 중력 반전
         GameplayManager.Instance.FlipCount++;
         IsGravityFlipped = !IsGravityFlipped;
-        IsGrounded = false;
+        isGrounded = false;
 
         // TODO : 중력 반전 효과음 재생
     }

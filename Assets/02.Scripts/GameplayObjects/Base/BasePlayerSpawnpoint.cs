@@ -13,4 +13,5 @@ public struct PlayerSpawnpoint
     [HideInInspector] public Vector2 velocity;
     public bool isGravityFlipped;
     public bool isFacingLeft;
+    public bool isCollidingWithGravityFlip;
 }

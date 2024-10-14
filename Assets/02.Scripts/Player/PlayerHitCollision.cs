@@ -26,7 +26,7 @@ public class PlayerHitCollision : MonoBehaviour
             // GravityFlip은 한 번만 충돌하도록 설정
             if (collision.TryGetComponent(out GravityFlip gravityFlip))
             {
-                player.lastGravityFlip = gravityFlip;
+                player.isCollidingWithGravityFlip = true;
             }
         }
 
@@ -40,6 +40,12 @@ public class PlayerHitCollision : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        // 중력 변환에서 벗어남
+        if (collision.TryGetComponent(out GravityFlip gravityFlip))
+        {
+            player.isCollidingWithGravityFlip = false;
+        }
+
         // 이동 플랫폼에서 벗어남
         if (collision.gameObject.CompareTag("MovingPlatform"))
         {

@@ -24,7 +24,7 @@ public class PlayerGravityFlipping : BaseState<Player>
             player.currentSpeed = 0;
         }
 
-        if (player.IsGrounded)
+        if (player.isGrounded)
         {
             player.playerStateMachine.ChangeState(player.playerStates[PlayerState.Idle]);
         }
@@ -32,7 +32,7 @@ public class PlayerGravityFlipping : BaseState<Player>
 
     public override bool CheckAction(Player player)
     {
-        return InputManager.GravityFlipAction.WasPressedThisFrame() && player.IsGrounded;
+        return InputManager.GravityFlipAction.WasPressedThisFrame() && player.isGrounded;
     }
 
     public override void Exit(Player player)

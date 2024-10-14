@@ -143,6 +143,7 @@ public class TransitionManager : MonoBehaviour
         player.rb2d.velocity = playerSpawnpoint.velocity;
         player.IsGravityFlipped = playerSpawnpoint.isGravityFlipped;
         player.IsFacingLeft = playerSpawnpoint.isFacingLeft;
+        player.isCollidingWithGravityFlip = playerSpawnpoint.isCollidingWithGravityFlip;
 
         // FadeOut 코루틴 실행
         yield return StartCoroutine(transition.FadeOut());

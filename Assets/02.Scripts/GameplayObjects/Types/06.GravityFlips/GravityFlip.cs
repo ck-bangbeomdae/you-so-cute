@@ -4,7 +4,7 @@ public class GravityFlip : MonoBehaviour, ICollisionable
 {
     public void OnCollision(Player player)
     {
-        if (player.lastGravityFlip == this)
+        if (player.isCollidingWithGravityFlip)
         {
             return;
         }

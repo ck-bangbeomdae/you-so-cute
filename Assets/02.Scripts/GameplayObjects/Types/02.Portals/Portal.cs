@@ -28,6 +28,7 @@ public class Portal : BasePlayerSpawnpoint, ICollisionable
         playerSpawnpoint.velocity = player.rb2d.velocity;
         playerSpawnpoint.isGravityFlipped = player.IsGravityFlipped;
         playerSpawnpoint.isFacingLeft = player.IsFacingLeft;
+        playerSpawnpoint.isCollidingWithGravityFlip = player.isCollidingWithGravityFlip;
 
         TransitionManager.Instance.LoadSceneWithPlayer(playerSpawnpoint);
     }
