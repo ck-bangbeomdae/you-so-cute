@@ -14,7 +14,7 @@ public class GameplayManager : MonoBehaviour
         set
         {
             elapsedTime = value;
-            UIManager.Instance.UpdateElapsedTime(FormatElapsedTime(elapsedTime));
+            UIManager.Instance.UpdateElapsedTime(StringUtils.FormatElapsedTime(elapsedTime));
         }
     }
 
@@ -105,13 +105,5 @@ public class GameplayManager : MonoBehaviour
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
         }
-    }
-
-    private string FormatElapsedTime(float time)
-    {
-        int minutes = Mathf.FloorToInt(time / 60F);
-        int seconds = Mathf.FloorToInt(time % 60F);
-        float fraction = time * 100 % 100;
-        return string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, fraction);
     }
 }
