@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BasePlayerSpawnpoint : MonoBehaviour
@@ -14,4 +15,16 @@ public struct PlayerSpawnpoint
     public bool isGravityFlipped;
     public bool isFacingLeft;
     public bool isCollidingWithGravityFlip;
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(
+            sceneTransition,
+            spawnPosition,
+            velocity,
+            isGravityFlipped,
+            isFacingLeft,
+            isCollidingWithGravityFlip
+        );
+    }
 }

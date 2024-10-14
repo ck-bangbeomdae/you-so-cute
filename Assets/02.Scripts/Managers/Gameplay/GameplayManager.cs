@@ -7,6 +7,8 @@ public class GameplayManager : MonoBehaviour
     public PlayerSpawnpoint playerSavepoint;
     public bool hasPlayerSavepoint;
 
+    public int lastSavepointId;
+
     private float elapsedTime = 0f;
     public float ElapsedTime
     {
@@ -14,7 +16,7 @@ public class GameplayManager : MonoBehaviour
         set
         {
             elapsedTime = value;
-            UIManager.Instance.UpdateElapsedTime(StringUtils.FormatElapsedTime(elapsedTime));
+            UIManager.Instance.UpdateElapsedTime(StringUtils.FormatElapsedTime(value));
         }
     }
 
@@ -35,7 +37,7 @@ public class GameplayManager : MonoBehaviour
         set
         {
             isGodMode = value;
-            UIManager.Instance.UpdateGodModeText(isGodMode);
+            UIManager.Instance.UpdateGodModeText(value);
         }
     }
 
@@ -46,7 +48,7 @@ public class GameplayManager : MonoBehaviour
         set
         {
             flipCount = value;
-            UIManager.Instance.UpdateFlipCountText(flipCount);
+            UIManager.Instance.UpdateFlipCountText(value);
         }
     }
 
@@ -57,7 +59,7 @@ public class GameplayManager : MonoBehaviour
         set
         {
             deathCount = value;
-            UIManager.Instance.UpdateDeathCountText(deathCount);
+            UIManager.Instance.UpdateDeathCountText(value);
         }
     }
 
