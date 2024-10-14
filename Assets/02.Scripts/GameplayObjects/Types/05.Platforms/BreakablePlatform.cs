@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
@@ -22,10 +23,6 @@ public class BreakablePlatform : MonoBehaviour, IRespawnable
         {
             if (CollisionUtils.IsCollisionFromTopOrBottom(collision))
             {
-                // TODO : 플랫폼 파괴 애니메이션 재생
-
-                // TODO : 플랫폼 파괴 효과음 재생
-
                 StartCoroutine(DeactivateAfterDelay());
             }
         }
@@ -33,9 +30,9 @@ public class BreakablePlatform : MonoBehaviour, IRespawnable
 
     public void HandleRespawn()
     {
-        // TODO : 플랫폼 리스폰 애니메이션 재생
-
         isbreaking = false;
+
+        spriteRenderer.DOFade(1f, 0.3f);
 
         spriteRenderer.enabled = true;
         collider2d.enabled = true;
@@ -47,7 +44,11 @@ public class BreakablePlatform : MonoBehaviour, IRespawnable
     {
         isbreaking = true;
 
+        spriteRenderer.DOFade(0, destructionDelay).SetEase(Ease.InSine);
+
         yield return new WaitForSeconds(destructionDelay);
+
+        // TODO : 플랫폼 파괴 효과음 재생
 
         spriteRenderer.enabled = false;
         collider2d.enabled = false;

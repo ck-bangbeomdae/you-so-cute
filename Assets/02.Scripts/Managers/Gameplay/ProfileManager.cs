@@ -8,8 +8,8 @@ public class ProfileManager : MonoBehaviour
 
     public const string PROFILE_FILE_NAME = "profile.json";
 
-    public const float DEFAULT_SFX_VOLUME = 1.0f;
-    public const float DEFAULT_BGM_VOLUME = 1.0f;
+    public const float DEFAULT_SFX_VOLUME = 1f;
+    public const float DEFAULT_BGM_VOLUME = 1f;
 
     public PlayerProfile playerProfile;
 

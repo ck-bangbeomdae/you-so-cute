@@ -5,7 +5,7 @@ public class MovingPlatform : MonoBehaviour
     // 정적 데이터
     [SerializeField] private Direction direction;
     [SerializeField] private StartDirection startDirection;
-    [SerializeField] private float speed = 4.0f;
+    [SerializeField] private float speed = 4f;
     [SerializeField] private LayerMask groundLayer;
 
     // 컴포넌트

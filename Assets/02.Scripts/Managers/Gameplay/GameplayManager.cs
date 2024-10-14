@@ -7,7 +7,7 @@ public class GameplayManager : MonoBehaviour
     public PlayerSpawnpoint playerSavepoint;
     public bool hasPlayerSavepoint;
 
-    private float elapsedTime = 0.0f;
+    private float elapsedTime = 0f;
     public float ElapsedTime
     {
         get => elapsedTime;
@@ -95,7 +95,7 @@ public class GameplayManager : MonoBehaviour
         // 기록 초기화
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            ElapsedTime = 0.0f;
+            ElapsedTime = 0f;
             FlipCount = 0;
             DeathCount = 0;
         }
