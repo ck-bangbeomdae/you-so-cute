@@ -2,11 +2,11 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class SettingsManager : MonoBehaviour
+public class ProfileManager : MonoBehaviour
 {
-    public static SettingsManager Instance { get; private set; }
+    public static ProfileManager Instance { get; private set; }
 
-    public const string SETTINGS_FILE_NAME = "settings.json";
+    public const string PROFILE_FILE_NAME = "profile.json";
 
     public const float DEFAULT_SFX_VOLUME = 1.0f;
     public const float DEFAULT_BGM_VOLUME = 1.0f;
@@ -23,28 +23,28 @@ public class SettingsManager : MonoBehaviour
         Instance = this;
 
         playerProfile = new PlayerProfile(new PlayerSpawnpoint(), "Player", DEFAULT_SFX_VOLUME, DEFAULT_BGM_VOLUME);
-        LoadSettings();
+        LoadProfile();
     }
 
-    public void SaveSettings()
+    public void SaveProfile()
     {
-        string filePath = Path.Combine(Application.persistentDataPath, SETTINGS_FILE_NAME);
+        string filePath = Path.Combine(Application.persistentDataPath, PROFILE_FILE_NAME);
         string json = JsonUtility.ToJson(playerProfile, true);
         File.WriteAllText(filePath, json);
     }
 
-    public void LoadSettings()
+    public void LoadProfile()
     {
-        string filePath = Path.Combine(Application.persistentDataPath, SETTINGS_FILE_NAME);
+        string filePath = Path.Combine(Application.persistentDataPath, PROFILE_FILE_NAME);
 
-        if (SettingsFileExists())
+        if (ProfileFileExist())
         {
             string json = File.ReadAllText(filePath);
             playerProfile = JsonUtility.FromJson<PlayerProfile>(json);
         }
         else
         {
-            SaveSettings();
+            SaveProfile();
         }
     }
 
@@ -52,7 +52,7 @@ public class SettingsManager : MonoBehaviour
     {
         playerProfile.lastRecord = newRecord;
         UpdateTop10HighRecords(newRecord);
-        SaveSettings();
+        SaveProfile();
     }
 
     private void UpdateTop10HighRecords(Record newRecord)
@@ -89,9 +89,9 @@ public class SettingsManager : MonoBehaviour
         });
     }
 
-    private bool SettingsFileExists()
+    private bool ProfileFileExist()
     {
-        return File.Exists(Path.Combine(Application.persistentDataPath, SETTINGS_FILE_NAME));
+        return File.Exists(Path.Combine(Application.persistentDataPath, PROFILE_FILE_NAME));
     }
 }
 
@@ -99,11 +99,11 @@ public class SettingsManager : MonoBehaviour
 public struct PlayerProfile
 {
     public PlayerSpawnpoint playerSpawnpoint;
-    public Record lastRecord;
-    public Record[] top10HighRecord;
     public string playerName;
     public float sfxVolume;
     public float bgmVolume;
+    public Record lastRecord;
+    public Record[] top10HighRecord;
 
     public PlayerProfile(PlayerSpawnpoint playerSpawnpoint, string playerName, float sfxVolume, float bgmVolume)
     {
@@ -124,4 +124,13 @@ public struct Record
     public int coinCount;
     public int flipCount;
     public int deathCount;
+
+    public Record(string playerName, float elapsedTime, int coinCount, int flipCount, int deathCount)
+    {
+        this.playerName = playerName;
+        this.elapsedTime = elapsedTime;
+        this.coinCount = coinCount;
+        this.flipCount = flipCount;
+        this.deathCount = deathCount;
+    }
 }

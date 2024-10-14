@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 973869303409912733}
   - component: {fileID: 4790029225791061978}
   m_Layer: 0
-  m_Name: Manager_Settings
+  m_Name: Manager_Profile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerProfile:
-    PlayerSpawnpoint:
+    playerSpawnpoint:
       sceneTransition:
         transitionType: 0
         sceneName: 
@@ -188,8 +188,17 @@ MonoBehaviour:
       velocity: {x: 0, y: 0}
       isGravityFlipped: 0
       isFacingLeft: 0
+      isCollidingWithGravityFlip: 0
+    playerName: 
     sfxVolume: 0
     bgmVolume: 0
+    lastRecord:
+      playerName: 
+      elapsedTime: 0
+      coinCount: 0
+      flipCount: 0
+      deathCount: 0
+    top10HighRecord: []
 --- !u!1 &4116497752486218496
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,6 +871,7 @@ MonoBehaviour:
     velocity: {x: 0, y: 0}
     isGravityFlipped: 0
     isFacingLeft: 0
+    isCollidingWithGravityFlip: 0
   hasPlayerSavepoint: 0
 --- !u!1 &6975788330149952805
 GameObject:

@@ -40,7 +40,7 @@ public class PlayerHitCollision : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // 중력 변환에서 벗어남
+        // 중력 반전 오브젝트에서 벗어남
         if (collision.TryGetComponent(out GravityFlip gravityFlip))
         {
             player.isCollidingWithGravityFlip = false;

@@ -16,26 +16,10 @@ public class MainMenuManager : MonoBehaviour
         UpdateTop10HighScores();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F12))
-        {
-            Record newRecord = new Record();
-            newRecord.playerName = "JH";
-            newRecord.elapsedTime = Random.Range(100, 10000);
-            newRecord.coinCount = 100;
-            newRecord.flipCount = Random.Range(10, 100);
-            newRecord.deathCount = 100;
-            SettingsManager.Instance.SaveRecord(newRecord);
-
-            UpdateTop10HighScores();
-        }
-    }
-
     public void OnPlayerNameChanged(string newValue)
     {
-        SettingsManager.Instance.playerProfile.playerName = newValue;
-        SettingsManager.Instance.SaveSettings();
+        ProfileManager.Instance.playerProfile.playerName = newValue;
+        ProfileManager.Instance.SaveProfile();
     }
 
     public void OnClickNewGameButton()
@@ -45,9 +29,9 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnClickContinueButton()
     {
-        if (!string.IsNullOrEmpty(SettingsManager.Instance.playerProfile.playerSpawnpoint.sceneTransition.sceneName))
+        if (!string.IsNullOrEmpty(ProfileManager.Instance.playerProfile.playerSpawnpoint.sceneTransition.sceneName))
         {
-            TransitionManager.Instance.LoadSceneWithPlayer(SettingsManager.Instance.playerProfile.playerSpawnpoint);
+            TransitionManager.Instance.LoadSceneWithPlayer(ProfileManager.Instance.playerProfile.playerSpawnpoint);
         }
     }
 
@@ -62,18 +46,18 @@ public class MainMenuManager : MonoBehaviour
 
     private void UpdatePlayerName()
     {
-        playerNameInputField.text = SettingsManager.Instance.playerProfile.playerName;
+        playerNameInputField.text = ProfileManager.Instance.playerProfile.playerName;
     }
 
     private void UpdateLastRecord()
     {
-        Record lastRecord = SettingsManager.Instance.playerProfile.lastRecord;
+        Record lastRecord = ProfileManager.Instance.playerProfile.lastRecord;
         lastRecordText.text = lastRecord.flipCount == 0 ? "NO RECORD" : StringUtils.FormatRecord(lastRecord);
     }
 
     private void UpdateTop10HighScores()
     {
-        Record[] top10HighRecords = SettingsManager.Instance.playerProfile.top10HighRecord;
+        Record[] top10HighRecords = ProfileManager.Instance.playerProfile.top10HighRecord;
         for (int i = 0; i < top10HighRecords.Length; i++)
         {
             TextMeshProUGUI recordText = this.top10HighRecords.transform.GetChild(i).Find("RecordText").GetComponent<TextMeshProUGUI>();
