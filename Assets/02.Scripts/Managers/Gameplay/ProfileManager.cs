@@ -22,7 +22,7 @@ public class ProfileManager : MonoBehaviour
 
         Instance = this;
 
-        playerProfile = new PlayerProfile(new PlayerSpawnpoint(), "Player", DEFAULT_SFX_VOLUME, DEFAULT_BGM_VOLUME);
+        playerProfile = new PlayerProfile(new ProgressSave(), "Player", DEFAULT_SFX_VOLUME, DEFAULT_BGM_VOLUME);
         LoadProfile();
     }
 
@@ -48,11 +48,10 @@ public class ProfileManager : MonoBehaviour
         }
     }
 
-    public void SaveRecord(Record newRecord)
+    public void UpdateRecord(Record newRecord)
     {
         playerProfile.lastRecord = newRecord;
         UpdateTop10HighRecords(newRecord);
-        SaveProfile();
     }
 
     private void UpdateTop10HighRecords(Record newRecord)
@@ -98,21 +97,40 @@ public class ProfileManager : MonoBehaviour
 [System.Serializable]
 public struct PlayerProfile
 {
-    public PlayerSpawnpoint playerSpawnpoint;
+    public ProgressSave progressSave;
     public string playerName;
     public float sfxVolume;
     public float bgmVolume;
     public Record lastRecord;
     public Record[] top10HighRecord;
 
-    public PlayerProfile(PlayerSpawnpoint playerSpawnpoint, string playerName, float sfxVolume, float bgmVolume)
+    public PlayerProfile(ProgressSave progressSave, string playerName, float sfxVolume, float bgmVolume)
     {
-        this.playerSpawnpoint = playerSpawnpoint;
+        this.progressSave = progressSave;
         this.playerName = playerName;
         this.sfxVolume = sfxVolume;
         this.bgmVolume = bgmVolume;
         this.lastRecord = new Record();
         this.top10HighRecord = new Record[10];
+    }
+}
+
+[System.Serializable]
+public struct ProgressSave
+{
+    public PlayerSpawnpoint playerSpawnpoint;
+    public float elapsedTime;
+    public int coinCount;
+    public int flipCount;
+    public int deathCount;
+
+    public ProgressSave(PlayerSpawnpoint playerSpawnpoint, float elapsedTime, int coinCount, int flipCount, int deathCount)
+    {
+        this.playerSpawnpoint = playerSpawnpoint;
+        this.elapsedTime = elapsedTime;
+        this.coinCount = coinCount;
+        this.flipCount = flipCount;
+        this.deathCount = deathCount;
     }
 }
 

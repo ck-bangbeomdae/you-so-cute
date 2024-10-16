@@ -11,6 +11,8 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
+        GameplayManager.Instance.isGameRunning = false;
+
         UpdatePlayerName();
         UpdateLastRecord();
         UpdateTop10HighScores();
@@ -24,14 +26,16 @@ public class MainMenuManager : MonoBehaviour
 
     public void OnClickNewGameButton()
     {
+        GameplayManager.Instance.isGameRunning = true;
         TransitionManager.Instance.LoadScene(newGameSceneTransition);
     }
 
     public void OnClickContinueButton()
     {
-        if (!string.IsNullOrEmpty(ProfileManager.Instance.playerProfile.playerSpawnpoint.sceneTransition.sceneName))
+        if (!string.IsNullOrEmpty(ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint.sceneTransition.sceneName))
         {
-            TransitionManager.Instance.LoadSceneWithPlayer(ProfileManager.Instance.playerProfile.playerSpawnpoint);
+            GameplayManager.Instance.isGameRunning = true;
+            TransitionManager.Instance.LoadSceneWithPlayer(ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint);
         }
     }
 

@@ -6,18 +6,39 @@ public class Goal : MonoBehaviour, ICollisionable
 
     public void OnCollision(Player player)
     {
-        var profileManager = ProfileManager.Instance;
-        var gameplayManager = GameplayManager.Instance;
+        GameplayManager.Instance.isGameRunning = false;
 
-        Record record = new Record(
-            profileManager.playerProfile.playerName,
-            gameplayManager.ElapsedTime,
-            gameplayManager.CoinCount,
-            gameplayManager.FlipCount,
-            gameplayManager.DeathCount
-        );
+        // 기록 업데이트
+        UpdatePlayerRecord();
 
-        profileManager.SaveRecord(record);
+        // 진행사항 초기화
+        InitializeProgress();
+
+        // 프로필 저장
+        ProfileManager.Instance.SaveProfile();
+
         TransitionManager.Instance.LoadScene(sceneTransition);
+    }
+
+    private void UpdatePlayerRecord()
+    {
+        var record = new Record(
+            ProfileManager.Instance.playerProfile.playerName,
+            GameplayManager.Instance.ElapsedTime,
+            GameplayManager.Instance.CoinCount,
+            GameplayManager.Instance.FlipCount,
+            GameplayManager.Instance.DeathCount
+        );
+        ProfileManager.Instance.UpdateRecord(record);
+    }
+
+    private void InitializeProgress()
+    {
+        GameplayManager.Instance.playerSavepoint = new PlayerSpawnpoint();
+        GameplayManager.Instance.ElapsedTime = 0f;
+        GameplayManager.Instance.CoinCount = 0;
+        GameplayManager.Instance.FlipCount = 0;
+        GameplayManager.Instance.DeathCount = 0;
+        ProfileManager.Instance.playerProfile.progressSave = new ProgressSave();
     }
 }

@@ -52,8 +52,12 @@ public class Savepoint : BasePlayerSpawnpoint, ICollisionable
     {
         if (!IsActive)
         {
-            // 세이브 파일 생성 및 덮어쓰기
-            ProfileManager.Instance.playerProfile.playerSpawnpoint = playerSpawnpoint;
+            // 프로필 저장
+            ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint = playerSpawnpoint;
+            ProfileManager.Instance.playerProfile.progressSave.elapsedTime = GameplayManager.Instance.ElapsedTime;
+            ProfileManager.Instance.playerProfile.progressSave.coinCount = GameplayManager.Instance.CoinCount;
+            ProfileManager.Instance.playerProfile.progressSave.flipCount = GameplayManager.Instance.FlipCount;
+            ProfileManager.Instance.playerProfile.progressSave.deathCount = GameplayManager.Instance.DeathCount;
             ProfileManager.Instance.SaveProfile();
 
             // 세이브 포인트 변경

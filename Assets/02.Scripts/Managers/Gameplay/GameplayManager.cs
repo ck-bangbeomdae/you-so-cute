@@ -7,6 +7,8 @@ public class GameplayManager : MonoBehaviour
     public PlayerSpawnpoint playerSavepoint;
     public bool hasPlayerSavepoint;
 
+    public bool isGameRunning;
+
     public int lastSavepointId;
 
     private float elapsedTime = 0f;
@@ -73,6 +75,8 @@ public class GameplayManager : MonoBehaviour
 
         Instance = this;
 
+        isGameRunning = true;
+
         DontDestroyOnLoad(gameObject);
     }
 
@@ -86,7 +90,10 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-        ElapsedTime += Time.deltaTime;
+        if (isGameRunning)
+        {
+            ElapsedTime += Time.deltaTime;
+        }
 
         // 무적모드
         if (Input.GetKeyDown(KeyCode.F1))
