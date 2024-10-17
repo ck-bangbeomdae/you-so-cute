@@ -101,18 +101,11 @@ public class GameplayManager : MonoBehaviour
             IsGodMode = !IsGodMode;
         }
 
-        // 기록 초기화
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            ElapsedTime = 0f;
-            FlipCount = 0;
-            DeathCount = 0;
-        }
-
-        // 씬 재시작
+        // 세이브 포인트로 돌아가기
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+            DeathCount++;
+            TransitionManager.Instance.LoadSceneWithPlayer(playerSavepoint);
         }
     }
 }
