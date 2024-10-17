@@ -12,6 +12,6 @@ public static class StringUtils
 
     public static string FormatRecord(Record record)
     {
-        return $"{record.playerName} | {FormatElapsedTime(record.elapsedTime)} | {record.deathCount}";
+        return $"{(string.IsNullOrEmpty(record.playerName) ? "noname" : record.playerName)} | {FormatElapsedTime(record.elapsedTime)} | {record.deathCount}";
     }
 }
