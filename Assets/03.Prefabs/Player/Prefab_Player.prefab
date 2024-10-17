@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 3331740372363280445}
   - component: {fileID: 7233643307950291440}
   - component: {fileID: 6581099663335812197}
-  - component: {fileID: 2008487519554780882}
+  - component: {fileID: 4671637482668986632}
   m_Layer: 6
   m_Name: Prefab_Player
   m_TagString: Player
@@ -109,7 +109,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8851379163490633484}
@@ -140,8 +140,9 @@ MonoBehaviour:
   skeletonAnimation: {fileID: 0}
   currentMoveDirection: {x: 0, y: 0}
   currentSpeed: 0
+  isGrounded: 0
   isFacingLeft: 0
-  lastGravityFlipId: 
+  isCollidingWithGravityFlip: 0
   currentPlatform: {fileID: 0}
   lastPlatformPosition: {x: 0, y: 0, z: 0}
 --- !u!50 &6581099663335812197
@@ -171,8 +172,8 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!70 &2008487519554780882
-CapsuleCollider2D:
+--- !u!61 &4671637482668986632
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -204,8 +205,18 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 2.5}
+  m_EdgeRadius: 0
 --- !u!1 &3805051140592661218
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +245,7 @@ Transform:
   m_GameObject: {fileID: 3805051140592661218}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.22996265, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -260,7 +271,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b713e3a78836a364996cafd727278d7a, type: 2}
+  - {fileID: 2100000, guid: 0230a98fda0ea4f4c854a229aa0458d2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -294,9 +305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: bc5b9bcd48c1c7c499045e496ef2f243, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: a3d9026c32aed044fb565201acdf48e2, type: 2}
   initialSkinName: 
-  fixPrefabOverrideViaMeshFilter: 2
   initialFlipX: 0
   initialFlipY: 0
   updateWhenInvisible: 3
@@ -317,11 +327,6 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  physicsPositionInheritanceFactor: {x: 1, y: 1}
-  physicsRotationInheritanceFactor: 1
-  physicsMovementRelativeTo: {fileID: 0}
-  updateTiming: 1
-  unscaledTime: 0
   _animationName: 
   loop: 0
   timeScale: 1
@@ -343,7 +348,7 @@ GameObject:
   m_Component:
   - component: {fileID: 458885701500561640}
   - component: {fileID: 2366511852155260327}
-  - component: {fileID: 4265290798226587474}
+  - component: {fileID: 8760272827215955989}
   m_Layer: 6
   m_Name: HitCollision
   m_TagString: Untagged
@@ -378,8 +383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9249fd934642699429f62ac83eb67889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!70 &4265290798226587474
-CapsuleCollider2D:
+--- !u!61 &8760272827215955989
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -411,5 +416,15 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 2.5}
+  m_EdgeRadius: 0

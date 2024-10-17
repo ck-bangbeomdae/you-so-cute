@@ -5,7 +5,7 @@ public class PlayerRunning : BaseState<Player>
     public override void Enter(Player player)
     {
         // 애니메이션 재생
-        player.skeletonAnimation.state.SetAnimation(0, "running", true);
+        player.skeletonAnimation.state.SetAnimation(0, "run", true);
 
         // TODO : 뛰는 효과음 재생
 

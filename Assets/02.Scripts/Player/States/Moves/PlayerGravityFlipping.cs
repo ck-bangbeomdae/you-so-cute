@@ -5,7 +5,7 @@ public class PlayerGravityFlipping : BaseState<Player>
     public override void Enter(Player player)
     {
         // 애니메이션 재생
-        player.skeletonAnimation.state.SetAnimation(0, "gravity_flipping", false);
+        player.skeletonAnimation.state.SetAnimation(0, "flipping", false);
 
         // 중력 반전
         player.GravityFlip();

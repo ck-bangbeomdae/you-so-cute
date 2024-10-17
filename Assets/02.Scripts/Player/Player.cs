@@ -45,8 +45,7 @@ public class Player : MonoBehaviour
         set
         {
             isFacingLeft = value;
-            //skeletonAnimation.Skeleton.ScaleX = isFacingLeft ? -1 : 1;
-            skeletonAnimation.Skeleton.ScaleX = isFacingLeft ? 1 : -1;
+            skeletonAnimation.Skeleton.ScaleX = isFacingLeft ? -1 : 1;
         }
     }
 
