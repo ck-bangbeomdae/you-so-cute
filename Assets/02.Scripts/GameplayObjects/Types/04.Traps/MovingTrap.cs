@@ -3,9 +3,11 @@ using UnityEngine;
 public class MovingTrap : MonoBehaviour
 {
     // 정적 데이터
+    [SerializeField] private float speed = 4f;
+    [SerializeField] private float rotationSpeed = 3f;
     [SerializeField] private Direction direction;
     [SerializeField] private StartDirection startDirection;
-    [SerializeField] private float speed = 4f;
+    [SerializeField] private RotateDirection rotationDirection;
     [SerializeField] private LayerMask groundLayer;
 
     // 컴포넌트
@@ -38,12 +40,23 @@ public class MovingTrap : MonoBehaviour
         rb2d.MovePosition(newPosition);
     }
 
+    private void Update()
+    {
+        Rotate();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (IsGroundLayer(collision.gameObject.layer))
         {
             moveDirection = -moveDirection;
         }
+    }
+
+    private void Rotate()
+    {
+        float directionMultiplier = rotationDirection == RotateDirection.Clockwise ? -1 : 1;
+        transform.Rotate(Vector3.forward, directionMultiplier * rotationSpeed);
     }
 
     private bool IsGroundLayer(int layer)
@@ -61,5 +74,11 @@ public class MovingTrap : MonoBehaviour
     {
         RightOrUp,
         LeftOrDown
+    }
+
+    private enum RotateDirection
+    {
+        Clockwise,
+        CounterClockwise
     }
 }
