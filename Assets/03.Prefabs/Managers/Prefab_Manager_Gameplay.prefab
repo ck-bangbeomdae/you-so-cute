@@ -179,16 +179,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerProfile:
-    playerSpawnpoint:
-      sceneTransition:
-        transitionType: 0
-        sceneName: 
-        delay: 0
-      spawnPosition: {x: 0, y: 0}
-      velocity: {x: 0, y: 0}
-      isGravityFlipped: 0
-      isFacingLeft: 0
-      isCollidingWithGravityFlip: 0
+    progressSave:
+      playerSpawnpoint:
+        sceneTransition:
+          transitionType: 0
+          sceneName: 
+          delay: 0
+        spawnPosition: {x: 0, y: 0}
+        velocity: {x: 0, y: 0}
+        isGravityFlipped: 0
+        isFacingLeft: 0
+        isCollidingWithGravityFlip: 0
+      elapsedTime: 0
+      coinCount: 0
+      flipCount: 0
+      deathCount: 0
     playerName: 
     sfxVolume: 0
     bgmVolume: 0
@@ -873,6 +878,8 @@ MonoBehaviour:
     isFacingLeft: 0
     isCollidingWithGravityFlip: 0
   hasPlayerSavepoint: 0
+  isGameRunning: 0
+  lastSavepointId: 0
 --- !u!1 &6975788330149952805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,7 +1275,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8879329361012918055}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
