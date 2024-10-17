@@ -35,6 +35,15 @@ public class Player : MonoBehaviour
         {
             isGravityFlipped = value;
             skeletonAnimation.Skeleton.ScaleY = isGravityFlipped ? -1 : 1;
+
+            if (value)
+            {
+                skeletonAnimation.Skeleton.SetSkin("Red_Mag");
+            }
+            else
+            {
+                skeletonAnimation.Skeleton.SetSkin("Blue_Mag");
+            }
         }
     }
 
