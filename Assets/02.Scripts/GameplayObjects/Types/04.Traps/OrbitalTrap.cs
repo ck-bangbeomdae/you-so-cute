@@ -4,10 +4,8 @@ public class OrbitalTrap : MonoBehaviour
 {
     [SerializeField] private float orbitalSpeed = 3f;
     [SerializeField] private float rotationSpeed = 3f;
-
     [SerializeField] private Direction orbitalDirection;
     [SerializeField] private Direction rotationDirection;
-
     [SerializeField] private float radius = 3f;
 
     private Vector3 centerPoint;
