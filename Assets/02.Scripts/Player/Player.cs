@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     // 정적 데이터
-    [SerializeField] public float moveSpeed = 8f;
+    [SerializeField] public float moveSpeed = 9f;
     [SerializeField] private float friction = 0.2f;
     [SerializeField] private float maxVerticalSpeed = 30f;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float groundCheckDistance = 4f;
+    [SerializeField] private float groundCheckDistance = 2.38f;
 
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
