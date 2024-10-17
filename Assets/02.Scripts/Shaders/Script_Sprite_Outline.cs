@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 [ExecuteInEditMode]
 public class Script_Sprite_Outline : MonoBehaviour
