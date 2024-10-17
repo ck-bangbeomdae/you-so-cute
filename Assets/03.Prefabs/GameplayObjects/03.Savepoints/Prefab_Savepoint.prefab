@@ -49,9 +49,9 @@ MonoBehaviour:
   playerSpawnpoint:
     sceneTransition:
       transitionType: 0
-      sceneName: "Scene_\uCD5C\uC6C5\uADDC_16"
+      sceneName: SceneTemplate_Gameplay_1
       delay: 0
-    spawnPosition: {x: -13.5, y: 2}
+    spawnPosition: {x: 0, y: 0}
     velocity: {x: 0, y: 0}
     isGravityFlipped: 0
     isFacingLeft: 0
@@ -139,7 +139,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
