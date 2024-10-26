@@ -3,8 +3,8 @@ using UnityEngine;
 public class MovingTrap : MonoBehaviour
 {
     // 정적 데이터
-    [SerializeField] private float speed = 4f;
-    [SerializeField] private float rotationSpeed = 3f;
+    [SerializeField] private float speed = 8f;
+    [SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private Direction direction;
     [SerializeField] private StartDirection startDirection;
     [SerializeField] private RotateDirection rotationDirection;
