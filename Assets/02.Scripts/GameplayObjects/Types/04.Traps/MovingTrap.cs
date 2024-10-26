@@ -36,8 +36,7 @@ public class MovingTrap : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 newPosition = rb2d.position + moveDirection * speed * Time.fixedDeltaTime;
-        rb2d.MovePosition(newPosition);
+        Move();
     }
 
     private void Update()
@@ -51,6 +50,12 @@ public class MovingTrap : MonoBehaviour
         {
             moveDirection = -moveDirection;
         }
+    }
+
+    private void Move()
+    {
+        Vector2 newPosition = rb2d.position + moveDirection * speed * Time.fixedDeltaTime;
+        rb2d.MovePosition(newPosition);
     }
 
     private void Rotate()

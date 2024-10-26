@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class OrbitalTrap : MonoBehaviour
 {
+    // 정적 데이터
     [SerializeField] private float orbitalSpeed = 3f;
     [SerializeField] private float rotationSpeed = 3f;
     [SerializeField] private Direction orbitalDirection;
@@ -30,7 +31,7 @@ public class OrbitalTrap : MonoBehaviour
     private void Orbit()
     {
         float directionMultiplier = orbitalDirection == Direction.Clockwise ? -1 : 1;
-        angle += directionMultiplier * orbitalSpeed * Time.deltaTime;
+        angle += directionMultiplier * orbitalSpeed * Time.fixedDeltaTime;
         float x = Mathf.Cos(angle) * radius;
         float y = Mathf.Sin(angle) * radius;
         transform.position = new Vector3(centerPoint.x + x, centerPoint.y + y, transform.position.z);
