@@ -22,16 +22,6 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    private int coinCount;
-    public int CoinCount
-    {
-        get => coinCount;
-        set
-        {
-            coinCount = value;
-        }
-    }
-
     private bool isGodMode;
     public bool IsGodMode
     {

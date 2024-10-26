@@ -25,7 +25,6 @@ public class Goal : MonoBehaviour, ICollisionable
         var record = new Record(
             ProfileManager.Instance.playerProfile.playerName,
             GameplayManager.Instance.ElapsedTime,
-            GameplayManager.Instance.CoinCount,
             GameplayManager.Instance.FlipCount,
             GameplayManager.Instance.DeathCount
         );
@@ -36,7 +35,6 @@ public class Goal : MonoBehaviour, ICollisionable
     {
         GameplayManager.Instance.playerSavepoint = new PlayerSpawnpoint();
         GameplayManager.Instance.ElapsedTime = 0f;
-        GameplayManager.Instance.CoinCount = 0;
         GameplayManager.Instance.FlipCount = 0;
         GameplayManager.Instance.DeathCount = 0;
         ProfileManager.Instance.playerProfile.progressSave = new ProgressSave();

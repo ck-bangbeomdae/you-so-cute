@@ -120,15 +120,13 @@ public struct ProgressSave
 {
     public PlayerSpawnpoint playerSpawnpoint;
     public float elapsedTime;
-    public int coinCount;
     public int flipCount;
     public int deathCount;
 
-    public ProgressSave(PlayerSpawnpoint playerSpawnpoint, float elapsedTime, int coinCount, int flipCount, int deathCount)
+    public ProgressSave(PlayerSpawnpoint playerSpawnpoint, float elapsedTime, int flipCount, int deathCount)
     {
         this.playerSpawnpoint = playerSpawnpoint;
         this.elapsedTime = elapsedTime;
-        this.coinCount = coinCount;
         this.flipCount = flipCount;
         this.deathCount = deathCount;
     }
@@ -139,15 +137,13 @@ public struct Record
 {
     public string playerName;
     public float elapsedTime;
-    public int coinCount;
     public int flipCount;
     public int deathCount;
 
-    public Record(string playerName, float elapsedTime, int coinCount, int flipCount, int deathCount)
+    public Record(string playerName, float elapsedTime, int flipCount, int deathCount)
     {
         this.playerName = playerName;
         this.elapsedTime = elapsedTime;
-        this.coinCount = coinCount;
         this.flipCount = flipCount;
         this.deathCount = deathCount;
     }
