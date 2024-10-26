@@ -1,10 +1,11 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Text;
 using UnityEngine.Networking;
 
-public static class ScoreAPIUtility
+public static class ScoreAPIUtils
 {
-    private const string baseUrl = "http://localhost:3000/scores";
+    private const string baseUrl = "http://junhaddi.com:3000/scores";
 
     // GET 요청으로 모든 점수 가져오기
     public static IEnumerator GetScoresCoroutine(System.Action<string> onSuccess, System.Action<string> onError)
@@ -25,9 +26,9 @@ public static class ScoreAPIUtility
     }
 
     // POST 요청으로 새로운 점수 기록을 서버에 추가
-    public static IEnumerator PostScoreCoroutine(string playerName, float elapsedTime, int flipCount, int deathCount, System.Action<string> onSuccess, System.Action<string> onError)
+    public static IEnumerator PostScoreCoroutine(Record record, System.Action<string> onSuccess, System.Action<string> onError)
     {
-        string jsonData = $"{{\"playerName\":\"{playerName}\",\"elapsedTime\":{elapsedTime},\"flipCount\":{flipCount},\"deathCount\":{deathCount}}}";
+        string jsonData = JsonConvert.SerializeObject(record);
         byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
 
         using (UnityWebRequest request = new UnityWebRequest(baseUrl, "POST"))

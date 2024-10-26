@@ -10,33 +10,47 @@ public class Goal : MonoBehaviour, ICollisionable
 
         // 기록 업데이트
         UpdatePlayerRecord();
-
-        // 진행사항 초기화
-        InitializeProgress();
-
-        // 프로필 저장
-        ProfileManager.Instance.SaveProfile();
-
-        TransitionManager.Instance.LoadScene(sceneTransition);
     }
 
     private void UpdatePlayerRecord()
     {
-        var record = new Record(
+        var newRecord = new Record(
             ProfileManager.Instance.playerProfile.playerName,
             GameplayManager.Instance.ElapsedTime,
             GameplayManager.Instance.FlipCount,
             GameplayManager.Instance.DeathCount
         );
-        ProfileManager.Instance.UpdateRecord(record);
+
+        // 로컬에 마지막 기록 업데이트
+        ProfileManager.Instance.playerProfile.lastRecord = newRecord;
+        ProfileManager.Instance.SaveProfile();
+
+        // 서버에 기록 전송
+        StartCoroutine(ScoreAPIUtils.PostScoreCoroutine(newRecord, OnPostScoreSuccess, OnPostScoreError));
     }
 
-    private void InitializeProgress()
+    private void OnPostScoreSuccess(string message)
     {
+        Debug.Log("Success: " + message);
+        ResetProgressAndTransition();
+    }
+
+    private void OnPostScoreError(string error)
+    {
+        Debug.LogError("Error: " + error);
+        ResetProgressAndTransition();
+    }
+
+    private void ResetProgressAndTransition()
+    {
+        // 진행사항 초기화
         GameplayManager.Instance.playerSavepoint = new PlayerSpawnpoint();
         GameplayManager.Instance.ElapsedTime = 0f;
         GameplayManager.Instance.FlipCount = 0;
         GameplayManager.Instance.DeathCount = 0;
         ProfileManager.Instance.playerProfile.progressSave = new ProgressSave();
+
+        // 메인메뉴로 씬 전환
+        TransitionManager.Instance.LoadScene(sceneTransition);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using UnityEngine;
 
@@ -48,46 +47,6 @@ public class ProfileManager : MonoBehaviour
         }
     }
 
-    public void UpdateRecord(Record newRecord)
-    {
-        playerProfile.lastRecord = newRecord;
-        UpdateTop10HighRecords(newRecord);
-    }
-
-    private void UpdateTop10HighRecords(Record newRecord)
-    {
-        int emptyIndex = -1;
-        int lastIndex = playerProfile.top10HighRecord.Length - 1;
-
-        for (int i = 0; i < playerProfile.top10HighRecord.Length; i++)
-        {
-            if (playerProfile.top10HighRecord[i].flipCount == 0)
-            {
-                emptyIndex = i;
-                break;
-            }
-        }
-
-        if (emptyIndex != -1)
-        {
-            playerProfile.top10HighRecord[emptyIndex] = newRecord;
-        }
-        else
-        {
-            if (newRecord.elapsedTime < playerProfile.top10HighRecord[lastIndex].elapsedTime)
-            {
-                playerProfile.top10HighRecord[lastIndex] = newRecord;
-            }
-        }
-
-        Array.Sort(playerProfile.top10HighRecord, (x, y) =>
-        {
-            if (x.flipCount == 0) return 1;
-            if (y.flipCount == 0) return -1;
-            return x.elapsedTime.CompareTo(y.elapsedTime);
-        });
-    }
-
     private bool ProfileFileExist()
     {
         return File.Exists(Path.Combine(Application.persistentDataPath, PROFILE_FILE_NAME));
@@ -102,7 +61,6 @@ public struct PlayerProfile
     public float sfxVolume;
     public float bgmVolume;
     public Record lastRecord;
-    public Record[] top10HighRecord;
 
     public PlayerProfile(ProgressSave progressSave, string playerName, float sfxVolume, float bgmVolume)
     {
@@ -111,7 +69,6 @@ public struct PlayerProfile
         this.sfxVolume = sfxVolume;
         this.bgmVolume = bgmVolume;
         this.lastRecord = new Record();
-        this.top10HighRecord = new Record[10];
     }
 }
 

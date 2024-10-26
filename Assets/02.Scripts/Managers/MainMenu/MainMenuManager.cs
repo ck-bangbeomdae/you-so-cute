@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -7,7 +9,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private SceneTransition newGameSceneTransition;
     [SerializeField] private TMP_InputField playerNameInputField;
     [SerializeField] private TextMeshProUGUI lastRecordText;
-    [SerializeField] private GameObject top10HighRecords;
+    [SerializeField] private GameObject highScores;
+    [SerializeField] private GameObject recordPrefab;
 
     private void Start()
     {
@@ -15,7 +18,8 @@ public class MainMenuManager : MonoBehaviour
 
         UpdatePlayerName();
         UpdateLastRecord();
-        UpdateTop10HighScores();
+
+        StartCoroutine(ScoreAPIUtils.GetScoresCoroutine(OnGetScoresSuccess, OnGetScoresError));
     }
 
     public void OnPlayerNameChanged(string newValue)
@@ -59,13 +63,23 @@ public class MainMenuManager : MonoBehaviour
         lastRecordText.text = lastRecord.flipCount == 0 ? "NO RECORD" : StringUtils.FormatRecord(lastRecord);
     }
 
-    private void UpdateTop10HighScores()
+    private void OnGetScoresSuccess(string jsonResponse)
     {
-        Record[] top10HighRecords = ProfileManager.Instance.playerProfile.top10HighRecord;
-        for (int i = 0; i < top10HighRecords.Length; i++)
+        Record[] records = JsonConvert.DeserializeObject<Record[]>(jsonResponse);
+
+        Array.Sort(records, (x, y) => x.elapsedTime.CompareTo(y.elapsedTime));
+
+        for (int i = 0; i < records.Length; i++)
         {
-            TextMeshProUGUI recordText = this.top10HighRecords.transform.GetChild(i).Find("RecordText").GetComponent<TextMeshProUGUI>();
-            recordText.text = top10HighRecords[i].flipCount == 0 ? "NO RECORD" : StringUtils.FormatRecord(top10HighRecords[i]);
+            Record record = records[i];
+            GameObject recordInstance = Instantiate(recordPrefab, highScores.transform);
+            TextMeshProUGUI recordText = recordInstance.GetComponentInChildren<TextMeshProUGUI>();
+            recordText.text = $"{i + 1}. {StringUtils.FormatRecord(record)}";
         }
+    }
+
+    private void OnGetScoresError(string error)
+    {
+        Debug.LogError("GET 요청 실패: " + error);
     }
 }
