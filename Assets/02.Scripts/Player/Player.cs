@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     public Vector2 currentMoveDirection;
     public float currentSpeed;
 
+    public float currentBeltSpeed;
+
     public bool isGrounded;
 
     private bool isGravityFlipped;
@@ -112,6 +114,9 @@ public class Player : MonoBehaviour
             rb2d.velocity = new Vector2(currentMoveDirection.x * currentSpeed, rb2d.velocity.y);
         }
 
+        // 이동 벨트 추가 이동속도 설정
+        rb2d.velocity += new Vector2(currentBeltSpeed, 0);
+
         // 마찰력 적용 및 y 속도 최대치 제한
         Vector2 velocity = rb2d.velocity;
         velocity.x = Mathf.Lerp(velocity.x, 0, friction);
@@ -141,6 +146,25 @@ public class Player : MonoBehaviour
         else if (currentMoveDirection.x > 0f)
         {
             IsFacingLeft = false;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (CollisionUtils.IsCollisionFromTopOrBottom(collision))
+        {
+            if (collision.gameObject.TryGetComponent(out BeltPlatform beltPlatform))
+            {
+                currentBeltSpeed = beltPlatform.beltSpeed;
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out BeltPlatform beltPlatform))
+        {
+            currentBeltSpeed = 0f;
         }
     }
 
