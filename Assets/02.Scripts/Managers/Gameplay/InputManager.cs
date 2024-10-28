@@ -10,7 +10,6 @@ public class InputManager : MonoBehaviour
     public static InputAction MoveAction => instance.playerActionsData.Player.Move;
     public static InputAction GravityFlipAction => instance.playerActionsData.Player.GravityFlip;
     public static InputAction InteractAction => instance.playerActionsData.Player.Interact;
-    public static InputAction OpenInventoryAction => instance.playerActionsData.Player.OpenInventory;
 
     private void Awake()
     {

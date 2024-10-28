@@ -94,10 +94,10 @@ public class Player : MonoBehaviour
 
         // FSM 초기화
         playerStates[PlayerState.Idle] = new PlayerIdle();
+        playerStates[PlayerState.InAir] = new PlayerInAir();
         playerStates[PlayerState.Running] = new PlayerRunning();
         playerStates[PlayerState.GravityFlipping] = new PlayerGravityFlipping();
         playerStates[PlayerState.Interacting] = new PlayerInteracting();
-        playerStates[PlayerState.OpeningInventory] = new PlayerOpeningInventory();
     }
 
     private void Start()
@@ -212,6 +212,9 @@ public class Player : MonoBehaviour
         IsGravityFlipped = !IsGravityFlipped;
         IsGrounded = false;
 
+        // 애니메이션 재생
+        skeletonAnimation.state.SetAnimation(0, "flipping", false);
+
         // TODO : 중력 반전 효과음 재생
     }
 
@@ -239,8 +242,8 @@ public class Player : MonoBehaviour
 public enum PlayerState
 {
     Idle,
+    InAir,
     Running,
     GravityFlipping,
     Interacting,
-    OpeningInventory
 }

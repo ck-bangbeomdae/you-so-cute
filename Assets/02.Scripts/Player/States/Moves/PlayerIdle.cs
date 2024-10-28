@@ -4,7 +4,7 @@ public class PlayerIdle : BaseState<Player>
 {
     private readonly PlayerState[] actionableStates =
     {
-        PlayerState.OpeningInventory,
+        PlayerState.InAir,
         PlayerState.Interacting,
         PlayerState.GravityFlipping,
         PlayerState.Running,
