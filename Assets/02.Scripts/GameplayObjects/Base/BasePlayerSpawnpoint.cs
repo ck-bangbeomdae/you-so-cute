@@ -18,7 +18,8 @@ public struct PlayerSpawnpoint
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(
+        return HashCode.Combine
+        (
             sceneTransition,
             spawnPosition,
             velocity,

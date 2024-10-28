@@ -9,7 +9,7 @@ public class GravityFlip : MonoBehaviour, ICollisionable
             return;
         }
 
-        player.rb2d.velocity /= 3f;
+        player.rb2d.velocity /= 4f;
         player.GravityFlip();
     }
 }

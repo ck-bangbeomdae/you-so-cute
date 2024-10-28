@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public SkeletonAnimation skeletonAnimation;
+    private DarkenTrigger darkenTrigger;
 
     // FSM
     public readonly Dictionary<PlayerState, BaseState<Player>> playerStates = new Dictionary<PlayerState, BaseState<Player>>();
@@ -49,6 +50,11 @@ public class Player : MonoBehaviour
         get => isGravityFlipped;
         set
         {
+            if (darkenTrigger != null)
+            {
+                darkenTrigger.UpdateLightIntensities(!darkenTrigger.isDarkMode);
+            }
+
             isGravityFlipped = value;
             skeletonAnimation.Skeleton.ScaleY = isGravityFlipped ? -1 : 1;
 
@@ -83,7 +89,7 @@ public class Player : MonoBehaviour
     // 상호작용
     public IInteractable closestInteractable;
 
-    // 경직 타이머
+    // 타이머
     public float stunTimer = 0f;
 
     private void Awake()
@@ -91,6 +97,13 @@ public class Player : MonoBehaviour
         // 컴포넌트 초기화
         rb2d = GetComponent<Rigidbody2D>();
         skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+
+        GameObject darkenTriggerObject = GameObject.FindWithTag("DarkenTrigger");
+        if (darkenTriggerObject != null)
+        {
+            darkenTrigger = darkenTriggerObject.GetComponent<DarkenTrigger>();
+            darkenTrigger.player = this;
+        }
 
         // FSM 초기화
         playerStates[PlayerState.Idle] = new PlayerIdle();

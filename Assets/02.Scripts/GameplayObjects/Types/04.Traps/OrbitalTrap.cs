@@ -24,7 +24,6 @@ public class OrbitalTrap : MonoBehaviour
 
     private void Update()
     {
-
         Rotate();
     }
 
