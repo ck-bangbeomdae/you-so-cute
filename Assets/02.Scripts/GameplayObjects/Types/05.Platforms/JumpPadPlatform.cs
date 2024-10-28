@@ -17,10 +17,10 @@ public class JumpPadPlatform : MonoBehaviour, ICollisionable
         // 점프 패드 충돌했을 때의 마찰력 설정
         player.jumpPadFriction = jumpPadFriction;
 
-        // 경직 시간 설정
-        player.stunTimer = 0.5f;
-
         player.IsGrounded = false;
         player.isCollidingWithJumpPad = true;
+
+        // 경직 시간 설정
+        player.stunTimer = 0.5f;
     }
 }

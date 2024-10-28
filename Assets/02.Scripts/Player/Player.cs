@@ -167,7 +167,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         // 씬 전환 중이거나 플레이어가 사망한 경우 상태 업데이트 중지
-        if (TransitionManager.Instance.isTransition || isDead || isCollidingWithJumpPad)
+        if (TransitionManager.Instance.isTransition || isDead)
         {
             return;
         }
@@ -176,13 +176,16 @@ public class Player : MonoBehaviour
         playerStateMachine.Execute();
 
         // 이동 방향에 따른 좌우 반전
-        if (currentMoveDirection.x < 0f)
+        if (!isCollidingWithJumpPad)
         {
-            IsFacingLeft = true;
-        }
-        else if (currentMoveDirection.x > 0f)
-        {
-            IsFacingLeft = false;
+            if (currentMoveDirection.x < 0f)
+            {
+                IsFacingLeft = true;
+            }
+            else if (currentMoveDirection.x > 0f)
+            {
+                IsFacingLeft = false;
+            }
         }
     }
 
