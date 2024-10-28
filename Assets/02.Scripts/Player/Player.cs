@@ -26,8 +26,22 @@ public class Player : MonoBehaviour
     public float currentSpeed;
 
     public float currentBeltSpeed;
+    public float jumpPadFriction;
 
-    public bool isGrounded;
+    private bool isGrounded;
+    public bool IsGrounded
+    {
+        get => isGrounded;
+        set
+        {
+            isGrounded = value;
+
+            if (value)
+            {
+                isCollidingWithJumpPad = false;
+            }
+        }
+    }
 
     private bool isGravityFlipped;
     public bool IsGravityFlipped
@@ -61,12 +75,16 @@ public class Player : MonoBehaviour
     }
 
     public bool isCollidingWithGravityFlip;
+    public bool isCollidingWithJumpPad;
 
     public Transform currentPlatform;
     public Vector3 lastPlatformPosition;
 
     // 상호작용
     public IInteractable closestInteractable;
+
+    // 경직 타이머
+    public float stunTimer = 0f;
 
     private void Awake()
     {
@@ -108,29 +126,48 @@ public class Player : MonoBehaviour
         // 중력 방향 설정
         rb2d.gravityScale = IsGravityFlipped ? -Mathf.Abs(rb2d.gravityScale) : Mathf.Abs(rb2d.gravityScale);
 
-        // 이동 속도 설정
-        if (currentSpeed > 0f)
+        Vector2 velocity = rb2d.velocity;
+
+        if (!isCollidingWithJumpPad)
         {
-            rb2d.velocity = new Vector2(currentMoveDirection.x * currentSpeed, rb2d.velocity.y);
+            // 이동 속도 설정
+            if (currentSpeed > 0f)
+            {
+                velocity.x = currentMoveDirection.x * currentSpeed;
+            }
+
+            // 이동 벨트 추가 이동속도 설정
+            velocity.x += currentBeltSpeed;
+
+            // 마찰력 적용
+            velocity.x = Mathf.Lerp(velocity.x, 0, friction);
+        }
+        else
+        {
+            // 마찰력 적용
+            velocity.x = Mathf.Lerp(velocity.x, 0, jumpPadFriction);
         }
 
-        // 이동 벨트 추가 이동속도 설정
-        rb2d.velocity += new Vector2(currentBeltSpeed, 0);
-
-        // 마찰력 적용 및 y 속도 최대치 제한
-        Vector2 velocity = rb2d.velocity;
-        velocity.x = Mathf.Lerp(velocity.x, 0, friction);
+        // y 속도 최대치 제한
         velocity.y = Mathf.Clamp(velocity.y, -maxVerticalSpeed, maxVerticalSpeed);
         rb2d.velocity = velocity;
 
-        // 레이캐스트를 사용하여 땅과의 충돌 감지
-        isGrounded = Physics2D.Raycast(transform.position, IsGravityFlipped ? Vector2.up : Vector2.down, groundCheckDistance, groundLayer);
+        // 경직 타이머 감소
+        if (stunTimer > 0)
+        {
+            stunTimer -= Time.fixedDeltaTime;
+        }
+        else
+        {
+            // 레이캐스트를 사용하여 땅과의 충돌 감지
+            IsGrounded = Physics2D.Raycast(transform.position, IsGravityFlipped ? Vector2.up : Vector2.down, groundCheckDistance, groundLayer);
+        }
     }
 
     private void Update()
     {
         // 씬 전환 중이거나 플레이어가 사망한 경우 상태 업데이트 중지
-        if (TransitionManager.Instance.isTransition || isDead)
+        if (TransitionManager.Instance.isTransition || isDead || isCollidingWithJumpPad)
         {
             return;
         }
@@ -173,7 +210,7 @@ public class Player : MonoBehaviour
         // 중력 반전
         GameplayManager.Instance.FlipCount++;
         IsGravityFlipped = !IsGravityFlipped;
-        isGrounded = false;
+        IsGrounded = false;
 
         // TODO : 중력 반전 효과음 재생
     }

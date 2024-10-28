@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8572819023800036188}
   - component: {fileID: 3363132281724018819}
   - component: {fileID: 5543326718825537633}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Prefab_Platform_JumpPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009c36e4d65097a4eb56b4aed8a6e8aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 20
+  jumpDirection: {x: 1, y: 1}
 --- !u!212 &3363132281724018819
 SpriteRenderer:
   m_ObjectHideFlags: 0
