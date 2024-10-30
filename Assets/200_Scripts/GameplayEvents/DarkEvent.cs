@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class DarkModeEnvironment : MonoBehaviour
+public class DarkEvent : MonoBehaviour
 {
-    [SerializeField] private bool initialDarkMode;
+    [SerializeField] private bool initialDark;
     [SerializeField] private float animationDuration = 2f;
 
     public Player player;
 
-    public bool isDarkMode;
+    public bool isDark;
     private readonly Dictionary<Light2D, float> lightDictionary = new Dictionary<Light2D, float>();
 
     private void Start()
     {
-        isDarkMode = initialDarkMode;
+        isDark = initialDark;
 
         // 플레이어를 제외한 씬에 있는 Light2D 컴포넌트를 모두 찾아서 딕셔너리에 저장
         Light2D[] allLights = FindObjectsOfType<Light2D>();
@@ -27,20 +27,20 @@ public class DarkModeEnvironment : MonoBehaviour
             }
         }
 
-        if (initialDarkMode)
+        if (initialDark)
         {
             UpdateLightIntensities(true, true);
         }
     }
 
-    public void UpdateLightIntensities(bool isDarkMode, bool immediate = false)
+    public void UpdateLightIntensities(bool isDark, bool immediate = false)
     {
-        this.isDarkMode = isDarkMode;
+        this.isDark = isDark;
 
         foreach (KeyValuePair<Light2D, float> entry in lightDictionary)
         {
             Light2D light = entry.Key;
-            float targetIntensity = isDarkMode ? 0f : entry.Value;
+            float targetIntensity = isDark ? 0f : entry.Value;
 
             if (immediate)
             {

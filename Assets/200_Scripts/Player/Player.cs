@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public SkeletonAnimation skeletonAnimation;
-    private DarkModeEnvironment darkenTrigger;
+    private DarkEvent darkenTrigger;
 
     // FSM
     public readonly Dictionary<PlayerState, BaseState<Player>> playerStates = new Dictionary<PlayerState, BaseState<Player>>();
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
         {
             if (darkenTrigger != null)
             {
-                darkenTrigger.UpdateLightIntensities(!darkenTrigger.isDarkMode);
+                darkenTrigger.UpdateLightIntensities(!darkenTrigger.isDark);
             }
 
             isGravityFlipped = value;
@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
         GameObject darkenTriggerObject = GameObject.FindWithTag("DarkenTrigger");
         if (darkenTriggerObject != null)
         {
-            darkenTrigger = darkenTriggerObject.GetComponent<DarkModeEnvironment>();
+            darkenTrigger = darkenTriggerObject.GetComponent<DarkEvent>();
             darkenTrigger.player = this;
         }
 

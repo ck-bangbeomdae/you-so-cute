@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BreakablePlatform : MonoBehaviour, IRespawnable
 {
-    [SerializeField] private float destructionDelay = 2.5f;
+    [SerializeField] private float destructionDelay = 1f;
 
     private SpriteRenderer spriteRenderer;
     private Collider2D collider2d;
