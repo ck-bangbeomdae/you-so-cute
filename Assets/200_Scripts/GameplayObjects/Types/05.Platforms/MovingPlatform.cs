@@ -3,8 +3,8 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
     // 정적 데이터
-    [SerializeField] private Direction direction;
-    [SerializeField] private StartDirection startDirection;
+    [SerializeField] private CommonEnums.MovementDirection movementDirection;
+    [SerializeField] private CommonEnums.InitialDirection initialDirection;
     [SerializeField] private float speed = 4f;
     [SerializeField] private LayerMask groundLayer;
 
@@ -22,13 +22,13 @@ public class MovingPlatform : MonoBehaviour
     private void Start()
     {
         // 시작 방향 설정
-        if (direction == Direction.Horizontal)
+        if (movementDirection == CommonEnums.MovementDirection.Horizontal)
         {
-            moveDirection = (startDirection == StartDirection.RightOrUp) ? Vector2.right : Vector2.left;
+            moveDirection = (initialDirection == CommonEnums.InitialDirection.RightOrUp) ? Vector2.right : Vector2.left;
         }
         else
         {
-            moveDirection = (startDirection == StartDirection.RightOrUp) ? Vector2.up : Vector2.down;
+            moveDirection = (initialDirection == CommonEnums.InitialDirection.RightOrUp) ? Vector2.up : Vector2.down;
         }
     }
 
@@ -40,26 +40,9 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (IsGroundLayer(collision.gameObject.layer))
+        if (CollisionUtils.IsGroundLayer(groundLayer, collision.gameObject.layer))
         {
             moveDirection = -moveDirection;
         }
-    }
-
-    private bool IsGroundLayer(int layer)
-    {
-        return (groundLayer.value & (1 << layer)) != 0;
-    }
-
-    private enum Direction
-    {
-        Horizontal,
-        Vertical
-    }
-
-    private enum StartDirection
-    {
-        RightOrUp,
-        LeftOrDown
     }
 }

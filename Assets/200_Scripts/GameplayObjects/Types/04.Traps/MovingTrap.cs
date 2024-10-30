@@ -5,9 +5,9 @@ public class MovingTrap : MonoBehaviour
     // 정적 데이터
     [SerializeField] private float speed = 8f;
     [SerializeField] private float rotationSpeed = 1f;
-    [SerializeField] private Direction direction;
-    [SerializeField] private StartDirection startDirection;
-    [SerializeField] private RotateDirection rotationDirection;
+    [SerializeField] private CommonEnums.MovementDirection movementDirection;
+    [SerializeField] private CommonEnums.InitialDirection initialDirection;
+    [SerializeField] private CommonEnums.RotationDirection rotationDirection;
     [SerializeField] private LayerMask groundLayer;
 
     // 컴포넌트
@@ -24,13 +24,13 @@ public class MovingTrap : MonoBehaviour
     private void Start()
     {
         // 시작 방향 설정
-        if (direction == Direction.Horizontal)
+        if (movementDirection == CommonEnums.MovementDirection.Horizontal)
         {
-            moveDirection = (startDirection == StartDirection.RightOrUp) ? Vector2.right : Vector2.left;
+            moveDirection = (initialDirection == CommonEnums.InitialDirection.RightOrUp) ? Vector2.right : Vector2.left;
         }
         else
         {
-            moveDirection = (startDirection == StartDirection.RightOrUp) ? Vector2.up : Vector2.down;
+            moveDirection = (initialDirection == CommonEnums.InitialDirection.RightOrUp) ? Vector2.up : Vector2.down;
         }
     }
 
@@ -46,7 +46,7 @@ public class MovingTrap : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (IsGroundLayer(collision.gameObject.layer))
+        if (CollisionUtils.IsGroundLayer(groundLayer, collision.gameObject.layer))
         {
             moveDirection = -moveDirection;
         }
@@ -60,30 +60,7 @@ public class MovingTrap : MonoBehaviour
 
     private void Rotate()
     {
-        float directionMultiplier = rotationDirection == RotateDirection.Clockwise ? -1 : 1;
+        float directionMultiplier = rotationDirection == CommonEnums.RotationDirection.Clockwise ? -1 : 1;
         transform.Rotate(Vector3.forward, directionMultiplier * rotationSpeed);
-    }
-
-    private bool IsGroundLayer(int layer)
-    {
-        return (groundLayer.value & (1 << layer)) != 0;
-    }
-
-    private enum Direction
-    {
-        Horizontal,
-        Vertical
-    }
-
-    private enum StartDirection
-    {
-        RightOrUp,
-        LeftOrDown
-    }
-
-    private enum RotateDirection
-    {
-        Clockwise,
-        CounterClockwise
     }
 }

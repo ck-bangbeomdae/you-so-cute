@@ -2,24 +2,24 @@ using UnityEngine;
 
 public class Portal : BasePlayerSpawnpoint, ICollisionable
 {
-    [SerializeField] private Direction direction;
+    [SerializeField] private CommonEnums.CardinalDirection cardinalDirection;
 
     public void OnCollision(Player player)
     {
         Vector2 newPosition = player.transform.position;
 
-        switch (direction)
+        switch (cardinalDirection)
         {
-            case Direction.North:
+            case CommonEnums.CardinalDirection.North:
                 newPosition.y = -10f;
                 break;
-            case Direction.East:
+            case CommonEnums.CardinalDirection.East:
                 newPosition.x = -18f;
                 break;
-            case Direction.South:
+            case CommonEnums.CardinalDirection.South:
                 newPosition.y = 10f;
                 break;
-            case Direction.West:
+            case CommonEnums.CardinalDirection.West:
                 newPosition.x = 18f;
                 break;
         }
@@ -31,13 +31,5 @@ public class Portal : BasePlayerSpawnpoint, ICollisionable
         playerSpawnpoint.isCollidingWithGravityFlip = player.isCollidingWithGravityFlip;
 
         TransitionManager.Instance.LoadSceneWithPlayer(playerSpawnpoint);
-    }
-
-    private enum Direction
-    {
-        North,
-        East,
-        South,
-        West
     }
 }

@@ -25,4 +25,9 @@ public static class CollisionUtils
         }
         return false;
     }
+
+    public static bool IsGroundLayer(LayerMask groundLayer, int layer)
+    {
+        return (groundLayer.value & (1 << layer)) != 0;
+    }
 }
