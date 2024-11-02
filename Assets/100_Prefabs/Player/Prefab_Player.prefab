@@ -223,11 +223,14 @@ MonoBehaviour:
   skeletonAnimation: {fileID: 0}
   currentMoveDirection: {x: 0, y: 0}
   currentSpeed: 0
-  isGrounded: 0
+  currentBeltSpeed: 0
+  jumpPadFriction: 0
   isFacingLeft: 0
   isCollidingWithGravityFlip: 0
+  isCollidingWithJumpPad: 0
   currentPlatform: {fileID: 0}
   lastPlatformPosition: {x: 0, y: 0, z: 0}
+  stunTimer: 0
 --- !u!50 &6581099663335812197
 Rigidbody2D:
   serializedVersion: 4
