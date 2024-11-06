@@ -151,10 +151,7 @@ public class Player : MonoBehaviour
         if (!isCollidingWithJumpPad)
         {
             // 이동 속도 설정
-            if (currentSpeed > 0f)
-            {
-                velocity.x = currentMoveDirection.x * currentSpeed;
-            }
+            velocity.x = currentMoveDirection.x * currentSpeed;
 
             // 이동 벨트 추가 이동속도 설정
             velocity.x += currentBeltSpeed;
