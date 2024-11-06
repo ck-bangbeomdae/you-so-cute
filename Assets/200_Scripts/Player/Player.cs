@@ -15,7 +15,8 @@ public class Player : MonoBehaviour
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public SkeletonAnimation skeletonAnimation;
-    private DarkEvent darkenTrigger;
+    private DarkEvent darkEvent;
+    private ScrollEvent scrollEvent;
 
     // FSM
     public readonly Dictionary<PlayerState, BaseState<Player>> playerStates = new Dictionary<PlayerState, BaseState<Player>>();
@@ -50,9 +51,9 @@ public class Player : MonoBehaviour
         get => isGravityFlipped;
         set
         {
-            if (darkenTrigger != null)
+            if (darkEvent != null)
             {
-                darkenTrigger.UpdateLightIntensities(!darkenTrigger.isDark);
+                darkEvent.UpdateLightIntensities(!darkEvent.isDark);
             }
 
             isGravityFlipped = value;
@@ -98,11 +99,17 @@ public class Player : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
-        GameObject darkenTriggerObject = GameObject.FindWithTag("DarkenTrigger");
-        if (darkenTriggerObject != null)
+        GameObject darkEventObject = GameObject.FindWithTag("DarkEvent");
+        if (darkEventObject != null)
         {
-            darkenTrigger = darkenTriggerObject.GetComponent<DarkEvent>();
-            darkenTrigger.player = this;
+            darkEvent = darkEventObject.GetComponent<DarkEvent>();
+            darkEvent.player = this;
+        }
+
+        GameObject scrollEventObject = GameObject.FindWithTag("ScrollEvent");
+        if (scrollEventObject != null)
+        {
+            scrollEvent = scrollEventObject.GetComponent<ScrollEvent>();
         }
 
         // FSM 초기화
@@ -241,8 +248,6 @@ public class Player : MonoBehaviour
             return;
         }
 
-        isDead = true;
-
         currentMoveDirection = Vector2.zero;
         currentSpeed = 0;
 
@@ -250,8 +255,15 @@ public class Player : MonoBehaviour
 
         // TODO : 사망 효과음 재생
 
+        if (scrollEvent != null)
+        {
+            scrollEvent.MoveToSavepoint();
+        }
+
         GameplayManager.Instance.DeathCount++;
         TransitionManager.Instance.LoadSceneWithPlayer(GameplayManager.Instance.playerSavepoint);
+
+        isDead = true;
     }
 }
 
