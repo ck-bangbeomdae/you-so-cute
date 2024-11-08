@@ -50,9 +50,11 @@ public class Player : MonoBehaviour
             {
                 isCollidingWithJumpPad = false;
 
+                // 플레이어 착지 파티클 생성
                 GameObject landingParticleObject = Instantiate(landingParticlePrefab, groundPivotTransform.position, Quaternion.identity);
                 landingParticleObject.transform.localScale = new Vector3(1, IsGravityFlipped ? -1 : 1);
-
+                //landingParticleObject.GetComponent<ParticleSystem>().Play();
+                
                 // TODO : 착지 효과음 재생
             }
         }
@@ -66,7 +68,7 @@ public class Player : MonoBehaviour
         {
             if (darkEvent != null)
             {
-                darkEvent.UpdateLightIntensities(!darkEvent.isDark);
+                darkEvent.TriggerDark();
             }
 
             isGravityFlipped = value;
