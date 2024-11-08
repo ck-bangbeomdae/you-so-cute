@@ -143,7 +143,10 @@ public class Player : MonoBehaviour
     {
         if (e.Data.Name == "run")
         {
-            // TODO : 달리기 파티클 재생
+            // 달리기 파티클 재생
+            GameObject runningParticleObject = Instantiate(runningParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
+            Vector3 landingParticleScale = runningParticleObject.transform.localScale;
+            runningParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);
 
             // TODO : 달리기 효과음 재생
         }
