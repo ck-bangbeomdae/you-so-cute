@@ -22,6 +22,20 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
+    private const int maxProgressPortalCount = 100; // <- 최대 포탈 개수 나중에 카운트 해서 적용
+    private int currentProgressPortalCount;
+    public int CurrentProgressPortalCount
+    {
+        get => currentProgressPortalCount;
+        set
+        {
+            currentProgressPortalCount = value;
+
+            // TODO : Progress Bar 업데이트 구현
+            //UIManager.Instance.UpdateElapsedTime(StringUtils.FormatElapsedTime(value));
+        }
+    }
+
     private bool isGodMode;
     public bool IsGodMode
     {

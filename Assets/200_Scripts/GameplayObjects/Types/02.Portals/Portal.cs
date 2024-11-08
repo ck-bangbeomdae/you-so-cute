@@ -3,6 +3,7 @@ using UnityEngine;
 public class Portal : BasePlayerSpawnpoint, ICollisionable
 {
     [SerializeField] private CommonEnums.CardinalDirection cardinalDirection;
+    [SerializeField] private bool isRightway;
 
     public void OnCollision(Player player)
     {
