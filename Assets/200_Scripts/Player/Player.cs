@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 2.38f;
 
-    [SerializeField] private Transform groundPivotTransform;
+    [SerializeField] private Transform pivotReverseGround;
+    [SerializeField] private Transform pivotStraightGround;
     [SerializeField] private GameObject runningParticlePrefab;
     [SerializeField] private GameObject landingParticlePrefab;
 
@@ -51,10 +52,10 @@ public class Player : MonoBehaviour
                 isCollidingWithJumpPad = false;
 
                 // 플레이어 착지 파티클 생성
-                GameObject landingParticleObject = Instantiate(landingParticlePrefab, groundPivotTransform.position, Quaternion.identity);
-                landingParticleObject.transform.localScale = new Vector3(1, IsGravityFlipped ? -1 : 1);
-                //landingParticleObject.GetComponent<ParticleSystem>().Play();
-                
+                GameObject landingParticleObject = Instantiate(landingParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
+                Vector3 landingParticleScale = landingParticleObject.transform.localScale;
+                landingParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);
+
                 // TODO : 착지 효과음 재생
             }
         }
