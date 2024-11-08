@@ -5,9 +5,9 @@ using UnityEngine.Rendering.Universal;
 
 public class DarkEvent : MonoBehaviour
 {
-    [SerializeField] private float fadeOutDuration = 0.5f;
-    [SerializeField] private float intervalDuration = 1f;
     [SerializeField] private float fadeInDuration = 0.5f;
+    [SerializeField] private float intervalDuration = 1f;
+    [SerializeField] private float fadeOutDuration = 0.5f;
 
     public Player player;
 
@@ -23,11 +23,12 @@ public class DarkEvent : MonoBehaviour
             if (!light.transform.IsChildOf(player.transform))
             {
                 lightDictionary[light] = light.intensity;
+                light.intensity = 0f;
             }
         }
     }
 
-    public void TriggerDark()
+    public void TriggerBright()
     {
         foreach (KeyValuePair<Light2D, float> entry in lightDictionary)
         {
@@ -43,9 +44,9 @@ public class DarkEvent : MonoBehaviour
 
             // 새로운 Sequence 생성 및 저장
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(DOTween.To(() => light.intensity, x => light.intensity = x, 0f, fadeOutDuration));
-            sequence.AppendInterval(intervalDuration);
             sequence.Append(DOTween.To(() => light.intensity, x => light.intensity = x, originalIntensity, fadeInDuration));
+            sequence.AppendInterval(intervalDuration);
+            sequence.Append(DOTween.To(() => light.intensity, x => light.intensity = x, 0f, fadeOutDuration));
             sequenceDictionary[light] = sequence;
         }
     }

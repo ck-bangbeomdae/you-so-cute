@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
         {
             if (darkEvent != null)
             {
-                darkEvent.TriggerDark();
+                darkEvent.TriggerBright();
             }
 
             isGravityFlipped = value;
