@@ -240,11 +240,18 @@ public class Player : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (CollisionUtils.IsCollisionFromTopOrBottom(collision))
+        if (collision.gameObject.TryGetComponent(out BeltPlatform beltPlatform))
         {
-            if (collision.gameObject.TryGetComponent(out BeltPlatform beltPlatform))
+            bool isCollisionFromTop = CollisionUtils.IsCollisionFromTop(collision);
+            bool isClockwise = beltPlatform.rotationDirection == CommonEnums.RotationDirection.Clockwise;
+
+            if (isCollisionFromTop)
             {
-                currentBeltSpeed = beltPlatform.beltSpeed;
+                currentBeltSpeed = isClockwise ? beltPlatform.beltSpeed : -beltPlatform.beltSpeed;
+            }
+            else
+            {
+                currentBeltSpeed = isClockwise ? -beltPlatform.beltSpeed : beltPlatform.beltSpeed;
             }
         }
     }
