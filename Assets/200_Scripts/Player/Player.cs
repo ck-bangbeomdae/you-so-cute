@@ -1,3 +1,4 @@
+using Spine;
 using Spine.Unity;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,10 +50,10 @@ public class Player : MonoBehaviour
             {
                 isCollidingWithJumpPad = false;
 
-                // TODO : 착지 효과음 재생
-
                 GameObject landingParticleObject = Instantiate(landingParticlePrefab, groundPivotTransform.position, Quaternion.identity);
                 landingParticleObject.transform.localScale = new Vector3(1, IsGravityFlipped ? -1 : 1);
+
+                // TODO : 착지 효과음 재생
             }
         }
     }
@@ -130,6 +131,19 @@ public class Player : MonoBehaviour
         playerStates[PlayerState.Running] = new PlayerRunning();
         playerStates[PlayerState.GravityFlipping] = new PlayerGravityFlipping();
         playerStates[PlayerState.Interacting] = new PlayerInteracting();
+
+        // Spine 애니메이션 이벤트 리스너 추가
+        skeletonAnimation.AnimationState.Event += HandleAnimationEvent;
+    }
+
+    private void HandleAnimationEvent(TrackEntry trackEntry, Spine.Event e)
+    {
+        if (e.Data.Name == "run")
+        {
+            // TODO : 달리기 파티클 재생
+
+            // TODO : 달리기 효과음 재생
+        }
     }
 
     private void Start()
