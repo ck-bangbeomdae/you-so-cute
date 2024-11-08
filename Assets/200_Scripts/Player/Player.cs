@@ -12,6 +12,10 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 2.38f;
 
+    [SerializeField] private Transform groundPivotTransform;
+    [SerializeField] private GameObject runningParticlePrefab;
+    [SerializeField] private GameObject landingParticlePrefab;
+
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public SkeletonAnimation skeletonAnimation;
@@ -31,16 +35,24 @@ public class Player : MonoBehaviour
     public float jumpPadFriction;
 
     private bool isGrounded;
+    private bool wasGrounded;
+
     public bool IsGrounded
     {
         get => isGrounded;
         set
         {
+            wasGrounded = isGrounded;
             isGrounded = value;
 
-            if (value)
+            if (isGrounded && !wasGrounded)
             {
                 isCollidingWithJumpPad = false;
+
+                // TODO : 착지 효과음 재생
+
+                GameObject landingParticleObject = Instantiate(landingParticlePrefab, groundPivotTransform.position, Quaternion.identity);
+                landingParticleObject.transform.localScale = new Vector3(1, IsGravityFlipped ? -1 : 1);
             }
         }
     }

@@ -197,6 +197,7 @@ Transform:
   - {fileID: 8851379163490633484}
   - {fileID: 458885701500561640}
   - {fileID: 3767862458635387294}
+  - {fileID: 145787968941847725}
   - {fileID: 9182379306533414636}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -219,6 +220,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   groundCheckDistance: 2.38
+  groundPivotTransform: {fileID: 145787968941847725}
+  runningParticlePrefab: {fileID: 8934880604791656843, guid: 8bb1f177840d3fc4283654af9ebaa3a5, type: 3}
+  landingParticlePrefab: {fileID: 8655799466479241226, guid: 222868e205a099c4dba3fadc64675d75, type: 3}
   rb2d: {fileID: 0}
   skeletonAnimation: {fileID: 0}
   currentMoveDirection: {x: 0, y: 0}
@@ -457,6 +461,37 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &2311117353934390242
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 145787968941847725}
+  m_Layer: 6
+  m_Name: GroundPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &145787968941847725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2311117353934390242}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3331740372363280445}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3173017034925375599
 GameObject:
   m_ObjectHideFlags: 0
