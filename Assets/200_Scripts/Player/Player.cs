@@ -15,8 +15,12 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform pivotReverseGround;
     [SerializeField] private Transform pivotStraightGround;
-    [SerializeField] private GameObject runningParticlePrefab;
-    [SerializeField] private GameObject landingParticlePrefab;
+    [SerializeField] private GameObject s_runningParticlePrefab;
+    [SerializeField] private GameObject s_landingParticlePrefab;
+    [SerializeField] private GameObject s_deadParticlePrefab;
+    [SerializeField] private GameObject r_runningParticlePrefab;
+    [SerializeField] private GameObject r_landingParticlePrefab;
+    [SerializeField] private GameObject r_deadParticlePrefab;
 
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
@@ -52,9 +56,13 @@ public class Player : MonoBehaviour
                 isCollidingWithJumpPad = false;
 
                 // 플레이어 착지 파티클 생성
-                GameObject landingParticleObject = Instantiate(landingParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
+                /*GameObject landingParticleObject = Instantiate(landingParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
                 Vector3 landingParticleScale = landingParticleObject.transform.localScale;
-                landingParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);
+                landingParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);*/
+                if (IsGravityFlipped)
+                    r_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                else
+                    s_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
 
                 // TODO : 착지 효과음 재생
             }
@@ -144,9 +152,13 @@ public class Player : MonoBehaviour
         if (e.Data.Name == "run")
         {
             // 달리기 파티클 재생
-            GameObject runningParticleObject = Instantiate(runningParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
+            /*GameObject runningParticleObject = Instantiate(runningParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
             Vector3 landingParticleScale = runningParticleObject.transform.localScale;
-            runningParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);
+            runningParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);*/
+            if (IsGravityFlipped)
+                r_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
+            else
+                s_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
 
             // TODO : 달리기 효과음 재생
         }
@@ -288,6 +300,11 @@ public class Player : MonoBehaviour
         currentSpeed = 0;
 
         // TODO : 사망 애니메이션 재생
+        if (IsGravityFlipped)
+            r_deadParticlePrefab.GetComponent<ParticleSystem>().Play();
+        else
+            s_deadParticlePrefab.GetComponent<ParticleSystem>().Play();
+
 
         // TODO : 사망 효과음 재생
 

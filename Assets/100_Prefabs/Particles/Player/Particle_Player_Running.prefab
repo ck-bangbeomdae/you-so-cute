@@ -43,14 +43,14 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 3
-  stopAction: 2
+  stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -629,7 +629,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.2
+      scalar: -0.1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1541,7 +1541,9 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: 1170677334, guid: eb1d34659d309db4eb0ef48ccf7e5d80, type: 3}
+    - sprite: {fileID: -1489916163, guid: aca78693d9d945f4280b38e6b392b372, type: 3}
+    - sprite: {fileID: 51825507, guid: aca78693d9d945f4280b38e6b392b372, type: 3}
+    - sprite: {fileID: -959524186, guid: aca78693d9d945f4280b38e6b392b372, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
