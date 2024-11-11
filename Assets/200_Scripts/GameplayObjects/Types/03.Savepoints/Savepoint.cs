@@ -1,14 +1,11 @@
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Savepoint : BasePlayerSpawnpoint, ICollisionable
 {
-    // 정적 데이터
-    [SerializeField] private Sprite activeSprite;
-    [SerializeField] private Sprite inactiveSprite;
-
     // 컴포넌트
-    private SpriteRenderer spriteRenderer;
+    private SkeletonAnimation skeletonAnimation;
 
     private int id;
 
@@ -22,18 +19,18 @@ public class Savepoint : BasePlayerSpawnpoint, ICollisionable
 
             if (isActive)
             {
-                spriteRenderer.sprite = activeSprite;
+                skeletonAnimation.state.SetAnimation(0, "Save_on", false);
             }
             else
             {
-                spriteRenderer.sprite = inactiveSprite;
+                skeletonAnimation.state.SetAnimation(0, "Save_off", false);
             }
         }
     }
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
     }
 
     private void OnValidate()
@@ -46,6 +43,16 @@ public class Savepoint : BasePlayerSpawnpoint, ICollisionable
     {
         id = playerSpawnpoint.GetHashCode();
         IsActive = GameplayManager.Instance.lastSavepointId == id ? true : false;
+
+        if (IsActive)
+        {
+            var trackEntry = skeletonAnimation.state.SetAnimation(0, "Save_on", false);
+            trackEntry.TrackTime = trackEntry.AnimationEnd;
+        }
+        else
+        {
+            skeletonAnimation.state.SetAnimation(0, "Off", false);
+        }
     }
 
     public void OnCollision(Player player)
