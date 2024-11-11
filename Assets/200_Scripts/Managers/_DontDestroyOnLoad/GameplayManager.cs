@@ -38,8 +38,9 @@ public class GameplayManager : MonoBehaviour
         get => currentProgressPortalCount;
         set
         {
+            bool isDecreasing = value < currentProgressPortalCount;
             currentProgressPortalCount = value;
-            UIManager.Instance.UpdateProgressPortalCount(MaxProgressPortalCount, currentProgressPortalCount);
+            UIManager.Instance.UpdateProgressPortalCount(MaxProgressPortalCount, currentProgressPortalCount, isDecreasing);
         }
     }
 

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,8 +35,13 @@ public class UIManager : MonoBehaviour
         elapsedTimeText.text = elapsedTime;
     }
 
-    public void UpdateProgressPortalCount(int maxProgressPortalCount, int currentProgressPortalCount)
+    public void UpdateProgressPortalCount(int maxProgressPortalCount, int currentProgressPortalCount, bool isDecreasing)
     {
-        progressPortalCountSlider.value = currentProgressPortalCount / maxProgressPortalCount;
+        progressPortalCountSlider.DOValue((float)currentProgressPortalCount / maxProgressPortalCount, 0.5f);
+
+        if (isDecreasing)
+        {
+            // TODO : 역주행시 효과 추가
+        }
     }
 }
