@@ -6092,6 +6092,14 @@ PrefabInstance:
       propertyPath: InitialModule.gravityModifier.scalar
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6442804493625261906, guid: 8bb1f177840d3fc4283654af9ebaa3a5, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6442804493625261906, guid: 8bb1f177840d3fc4283654af9ebaa3a5, type: 3}
+      propertyPath: EmissionModule.rateOverTime.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8464259331751045795, guid: 8bb1f177840d3fc4283654af9ebaa3a5, type: 3}
       propertyPath: m_SortingOrder
       value: 9999
@@ -6123,6 +6131,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7426677189168346681}
     m_Modifications:
+    - target: {fileID: 1723397911377755716, guid: b85c41f582a1a424591d12488a9cc735, type: 3}
+      propertyPath: simulationSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6031450413654371786, guid: b85c41f582a1a424591d12488a9cc735, type: 3}
       propertyPath: m_Name
       value: Particle_Player_Dead
@@ -6166,6 +6178,10 @@ PrefabInstance:
     - target: {fileID: 6135914197595835044, guid: b85c41f582a1a424591d12488a9cc735, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7194207724109729489, guid: b85c41f582a1a424591d12488a9cc735, type: 3}
+      propertyPath: simulationSpeed
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
