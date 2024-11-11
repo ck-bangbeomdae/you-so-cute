@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    private GameObject canvas;
     private TextMeshProUGUI elapsedTimeText;
     private Slider progressPortalCountSlider;
 
@@ -18,8 +19,14 @@ public class UIManager : MonoBehaviour
 
         Instance = this;
 
+        canvas = transform.Find("Canvas").gameObject;
         elapsedTimeText = transform.Find("Canvas/ElapsedTimeText").GetComponent<TextMeshProUGUI>();
         progressPortalCountSlider = transform.Find("Canvas/ProgressPortalCountSlider").GetComponent<Slider>();
+    }
+
+    public void ToggleGameplayUI(bool isGameRunning)
+    {
+        canvas.SetActive(isGameRunning);
     }
 
     public void UpdateElapsedTime(string elapsedTime)

@@ -6,7 +6,7 @@ public class Goal : MonoBehaviour, ICollisionable
 
     public void OnCollision(Player player)
     {
-        GameplayManager.Instance.isGameRunning = false;
+        GameplayManager.Instance.IsGameRunning = false;
 
         // 기록 업데이트
         UpdatePlayerRecord();
@@ -44,11 +44,16 @@ public class Goal : MonoBehaviour, ICollisionable
     private void ResetProgressAndTransition()
     {
         // 진행사항 초기화
+        ProfileManager.Instance.playerProfile.progressSave = new ProgressSave();
+
         GameplayManager.Instance.playerSavepoint = new PlayerSpawnpoint();
+        GameplayManager.Instance.hasPlayerSavepoint = false;
+        GameplayManager.Instance.lastSavepointId = 0;
+        GameplayManager.Instance.lastSavepointProgressPortalCount = 0;
         GameplayManager.Instance.ElapsedTime = 0f;
+        GameplayManager.Instance.CurrentProgressPortalCount = 0;
         GameplayManager.Instance.flipCount = 0;
         GameplayManager.Instance.deathCount = 0;
-        ProfileManager.Instance.playerProfile.progressSave = new ProgressSave();
 
         // 메인메뉴로 씬 전환
         TransitionManager.Instance.LoadScene(sceneTransition);

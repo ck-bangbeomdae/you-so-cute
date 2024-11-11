@@ -4,12 +4,21 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager Instance { get; private set; }
 
+    private bool isGameRunning;
+    public bool IsGameRunning
+    {
+        get => isGameRunning;
+        set
+        {
+            isGameRunning = value;
+            UIManager.Instance.ToggleGameplayUI(value);
+        }
+    }
+
     public PlayerSpawnpoint playerSavepoint;
     public bool hasPlayerSavepoint;
-
-    public bool isGameRunning;
-
     public int lastSavepointId;
+    public int lastSavepointProgressPortalCount;
 
     private float elapsedTime = 0f;
     public float ElapsedTime
@@ -22,7 +31,7 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    private const int maxProgressPortalCount = 100; // <- TODO : 최대 포탈 개수 나중에 카운트 해서 적용
+    private const int MaxProgressPortalCount = 100; // <- TODO : 최대 포탈 개수 나중에 카운트 해서 적용
     private int currentProgressPortalCount;
     public int CurrentProgressPortalCount
     {
@@ -30,7 +39,7 @@ public class GameplayManager : MonoBehaviour
         set
         {
             currentProgressPortalCount = value;
-            UIManager.Instance.UpdateProgressPortalCount(maxProgressPortalCount, currentProgressPortalCount);
+            UIManager.Instance.UpdateProgressPortalCount(MaxProgressPortalCount, currentProgressPortalCount);
         }
     }
 
@@ -48,7 +57,7 @@ public class GameplayManager : MonoBehaviour
 
         Instance = this;
 
-        isGameRunning = true;
+        IsGameRunning = true;
 
         DontDestroyOnLoad(gameObject);
     }
@@ -63,7 +72,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
-        if (isGameRunning)
+        if (IsGameRunning)
         {
             ElapsedTime += Time.deltaTime;
         }

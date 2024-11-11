@@ -19,14 +19,14 @@ public class TitleManager : MonoBehaviour
 
     private void Start()
     {
-        GameplayManager.Instance.isGameRunning = false;
+        GameplayManager.Instance.IsGameRunning = false;
     }
 
     public void OnClickNewGameButton()
     {
         if (!isModalOpen)
         {
-            GameplayManager.Instance.isGameRunning = true;
+            GameplayManager.Instance.IsGameRunning = true;
             TransitionManager.Instance.LoadScene(newGameSceneTransition);
         }
     }
@@ -37,7 +37,15 @@ public class TitleManager : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint.sceneTransition.sceneName))
             {
-                GameplayManager.Instance.isGameRunning = true;
+                GameplayManager.Instance.IsGameRunning = true;
+                GameplayManager.Instance.hasPlayerSavepoint = true;
+                GameplayManager.Instance.lastSavepointId = ProfileManager.Instance.playerProfile.progressSave.lastSavepointId;
+                GameplayManager.Instance.lastSavepointProgressPortalCount = ProfileManager.Instance.playerProfile.progressSave.lastSavepointProgressPortalCount;
+                GameplayManager.Instance.ElapsedTime = ProfileManager.Instance.playerProfile.progressSave.elapsedTime;
+                GameplayManager.Instance.CurrentProgressPortalCount = ProfileManager.Instance.playerProfile.progressSave.progressPortalCount;
+                GameplayManager.Instance.flipCount = ProfileManager.Instance.playerProfile.progressSave.flipCount;
+                GameplayManager.Instance.deathCount = ProfileManager.Instance.playerProfile.progressSave.deathCount;
+
                 TransitionManager.Instance.LoadSceneWithPlayer(ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint);
             }
         }

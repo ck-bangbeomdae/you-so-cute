@@ -61,7 +61,10 @@ public class Savepoint : BasePlayerSpawnpoint, ICollisionable
         {
             // 프로필 저장
             ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint = playerSpawnpoint;
+            ProfileManager.Instance.playerProfile.progressSave.lastSavepointId = GameplayManager.Instance.lastSavepointId;
+            ProfileManager.Instance.playerProfile.progressSave.lastSavepointProgressPortalCount = GameplayManager.Instance.lastSavepointProgressPortalCount;
             ProfileManager.Instance.playerProfile.progressSave.elapsedTime = GameplayManager.Instance.ElapsedTime;
+            ProfileManager.Instance.playerProfile.progressSave.progressPortalCount = GameplayManager.Instance.CurrentProgressPortalCount;
             ProfileManager.Instance.playerProfile.progressSave.flipCount = GameplayManager.Instance.flipCount;
             ProfileManager.Instance.playerProfile.progressSave.deathCount = GameplayManager.Instance.deathCount;
             ProfileManager.Instance.SaveProfile();
@@ -80,8 +83,14 @@ public class Savepoint : BasePlayerSpawnpoint, ICollisionable
                     break;
                 }
             }
+
+            // 마지막 세이브 포인트 아이디 저장
             GameplayManager.Instance.lastSavepointId = id;
 
+            // 마지막 세이브 포인트 진행사항 저장
+            GameplayManager.Instance.lastSavepointProgressPortalCount = GameplayManager.Instance.CurrentProgressPortalCount;
+
+            // 세이브 포인트 활성화
             IsActive = true;
         }
     }

@@ -76,14 +76,20 @@ public struct PlayerProfile
 public struct ProgressSave
 {
     public PlayerSpawnpoint playerSpawnpoint;
+    public int lastSavepointId;
+    public int lastSavepointProgressPortalCount;
     public float elapsedTime;
+    public int progressPortalCount;
     public int flipCount;
     public int deathCount;
 
-    public ProgressSave(PlayerSpawnpoint playerSpawnpoint, float elapsedTime, int flipCount, int deathCount)
+    public ProgressSave(PlayerSpawnpoint playerSpawnpoint, int lastSavepointId, int lastSavepointProgressPortalCount, float elapsedTime, int progressPortalCount, int flipCount, int deathCount)
     {
         this.playerSpawnpoint = playerSpawnpoint;
+        this.lastSavepointId = lastSavepointId;
+        this.lastSavepointProgressPortalCount = lastSavepointProgressPortalCount;
         this.elapsedTime = elapsedTime;
+        this.progressPortalCount = progressPortalCount;
         this.flipCount = flipCount;
         this.deathCount = deathCount;
     }

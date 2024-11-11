@@ -311,8 +311,11 @@ public class Player : MonoBehaviour
         var trackEntry = skeletonAnimation.state.SetAnimation(0, "death", false);
         trackEntry.Complete += (entry) =>
         {
-            // 사망 애니메이션 종료 후 씬 리스폰
+            // 플레이어 리스폰
             TransitionManager.Instance.LoadSceneWithPlayer(GameplayManager.Instance.playerSavepoint);
+
+            // 진행사항 되돌리기
+            GameplayManager.Instance.CurrentProgressPortalCount = GameplayManager.Instance.lastSavepointProgressPortalCount;
         };
 
         // 사망 파티클 재생

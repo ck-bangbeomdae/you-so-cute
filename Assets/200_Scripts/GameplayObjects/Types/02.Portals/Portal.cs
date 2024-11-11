@@ -7,8 +7,8 @@ public class Portal : BasePlayerSpawnpoint, ICollisionable
 
     public void OnCollision(Player player)
     {
+        // 플레이어 스폰포인트 저장
         Vector2 newPosition = player.transform.position;
-
         switch (cardinalDirection)
         {
             case CommonEnums.CardinalDirection.North:
@@ -30,7 +30,9 @@ public class Portal : BasePlayerSpawnpoint, ICollisionable
         playerSpawnpoint.isGravityFlipped = player.IsGravityFlipped;
         playerSpawnpoint.isFacingLeft = player.IsFacingLeft;
         playerSpawnpoint.isCollidingWithGravityFlip = player.isCollidingWithGravityFlip;
-
         TransitionManager.Instance.LoadSceneWithPlayer(playerSpawnpoint);
+
+        // 게임 진행사항 업데이트
+        GameplayManager.Instance.CurrentProgressPortalCount += isRightway ? 1 : -1;
     }
 }
