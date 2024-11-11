@@ -279,7 +279,7 @@ public class Player : MonoBehaviour
     public void GravityFlip()
     {
         // 중력 반전
-        GameplayManager.Instance.FlipCount++;
+        GameplayManager.Instance.flipCount++;
         IsGravityFlipped = !IsGravityFlipped;
         IsGrounded = false;
 
@@ -313,7 +313,7 @@ public class Player : MonoBehaviour
             scrollEvent.MoveToSavepoint();
         }
 
-        GameplayManager.Instance.DeathCount++;
+        GameplayManager.Instance.deathCount++;
         TransitionManager.Instance.LoadSceneWithPlayer(GameplayManager.Instance.playerSavepoint);
 
         isDead = true;

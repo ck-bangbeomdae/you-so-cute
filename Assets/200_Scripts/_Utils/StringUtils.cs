@@ -11,7 +11,7 @@ public static class StringUtils
     {
         int minutes = Mathf.FloorToInt(time / 60F);
         int seconds = Mathf.FloorToInt(time % 60F);
-        float fraction = time * 100 % 100;
+        int fraction = Mathf.FloorToInt((time * 100) % 100);
         return string.Format("{0:00}:{1:00}.{2:00}", minutes, seconds, fraction);
     }
 }

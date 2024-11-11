@@ -17,8 +17,8 @@ public class Goal : MonoBehaviour, ICollisionable
         var newRecord = new Record(
             ProfileManager.Instance.playerProfile.playerName,
             GameplayManager.Instance.ElapsedTime,
-            GameplayManager.Instance.FlipCount,
-            GameplayManager.Instance.DeathCount
+            GameplayManager.Instance.flipCount,
+            GameplayManager.Instance.deathCount
         );
 
         // 로컬에 마지막 기록 업데이트
@@ -46,8 +46,8 @@ public class Goal : MonoBehaviour, ICollisionable
         // 진행사항 초기화
         GameplayManager.Instance.playerSavepoint = new PlayerSpawnpoint();
         GameplayManager.Instance.ElapsedTime = 0f;
-        GameplayManager.Instance.FlipCount = 0;
-        GameplayManager.Instance.DeathCount = 0;
+        GameplayManager.Instance.flipCount = 0;
+        GameplayManager.Instance.deathCount = 0;
         ProfileManager.Instance.playerProfile.progressSave = new ProgressSave();
 
         // 메인메뉴로 씬 전환

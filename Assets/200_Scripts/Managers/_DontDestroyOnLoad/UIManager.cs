@@ -1,14 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
     private TextMeshProUGUI elapsedTimeText;
-    private TextMeshProUGUI godModeText;
-    private TextMeshProUGUI flipCountText;
-    private TextMeshProUGUI deathCountText;
+    private Slider progressPortalCountSlider;
 
     private void Awake()
     {
@@ -20,28 +19,16 @@ public class UIManager : MonoBehaviour
         Instance = this;
 
         elapsedTimeText = transform.Find("Canvas/ElapsedTimeText").GetComponent<TextMeshProUGUI>();
-        godModeText = transform.Find("Canvas/[DEBUG]/GodModeText").GetComponent<TextMeshProUGUI>();
-        flipCountText = transform.Find("Canvas/[DEBUG]/FlipCountText").GetComponent<TextMeshProUGUI>();
-        deathCountText = transform.Find("Canvas/[DEBUG]/DeathCountText").GetComponent<TextMeshProUGUI>();
+        progressPortalCountSlider = transform.Find("Canvas/ProgressPortalCountSlider").GetComponent<Slider>();
     }
 
     public void UpdateElapsedTime(string elapsedTime)
     {
-        elapsedTimeText.text = $"Time : {elapsedTime}";
+        elapsedTimeText.text = elapsedTime;
     }
 
-    public void UpdateGodModeText(bool isGodMode)
+    public void UpdateProgressPortalCount(int maxProgressPortalCount, int currentProgressPortalCount)
     {
-        godModeText.text = $"God Mode : {(isGodMode ? "true" : "false")}";
-    }
-
-    public void UpdateFlipCountText(int flipCount)
-    {
-        flipCountText.text = $"Flip : {flipCount}";
-    }
-
-    public void UpdateDeathCountText(int deathCount)
-    {
-        deathCountText.text = $"Death : {deathCount}";
+        progressPortalCountSlider.value = currentProgressPortalCount / maxProgressPortalCount;
     }
 }
