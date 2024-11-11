@@ -1,3 +1,4 @@
+using Spine;
 using Spine.Unity;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +13,20 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 2.38f;
 
+    [SerializeField] private Transform pivotReverseGround;
+    [SerializeField] private Transform pivotStraightGround;
+    [SerializeField] private GameObject s_runningParticlePrefab;
+    [SerializeField] private GameObject s_landingParticlePrefab;
+    [SerializeField] private GameObject s_deadParticlePrefab;
+    [SerializeField] private GameObject r_runningParticlePrefab;
+    [SerializeField] private GameObject r_landingParticlePrefab;
+    [SerializeField] private GameObject r_deadParticlePrefab;
+
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public SkeletonAnimation skeletonAnimation;
-    private DarkEvent darkenTrigger;
+    private DarkEvent darkEvent;
+    private ScrollEvent scrollEvent;
 
     // FSM
     public readonly Dictionary<PlayerState, BaseState<Player>> playerStates = new Dictionary<PlayerState, BaseState<Player>>();
@@ -30,16 +41,30 @@ public class Player : MonoBehaviour
     public float jumpPadFriction;
 
     private bool isGrounded;
+    private bool wasGrounded;
+
     public bool IsGrounded
     {
         get => isGrounded;
         set
         {
+            wasGrounded = isGrounded;
             isGrounded = value;
 
-            if (value)
+            if (isGrounded && !wasGrounded)
             {
                 isCollidingWithJumpPad = false;
+
+                // 플레이어 착지 파티클 생성
+                /*GameObject landingParticleObject = Instantiate(landingParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
+                Vector3 landingParticleScale = landingParticleObject.transform.localScale;
+                landingParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);*/
+                if (IsGravityFlipped)
+                    r_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                else
+                    s_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
+
+                // TODO : 착지 효과음 재생
             }
         }
     }
@@ -50,9 +75,9 @@ public class Player : MonoBehaviour
         get => isGravityFlipped;
         set
         {
-            if (darkenTrigger != null)
+            if (darkEvent != null)
             {
-                darkenTrigger.UpdateLightIntensities(!darkenTrigger.isDark);
+                darkEvent.TriggerBright();
             }
 
             isGravityFlipped = value;
@@ -98,11 +123,17 @@ public class Player : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
-        GameObject darkenTriggerObject = GameObject.FindWithTag("DarkenTrigger");
-        if (darkenTriggerObject != null)
+        GameObject darkEventObject = GameObject.FindWithTag("DarkEvent");
+        if (darkEventObject != null)
         {
-            darkenTrigger = darkenTriggerObject.GetComponent<DarkEvent>();
-            darkenTrigger.player = this;
+            darkEvent = darkEventObject.GetComponent<DarkEvent>();
+            darkEvent.player = this;
+        }
+
+        GameObject scrollEventObject = GameObject.FindWithTag("ScrollEvent");
+        if (scrollEventObject != null)
+        {
+            scrollEvent = scrollEventObject.GetComponent<ScrollEvent>();
         }
 
         // FSM 초기화
@@ -111,6 +142,26 @@ public class Player : MonoBehaviour
         playerStates[PlayerState.Running] = new PlayerRunning();
         playerStates[PlayerState.GravityFlipping] = new PlayerGravityFlipping();
         playerStates[PlayerState.Interacting] = new PlayerInteracting();
+
+        // Spine 애니메이션 이벤트 리스너 추가
+        skeletonAnimation.AnimationState.Event += HandleAnimationEvent;
+    }
+
+    private void HandleAnimationEvent(TrackEntry trackEntry, Spine.Event e)
+    {
+        if (e.Data.Name == "run")
+        {
+            // 달리기 파티클 재생
+            /*GameObject runningParticleObject = Instantiate(runningParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
+            Vector3 landingParticleScale = runningParticleObject.transform.localScale;
+            runningParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);*/
+            if (IsGravityFlipped)
+                r_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
+            else
+                s_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
+
+            // TODO : 달리기 효과음 재생
+        }
     }
 
     private void Start()
@@ -144,10 +195,7 @@ public class Player : MonoBehaviour
         if (!isCollidingWithJumpPad)
         {
             // 이동 속도 설정
-            if (currentSpeed > 0f)
-            {
-                velocity.x = currentMoveDirection.x * currentSpeed;
-            }
+            velocity.x = currentMoveDirection.x * currentSpeed;
 
             // 이동 벨트 추가 이동속도 설정
             velocity.x += currentBeltSpeed;
@@ -204,11 +252,18 @@ public class Player : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (CollisionUtils.IsCollisionFromTopOrBottom(collision))
+        if (collision.gameObject.TryGetComponent(out BeltPlatform beltPlatform))
         {
-            if (collision.gameObject.TryGetComponent(out BeltPlatform beltPlatform))
+            bool isCollisionFromTop = CollisionUtils.IsCollisionFromTop(collision);
+            bool isClockwise = beltPlatform.rotationDirection == CommonEnums.RotationDirection.Clockwise;
+
+            if (isCollisionFromTop)
             {
-                currentBeltSpeed = beltPlatform.beltSpeed;
+                currentBeltSpeed = isClockwise ? beltPlatform.beltSpeed : -beltPlatform.beltSpeed;
+            }
+            else
+            {
+                currentBeltSpeed = isClockwise ? -beltPlatform.beltSpeed : beltPlatform.beltSpeed;
             }
         }
     }
@@ -241,17 +296,27 @@ public class Player : MonoBehaviour
             return;
         }
 
-        isDead = true;
-
         currentMoveDirection = Vector2.zero;
         currentSpeed = 0;
 
         // TODO : 사망 애니메이션 재생
+        if (IsGravityFlipped)
+            r_deadParticlePrefab.GetComponent<ParticleSystem>().Play();
+        else
+            s_deadParticlePrefab.GetComponent<ParticleSystem>().Play();
+
 
         // TODO : 사망 효과음 재생
 
+        if (scrollEvent != null)
+        {
+            scrollEvent.MoveToSavepoint();
+        }
+
         GameplayManager.Instance.DeathCount++;
         TransitionManager.Instance.LoadSceneWithPlayer(GameplayManager.Instance.playerSavepoint);
+
+        isDead = true;
     }
 }
 

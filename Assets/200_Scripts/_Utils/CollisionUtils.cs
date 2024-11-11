@@ -2,6 +2,30 @@ using UnityEngine;
 
 public static class CollisionUtils
 {
+    public static bool IsCollisionFromTop(Collision2D collision)
+    {
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static bool IsCollisionFromBottom(Collision2D collision)
+    {
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (contact.normal.y < -0.5f)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static bool IsCollisionFromTopOrBottom(Collision2D collision)
     {
         foreach (ContactPoint2D contact in collision.contacts)

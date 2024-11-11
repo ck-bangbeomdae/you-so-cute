@@ -31,11 +31,6 @@ public class PlayerRunning : BaseState<Player>
         if (CheckAction(player))
         {
             player.currentMoveDirection = InputManager.MoveAction.ReadValue<Vector2>();
-
-            // TODO : 뛰는 효과음 재생
-
-            // TODO : 뛰는 이펙트 재생
-
             return;
         }
 
