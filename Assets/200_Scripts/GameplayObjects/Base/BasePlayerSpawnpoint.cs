@@ -10,11 +10,11 @@ public class BasePlayerSpawnpoint : MonoBehaviour
 public struct PlayerSpawnpoint
 {
     public SceneTransition sceneTransition;
+    public bool isGravityFlipped;
     [HideInInspector] public Vector2 spawnPosition;
     [HideInInspector] public Vector2 velocity;
-    public bool isGravityFlipped;
-    public bool isFacingLeft;
-    public bool isCollidingWithGravityFlip;
+    [HideInInspector] public bool isFacingLeft;
+    [HideInInspector] public bool isCollidingWithGravityFlip;
 
     public override int GetHashCode()
     {

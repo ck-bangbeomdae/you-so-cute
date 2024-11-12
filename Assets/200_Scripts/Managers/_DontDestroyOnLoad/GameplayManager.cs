@@ -4,12 +4,21 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager Instance { get; private set; }
 
+    private bool isGameRunning;
+    public bool IsGameRunning
+    {
+        get => isGameRunning;
+        set
+        {
+            isGameRunning = value;
+            UIManager.Instance.ToggleGameplayUI(value);
+        }
+    }
+
     public PlayerSpawnpoint playerSavepoint;
     public bool hasPlayerSavepoint;
-
-    public bool isGameRunning;
-
     public int lastSavepointId;
+    public int lastSavepointProgressPortalCount;
 
     private float elapsedTime = 0f;
     public float ElapsedTime
@@ -22,52 +31,22 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    private const int maxProgressPortalCount = 100; // <- 최대 포탈 개수 나중에 카운트 해서 적용
+    private const int MaxProgressPortalCount = 100; // <- TODO : 최대 포탈 개수 나중에 카운트 해서 적용
     private int currentProgressPortalCount;
     public int CurrentProgressPortalCount
     {
         get => currentProgressPortalCount;
         set
         {
+            bool isDecreasing = value < currentProgressPortalCount;
             currentProgressPortalCount = value;
-
-            // TODO : Progress Bar 업데이트 구현
-            //UIManager.Instance.UpdateElapsedTime(StringUtils.FormatElapsedTime(value));
+            UIManager.Instance.UpdateProgressPortalCount(MaxProgressPortalCount, currentProgressPortalCount, isDecreasing);
         }
     }
 
-    private bool isGodMode;
-    public bool IsGodMode
-    {
-        get => isGodMode;
-        set
-        {
-            isGodMode = value;
-            UIManager.Instance.UpdateGodModeText(value);
-        }
-    }
-
-    private int flipCount;
-    public int FlipCount
-    {
-        get => flipCount;
-        set
-        {
-            flipCount = value;
-            UIManager.Instance.UpdateFlipCountText(value);
-        }
-    }
-
-    private int deathCount;
-    public int DeathCount
-    {
-        get => deathCount;
-        set
-        {
-            deathCount = value;
-            UIManager.Instance.UpdateDeathCountText(value);
-        }
-    }
+    public bool isGodMode;
+    public int flipCount;
+    public int deathCount;
 
     private void Awake()
     {
@@ -79,7 +58,7 @@ public class GameplayManager : MonoBehaviour
 
         Instance = this;
 
-        isGameRunning = true;
+        IsGameRunning = true;
 
         DontDestroyOnLoad(gameObject);
     }
@@ -87,14 +66,14 @@ public class GameplayManager : MonoBehaviour
     private void Start()
     {
         // UI 초기화
-        IsGodMode = false;
-        FlipCount = 0;
-        DeathCount = 0;
+        isGodMode = false;
+        flipCount = 0;
+        deathCount = 0;
     }
 
     private void Update()
     {
-        if (isGameRunning)
+        if (IsGameRunning)
         {
             ElapsedTime += Time.deltaTime;
         }
@@ -102,13 +81,13 @@ public class GameplayManager : MonoBehaviour
         // 무적모드
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            IsGodMode = !IsGodMode;
+            isGodMode = !isGodMode;
         }
 
         // 세이브 포인트로 돌아가기
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            DeathCount++;
+            deathCount++;
             TransitionManager.Instance.LoadSceneWithPlayer(playerSavepoint);
         }
     }

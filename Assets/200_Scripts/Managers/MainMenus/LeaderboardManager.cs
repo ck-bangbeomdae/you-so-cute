@@ -13,7 +13,7 @@ public class LeaderboardManager : MonoBehaviour
 
     private void Start()
     {
-        GameplayManager.Instance.isGameRunning = false;
+        GameplayManager.Instance.IsGameRunning = false;
         StartCoroutine(ScoreAPIUtils.GetScoresCoroutine(OnGetScoresSuccess, OnGetScoresError));
     }
 

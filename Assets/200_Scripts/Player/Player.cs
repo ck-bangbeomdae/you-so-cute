@@ -17,9 +17,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform pivotStraightGround;
     [SerializeField] private GameObject s_runningParticlePrefab;
     [SerializeField] private GameObject s_landingParticlePrefab;
+    [SerializeField] private GameObject s_laserflippingParticlePrefab;
     [SerializeField] private GameObject s_deadParticlePrefab;
     [SerializeField] private GameObject r_runningParticlePrefab;
     [SerializeField] private GameObject r_landingParticlePrefab;
+    [SerializeField] private GameObject r_laserflippingParticlePrefab;
     [SerializeField] private GameObject r_deadParticlePrefab;
 
     // 컴포넌트
@@ -179,6 +181,12 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 씬 전환 중이거나 플레이어가 사망한 경우 상태 업데이트 중지
+        if (TransitionManager.Instance.isTransition || isDead)
+        {
+            return;
+        }
+
         // 이동 플랫폼의 위치 변화를 플레이어에게 반영
         if (currentPlatform != null)
         {
@@ -279,12 +287,22 @@ public class Player : MonoBehaviour
     public void GravityFlip()
     {
         // 중력 반전
-        GameplayManager.Instance.FlipCount++;
+        GameplayManager.Instance.flipCount++;
         IsGravityFlipped = !IsGravityFlipped;
         IsGrounded = false;
 
         // 애니메이션 재생
         skeletonAnimation.state.SetAnimation(0, "flipping", false);
+
+        // 레이저에 의한 중력 반전 파티클 재생
+        if (IsGravityFlipped)
+        {
+            r_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+        }
+        else if (!IsGravityFlipped)
+        {
+            s_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+        }
 
         // TODO : 중력 반전 효과음 재생
     }
@@ -296,15 +314,31 @@ public class Player : MonoBehaviour
             return;
         }
 
-        currentMoveDirection = Vector2.zero;
-        currentSpeed = 0;
+        GameplayManager.Instance.deathCount++;
 
-        // TODO : 사망 애니메이션 재생
+        // 물리 시뮬레이션 정지
+        rb2d.simulated = false;
+
+        // 사망 애니메이션 재생
+        var trackEntry = skeletonAnimation.state.SetAnimation(0, "death", false);
+        trackEntry.Complete += (entry) =>
+        {
+            // 플레이어 리스폰
+            TransitionManager.Instance.LoadSceneWithPlayer(GameplayManager.Instance.playerSavepoint);
+
+            // 진행사항 되돌리기
+            GameplayManager.Instance.CurrentProgressPortalCount = GameplayManager.Instance.lastSavepointProgressPortalCount;
+        };
+
+        // 사망 파티클 재생
         if (IsGravityFlipped)
+        {
             r_deadParticlePrefab.GetComponent<ParticleSystem>().Play();
+        }
         else
+        {
             s_deadParticlePrefab.GetComponent<ParticleSystem>().Play();
-
+        }
 
         // TODO : 사망 효과음 재생
 
@@ -312,9 +346,6 @@ public class Player : MonoBehaviour
         {
             scrollEvent.MoveToSavepoint();
         }
-
-        GameplayManager.Instance.DeathCount++;
-        TransitionManager.Instance.LoadSceneWithPlayer(GameplayManager.Instance.playerSavepoint);
 
         isDead = true;
     }
@@ -326,5 +357,5 @@ public enum PlayerState
     InAir,
     Running,
     GravityFlipping,
-    Interacting,
+    Interacting
 }

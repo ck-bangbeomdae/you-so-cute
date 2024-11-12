@@ -1,14 +1,15 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    private GameObject canvas;
     private TextMeshProUGUI elapsedTimeText;
-    private TextMeshProUGUI godModeText;
-    private TextMeshProUGUI flipCountText;
-    private TextMeshProUGUI deathCountText;
+    private Slider progressPortalCountSlider;
 
     private void Awake()
     {
@@ -19,29 +20,28 @@ public class UIManager : MonoBehaviour
 
         Instance = this;
 
+        canvas = transform.Find("Canvas").gameObject;
         elapsedTimeText = transform.Find("Canvas/ElapsedTimeText").GetComponent<TextMeshProUGUI>();
-        godModeText = transform.Find("Canvas/[DEBUG]/GodModeText").GetComponent<TextMeshProUGUI>();
-        flipCountText = transform.Find("Canvas/[DEBUG]/FlipCountText").GetComponent<TextMeshProUGUI>();
-        deathCountText = transform.Find("Canvas/[DEBUG]/DeathCountText").GetComponent<TextMeshProUGUI>();
+        progressPortalCountSlider = transform.Find("Canvas/ProgressPortalCountSlider").GetComponent<Slider>();
+    }
+
+    public void ToggleGameplayUI(bool isGameRunning)
+    {
+        canvas.SetActive(isGameRunning);
     }
 
     public void UpdateElapsedTime(string elapsedTime)
     {
-        elapsedTimeText.text = $"Time : {elapsedTime}";
+        elapsedTimeText.text = elapsedTime;
     }
 
-    public void UpdateGodModeText(bool isGodMode)
+    public void UpdateProgressPortalCount(int maxProgressPortalCount, int currentProgressPortalCount, bool isDecreasing)
     {
-        godModeText.text = $"God Mode : {(isGodMode ? "true" : "false")}";
-    }
+        progressPortalCountSlider.DOValue((float)currentProgressPortalCount / maxProgressPortalCount, 0.5f);
 
-    public void UpdateFlipCountText(int flipCount)
-    {
-        flipCountText.text = $"Flip : {flipCount}";
-    }
-
-    public void UpdateDeathCountText(int deathCount)
-    {
-        deathCountText.text = $"Death : {deathCount}";
+        if (isDecreasing)
+        {
+            // TODO : 역주행시 효과 추가
+        }
     }
 }

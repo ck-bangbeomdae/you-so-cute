@@ -13,7 +13,7 @@ public class PlayerHitCollision : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 함정 충돌
-        if (collision.gameObject.CompareTag("Trap") && !GameplayManager.Instance.IsGodMode)
+        if (collision.gameObject.CompareTag("Trap") && !GameplayManager.Instance.isGodMode)
         {
             player.Dead();
         }
