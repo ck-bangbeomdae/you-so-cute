@@ -17,11 +17,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform pivotStraightGround;
     [SerializeField] private GameObject s_runningParticlePrefab;
     [SerializeField] private GameObject s_landingParticlePrefab;
-    [SerializeField] private GameObject s_laserflippingParticlePrefab;
+    [SerializeField] public GameObject s_laserflippingParticlePrefab;
     [SerializeField] private GameObject s_deadParticlePrefab;
     [SerializeField] private GameObject r_runningParticlePrefab;
     [SerializeField] private GameObject r_landingParticlePrefab;
-    [SerializeField] private GameObject r_laserflippingParticlePrefab;
+    [SerializeField] public GameObject r_laserflippingParticlePrefab;
     [SerializeField] private GameObject r_deadParticlePrefab;
 
     // 컴포넌트
@@ -58,9 +58,6 @@ public class Player : MonoBehaviour
                 isCollidingWithJumpPad = false;
 
                 // 플레이어 착지 파티클 생성
-                /*GameObject landingParticleObject = Instantiate(landingParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
-                Vector3 landingParticleScale = landingParticleObject.transform.localScale;
-                landingParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);*/
                 if (IsGravityFlipped)
                     r_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
                 else
@@ -154,9 +151,6 @@ public class Player : MonoBehaviour
         if (e.Data.Name == "run")
         {
             // 달리기 파티클 재생
-            /*GameObject runningParticleObject = Instantiate(runningParticlePrefab, isGravityFlipped ? pivotReverseGround.position : pivotStraightGround.position, Quaternion.identity);
-            Vector3 landingParticleScale = runningParticleObject.transform.localScale;
-            runningParticleObject.transform.localScale = new Vector3(landingParticleScale.x, isGravityFlipped ? -landingParticleScale.y : landingParticleScale.y, 1);*/
             if (IsGravityFlipped)
                 r_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
             else
@@ -293,16 +287,6 @@ public class Player : MonoBehaviour
 
         // 애니메이션 재생
         skeletonAnimation.state.SetAnimation(0, "flipping", false);
-
-        // 레이저에 의한 중력 반전 파티클 재생
-        if (IsGravityFlipped)
-        {
-            r_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
-        }
-        else if (!IsGravityFlipped)
-        {
-            s_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
-        }
 
         // TODO : 중력 반전 효과음 재생
     }

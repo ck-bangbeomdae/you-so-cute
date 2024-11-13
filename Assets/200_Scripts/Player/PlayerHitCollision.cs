@@ -27,6 +27,16 @@ public class PlayerHitCollision : MonoBehaviour
             if (collision.TryGetComponent(out GravityFlip gravityFlip))
             {
                 player.isCollidingWithGravityFlip = true;
+
+                // 레이저에 의한 중력 반전 파티클 재생
+                if (player.IsGravityFlipped)
+                {
+                    player.r_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                }
+                else
+                {
+                    player.s_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                }
             }
         }
 
