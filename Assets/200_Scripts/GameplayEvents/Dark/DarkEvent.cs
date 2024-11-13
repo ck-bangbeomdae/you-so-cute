@@ -8,10 +8,12 @@ public class DarkEvent : MonoBehaviour
     [SerializeField] private float fadeInDuration = 0.5f;
     [SerializeField] private float intervalDuration = 1f;
     [SerializeField] private float fadeOutDuration = 0.5f;
+    [SerializeField] private float maxLightRadiusMultiplier = 1.2f;
+    [SerializeField] private float minLightRadiusMultiplier = 0.5f;
 
-    public Player player;
+    [HideInInspector] public Player player;
 
-    private readonly Dictionary<Light2D, float> lightDictionary = new Dictionary<Light2D, float>();
+    private readonly Dictionary<Light2D, float> playerLightDictionary = new Dictionary<Light2D, float>();
     private readonly Dictionary<Light2D, Sequence> sequenceDictionary = new Dictionary<Light2D, Sequence>();
 
     private void Start()
@@ -22,18 +24,22 @@ public class DarkEvent : MonoBehaviour
         {
             if (!light.transform.IsChildOf(player.transform))
             {
-                lightDictionary[light] = light.intensity;
                 light.intensity = 0f;
+            }
+            else
+            {
+                playerLightDictionary[light] = light.pointLightOuterRadius * maxLightRadiusMultiplier;
+                light.pointLightOuterRadius *= minLightRadiusMultiplier;
             }
         }
     }
 
     public void TriggerBright()
     {
-        foreach (KeyValuePair<Light2D, float> entry in lightDictionary)
+        foreach (KeyValuePair<Light2D, float> entry in playerLightDictionary)
         {
             Light2D light = entry.Key;
-            float originalIntensity = entry.Value;
+            float originalPointLightOuterRadius = entry.Value;
 
             // 기존 Sequence가 있으면 중지하고 제거
             if (sequenceDictionary.TryGetValue(light, out Sequence existingSequence))
@@ -44,9 +50,9 @@ public class DarkEvent : MonoBehaviour
 
             // 새로운 Sequence 생성 및 저장
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(DOTween.To(() => light.intensity, x => light.intensity = x, originalIntensity, fadeInDuration));
+            sequence.Append(DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, originalPointLightOuterRadius, fadeInDuration));
             sequence.AppendInterval(intervalDuration);
-            sequence.Append(DOTween.To(() => light.intensity, x => light.intensity = x, 0f, fadeOutDuration));
+            sequence.Append(DOTween.To(() => light.pointLightOuterRadius, x => light.pointLightOuterRadius = x, originalPointLightOuterRadius * minLightRadiusMultiplier, fadeOutDuration));
             sequenceDictionary[light] = sequence;
         }
     }
