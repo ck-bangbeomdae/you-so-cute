@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Transform pivotReverseGround;
     [SerializeField] private Transform pivotStraightGround;
+
     [SerializeField] private GameObject s_runningParticlePrefab;
     [SerializeField] private GameObject s_landingParticlePrefab;
     [SerializeField] public GameObject s_laserflippingParticlePrefab;
@@ -126,7 +127,7 @@ public class Player : MonoBehaviour
         if (darkEventObject != null)
         {
             darkEvent = darkEventObject.GetComponent<DarkEvent>();
-            darkEvent.player = this;
+            darkEvent.InitialPlayer(this);
         }
 
         GameObject scrollEventObject = GameObject.FindWithTag("ScrollEvent");

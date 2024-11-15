@@ -11,13 +11,18 @@ public class DarkEvent : MonoBehaviour
     [SerializeField] private float defaultLightRadiusMultiplier = 0.5f;
     [SerializeField] private float maxLightRadiusMultiplier = 1.2f;
 
-    [HideInInspector] public Player player;
+    private Player player;
 
     private readonly Dictionary<Light2D, float> playerLightDictionary = new Dictionary<Light2D, float>();
     private readonly Dictionary<Light2D, Sequence> sequenceDictionary = new Dictionary<Light2D, Sequence>();
 
-    private void Start()
+    public void InitialPlayer(Player player)
     {
+        this.player = player;
+
+        playerLightDictionary.Clear();
+        sequenceDictionary.Clear();
+
         Light2D[] allLights = FindObjectsOfType<Light2D>();
         foreach (Light2D light in allLights)
         {
