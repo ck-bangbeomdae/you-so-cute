@@ -1,10 +1,20 @@
+using Spine.Unity;
 using UnityEngine;
 
 public class JumpPadPlatform : MonoBehaviour, ICollisionable
 {
+    [SerializeField] private JumpPadType jumpPadType;
+
     [SerializeField] private Vector2 jumpDirection = new Vector2(1, 1);
     [SerializeField] private float jumpForce = 200f;
     [SerializeField] private float jumpPadFriction = 0.04f;
+
+    private SkeletonAnimation skeletonAnimation;
+
+    private void Awake()
+    {
+        skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+    }
 
     public void OnCollision(Player player)
     {
@@ -22,5 +32,14 @@ public class JumpPadPlatform : MonoBehaviour, ICollisionable
 
         // 경직 시간 설정
         player.stunTimer = 0.5f;
+
+        // 점프패드 애니메이션 재생
+        skeletonAnimation.state.SetAnimation(0, jumpPadType == JumpPadType.Low ? "Jump_Pad_1" : "Jump_Pad_2", false);
+    }
+
+    private enum JumpPadType
+    {
+        Low,
+        High
     }
 }
