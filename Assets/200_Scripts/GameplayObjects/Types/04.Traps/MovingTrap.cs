@@ -9,6 +9,7 @@ public class MovingTrap : MonoBehaviour
     [SerializeField] private CommonEnums.InitialDirection initialDirection;
     [SerializeField] private CommonEnums.RotationDirection rotationDirection;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private bool canFlip = true;
 
     // 컴포넌트
     private Rigidbody2D rb2d;
@@ -41,6 +42,22 @@ public class MovingTrap : MonoBehaviour
 
     private void Update()
     {
+        if (canFlip)
+        {
+            Vector3 localScale = transform.localScale;
+
+            if (movementDirection == CommonEnums.MovementDirection.Horizontal)
+            {
+                localScale.x = moveDirection.x;
+            }
+            else
+            {
+                localScale.y = moveDirection.y;
+            }
+
+            transform.localScale = localScale;
+        }
+
         Rotate();
     }
 
