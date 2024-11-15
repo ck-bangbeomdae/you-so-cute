@@ -13,17 +13,16 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 2.38f;
 
-    [SerializeField] private Transform pivotReverseGround;
-    [SerializeField] private Transform pivotStraightGround;
-
     [SerializeField] private GameObject s_runningParticlePrefab;
     [SerializeField] private GameObject s_landingParticlePrefab;
     [SerializeField] public GameObject s_laserflippingParticlePrefab;
     [SerializeField] private GameObject s_deadParticlePrefab;
+    [SerializeField] public GameObject[] s_dustParticlePrefab;
     [SerializeField] private GameObject r_runningParticlePrefab;
     [SerializeField] private GameObject r_landingParticlePrefab;
     [SerializeField] public GameObject r_laserflippingParticlePrefab;
     [SerializeField] private GameObject r_deadParticlePrefab;
+    [SerializeField] public GameObject[] r_dustParticlePrefab;
 
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
@@ -285,6 +284,22 @@ public class Player : MonoBehaviour
         GameplayManager.Instance.flipCount++;
         IsGravityFlipped = !IsGravityFlipped;
         IsGrounded = false;
+
+        // 중력 반전시 먼지 떨어지는 파티클 재생
+        if(isGravityFlipped)
+        {
+            foreach(GameObject p in r_dustParticlePrefab)
+            {
+                p.GetComponent<ParticleSystem>().Play();
+            }
+        }
+        else
+        {
+            foreach (GameObject p in s_dustParticlePrefab)
+            {
+                p.GetComponent<ParticleSystem>().Play();
+            }
+        }
 
         // 애니메이션 재생
         skeletonAnimation.state.SetAnimation(0, "flipping", false);
