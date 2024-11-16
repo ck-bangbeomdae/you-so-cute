@@ -286,18 +286,21 @@ public class Player : MonoBehaviour
         IsGrounded = false;
 
         // 중력 반전시 먼지 떨어지는 파티클 재생
-        if(isGravityFlipped)
+        if (r_dustParticlePrefab != null && s_dustParticlePrefab != null)
         {
-            foreach(GameObject p in r_dustParticlePrefab)
+            if (isGravityFlipped)
             {
-                p.GetComponent<ParticleSystem>().Play();
+                foreach (GameObject p in r_dustParticlePrefab)
+                {
+                    p.GetComponent<ParticleSystem>().Play();
+                }
             }
-        }
-        else
-        {
-            foreach (GameObject p in s_dustParticlePrefab)
+            else
             {
-                p.GetComponent<ParticleSystem>().Play();
+                foreach (GameObject p in s_dustParticlePrefab)
+                {
+                    p.GetComponent<ParticleSystem>().Play();
+                }
             }
         }
 
