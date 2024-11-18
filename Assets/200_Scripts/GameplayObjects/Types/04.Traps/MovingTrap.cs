@@ -11,16 +11,8 @@ public class MovingTrap : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private bool canFlip = true;
 
-    // 컴포넌트
-    private Rigidbody2D rb2d;
-
     // 이동
     private Vector2 moveDirection;
-
-    private void Awake()
-    {
-        rb2d = GetComponent<Rigidbody2D>();
-    }
 
     private void Start()
     {
@@ -38,10 +30,13 @@ public class MovingTrap : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        DetectCollision();
     }
 
     private void Update()
     {
+        Rotate();
+
         if (canFlip)
         {
             Vector3 localScale = transform.localScale;
@@ -57,27 +52,27 @@ public class MovingTrap : MonoBehaviour
 
             transform.localScale = localScale;
         }
-
-        Rotate();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (CollisionUtils.IsGroundLayer(groundLayer, collision.gameObject.layer))
-        {
-            moveDirection = -moveDirection;
-        }
     }
 
     private void Move()
     {
-        Vector2 newPosition = rb2d.position + moveDirection * speed * Time.fixedDeltaTime;
-        rb2d.MovePosition(newPosition);
+        Vector3 newPosition = transform.position + (Vector3)moveDirection * speed * Time.fixedDeltaTime;
+        transform.position = newPosition;
     }
 
     private void Rotate()
     {
         float directionMultiplier = rotationDirection == CommonEnums.RotationDirection.Clockwise ? -1 : 1;
         transform.Rotate(Vector3.forward, directionMultiplier * rotationSpeed);
+    }
+
+    private void DetectCollision()
+    {
+        // Raycast를 사용하여 충돌 감지
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDirection, speed * Time.fixedDeltaTime, groundLayer);
+        if (hit.collider != null)
+        {
+            moveDirection = -moveDirection;
+        }
     }
 }
