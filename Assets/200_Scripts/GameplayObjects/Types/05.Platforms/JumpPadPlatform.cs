@@ -5,8 +5,8 @@ public class JumpPadPlatform : MonoBehaviour, ICollisionable
 {
     [SerializeField] private JumpPadType jumpPadType;
 
-    [SerializeField] private Vector2 jumpDirection = new Vector2(1, 1);
-    [SerializeField] private float jumpForce = 200f;
+    [SerializeField] private Vector2 jumpDirection = new Vector2(1f, 1f);
+    [SerializeField] private float jumpForce = 24f;
     [SerializeField] private float jumpPadFriction = 0.04f;
 
     private SkeletonAnimation skeletonAnimation;
@@ -14,6 +14,7 @@ public class JumpPadPlatform : MonoBehaviour, ICollisionable
     private void Awake()
     {
         skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+        skeletonAnimation.timeScale = 0f;
     }
 
     public void OnCollision(Player player)
@@ -33,8 +34,11 @@ public class JumpPadPlatform : MonoBehaviour, ICollisionable
         // 경직 시간 설정
         player.stunTimer = 0.5f;
 
+        // 애니메이션 재생 속도를 1로 설정
+        skeletonAnimation.timeScale = 1f;
+
         // 점프패드 애니메이션 재생
-        skeletonAnimation.state.SetAnimation(0, jumpPadType == JumpPadType.Low ? "Jump_Pad_1" : "Jump_Pad_2", false);
+        skeletonAnimation.state.SetAnimation(0, jumpPadType == JumpPadType.Low ? "Jump_Pad_2" : "Jump_Pad_1", false);
     }
 
     private enum JumpPadType
