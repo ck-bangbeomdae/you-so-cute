@@ -17,12 +17,15 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject s_landingParticlePrefab;
     [SerializeField] public GameObject s_laserflippingParticlePrefab;
     [SerializeField] private GameObject s_deadParticlePrefab;
-    [SerializeField] public GameObject[] s_dustParticlePrefab = null;
+    [SerializeField] public GameObject s_dustParticlePrefab;
+    [SerializeField] public GameObject[] s_flipDustParticlePrefab = null;
+
     [SerializeField] private GameObject r_runningParticlePrefab;
     [SerializeField] private GameObject r_landingParticlePrefab;
     [SerializeField] public GameObject r_laserflippingParticlePrefab;
     [SerializeField] private GameObject r_deadParticlePrefab;
-    [SerializeField] public GameObject[] r_dustParticlePrefab = null;
+    [SerializeField] public GameObject r_dustParticlePrefab;
+    [SerializeField] public GameObject[] r_flipDustParticlePrefab = null;
 
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
@@ -290,14 +293,14 @@ public class Player : MonoBehaviour
         //{
         //    if (isGravityFlipped)
         //    {
-        //        foreach (GameObject p in r_dustParticlePrefab)
+        //        foreach (GameObject p in r_flipDustParticlePrefab)
         //        {
         //            p.GetComponent<ParticleSystem>().Play();
         //        }
         //    }
         //    else
         //    {
-        //        foreach (GameObject p in s_dustParticlePrefab)
+        //        foreach (GameObject p in s_flipDustParticlePrefab)
         //        {
         //            p.GetComponent<ParticleSystem>().Play();
         //        }
