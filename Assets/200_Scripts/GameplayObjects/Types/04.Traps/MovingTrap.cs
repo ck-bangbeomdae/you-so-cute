@@ -13,6 +13,7 @@ public class MovingTrap : MonoBehaviour
 
     // 이동
     private Vector2 moveDirection;
+    private Vector3 initialLocalScale;
 
     private void Start()
     {
@@ -25,6 +26,9 @@ public class MovingTrap : MonoBehaviour
         {
             moveDirection = (initialDirection == CommonEnums.InitialDirection.RightOrUp) ? Vector2.up : Vector2.down;
         }
+
+        // 초기 localScale 저장
+        initialLocalScale = transform.localScale;
     }
 
     private void FixedUpdate()
@@ -39,15 +43,15 @@ public class MovingTrap : MonoBehaviour
 
         if (canFlip)
         {
-            Vector3 localScale = transform.localScale;
+            Vector3 localScale = initialLocalScale;
 
             if (movementDirection == CommonEnums.MovementDirection.Horizontal)
             {
-                localScale.x = moveDirection.x;
+                localScale.x *= Mathf.Sign(moveDirection.x);
             }
             else
             {
-                localScale.y = moveDirection.y;
+                localScale.y *= Mathf.Sign(moveDirection.y);
             }
 
             transform.localScale = localScale;
