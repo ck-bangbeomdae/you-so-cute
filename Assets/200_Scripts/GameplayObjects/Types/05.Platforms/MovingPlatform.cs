@@ -3,7 +3,7 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
     // 정적 데이터
-    [SerializeField] private CommonEnums.MovementDirection movementDirection;
+    public CommonEnums.MovementDirection movementDirection;
     [SerializeField] private CommonEnums.InitialDirection initialDirection;
     [SerializeField] private float speed = 4f;
     [SerializeField] private LayerMask groundLayer;
@@ -38,7 +38,7 @@ public class MovingPlatform : MonoBehaviour
         rb2d.MovePosition(newPosition);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (CollisionUtils.IsGroundLayer(groundLayer, collision.gameObject.layer))
         {

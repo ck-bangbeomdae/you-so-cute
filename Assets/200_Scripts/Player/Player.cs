@@ -39,6 +39,9 @@ public class Player : MonoBehaviour
     private bool isDead;
 
     // 이동
+    private Vector3 lastPlatformPosition;
+    private MovingPlatform currentPlatform;
+
     public Vector2 currentMoveDirection;
     public float currentSpeed;
 
@@ -109,9 +112,6 @@ public class Player : MonoBehaviour
 
     public bool isCollidingWithGravityFlip;
     public bool isCollidingWithJumpPad;
-
-    public Transform currentPlatform;
-    public Vector3 lastPlatformPosition;
 
     // 상호작용
     public IInteractable closestInteractable;
@@ -184,12 +184,13 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // 이동 플랫폼의 위치 변화를 플레이어에게 반영
+        // 발판의 이동량을 계산하여 플레이어의 위치를 부드럽게 업데이트
         if (currentPlatform != null)
         {
-            Vector3 platformMovement = currentPlatform.position - lastPlatformPosition;
-            rb2d.position += (Vector2)platformMovement;
-            lastPlatformPosition = currentPlatform.position;
+            Vector3 platformMovement = currentPlatform.transform.position - lastPlatformPosition;
+            Vector3 targetPosition = rb2d.position + (Vector2)platformMovement;
+            rb2d.position = Vector3.Lerp(rb2d.position, targetPosition, currentPlatform.movementDirection == CommonEnums.MovementDirection.Horizontal ? 1f : 0.1f);
+            lastPlatformPosition = currentPlatform.transform.position;
         }
 
         // 중력 방향 설정
@@ -255,6 +256,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("MovingPlatform") && CollisionUtils.IsCollisionFromTopOrBottom(collision))
+        {
+            currentPlatform = collision.transform.GetComponent<MovingPlatform>();
+            lastPlatformPosition = currentPlatform.transform.position;
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out BeltPlatform beltPlatform))
@@ -275,6 +285,12 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            // 발판에서 떨어지면 현재 발판을 초기화
+            currentPlatform = null;
+        }
+
         if (collision.gameObject.TryGetComponent(out BeltPlatform beltPlatform))
         {
             currentBeltSpeed = 0f;

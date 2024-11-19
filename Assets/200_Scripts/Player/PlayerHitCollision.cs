@@ -23,9 +23,9 @@ public class PlayerHitCollision : MonoBehaviour
         {
             collisionable.OnCollision(player);
 
-            // GravityFlip은 한 번만 충돌하도록 설정
             if (collision.TryGetComponent(out GravityFlip gravityFlip))
             {
+                // GravityFlip은 한 번만 충돌하도록 설정
                 player.isCollidingWithGravityFlip = true;
 
                 // 레이저에 의한 중력 반전 파티클 재생
@@ -39,13 +39,6 @@ public class PlayerHitCollision : MonoBehaviour
                 }
             }
         }
-
-        // 이동 플랫폼 충돌
-        if (collision.gameObject.CompareTag("MovingPlatform"))
-        {
-            player.currentPlatform = collision.transform;
-            player.lastPlatformPosition = player.currentPlatform.position;
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -54,12 +47,6 @@ public class PlayerHitCollision : MonoBehaviour
         if (collision.TryGetComponent(out GravityFlip gravityFlip))
         {
             player.isCollidingWithGravityFlip = false;
-        }
-
-        // 이동 플랫폼에서 벗어남
-        if (collision.gameObject.CompareTag("MovingPlatform"))
-        {
-            player.currentPlatform = null;
         }
     }
 }
