@@ -299,6 +299,11 @@ public class Player : MonoBehaviour
 
     public void GravityFlip()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         // 중력 반전
         GameplayManager.Instance.flipCount++;
         IsGravityFlipped = !IsGravityFlipped;
