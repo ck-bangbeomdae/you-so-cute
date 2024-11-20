@@ -3,7 +3,7 @@ using UnityEngine;
 public class Portal : BasePlayerSpawnpoint, ICollisionable
 {
     [SerializeField] private CommonEnums.CardinalDirection cardinalDirection;
-    [SerializeField] private bool isRightway;
+    [SerializeField] private PathType pathType;
 
     public void OnCollision(Player player)
     {
@@ -33,6 +33,13 @@ public class Portal : BasePlayerSpawnpoint, ICollisionable
         TransitionManager.Instance.LoadSceneWithPlayer(playerSpawnpoint);
 
         // 게임 진행사항 업데이트
-        GameplayManager.Instance.CurrentProgressPortalCount += isRightway ? 1 : -1;
+        GameplayManager.Instance.CurrentProgressPortalCount += (int)pathType;
+    }
+
+    private enum PathType
+    {
+        Backward = -1,
+        Detour = 0,
+        Forward = 1
     }
 }
