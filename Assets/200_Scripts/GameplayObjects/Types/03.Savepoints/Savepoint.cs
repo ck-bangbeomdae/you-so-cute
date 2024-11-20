@@ -1,32 +1,13 @@
 using Spine.Unity;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class Savepoint : BasePlayerSpawnpoint, ICollisionable
+public class Savepoint : BasePlayerSpawnpoint, IResetable, ICollisionable
 {
     // 컴포넌트
     private SkeletonAnimation skeletonAnimation;
 
     private int id;
-
     private bool isActive;
-    public bool IsActive
-    {
-        get => isActive;
-        set
-        {
-            isActive = value;
-
-            if (isActive)
-            {
-                skeletonAnimation.state.SetAnimation(0, "Save_on", false);
-            }
-            else
-            {
-                skeletonAnimation.state.SetAnimation(0, "Save_off", false);
-            }
-        }
-    }
 
     private void Awake()
     {
@@ -35,33 +16,43 @@ public class Savepoint : BasePlayerSpawnpoint, ICollisionable
 
     private void OnValidate()
     {
-        playerSpawnpoint.sceneTransition.sceneName = SceneManager.GetActiveScene().name;
+        playerSpawnpoint.sceneTransition.sceneName = gameObject.scene.name;
         playerSpawnpoint.spawnPosition = transform.position;
     }
 
     private void Start()
     {
         id = playerSpawnpoint.GetHashCode();
-        IsActive = GameplayManager.Instance.lastSavepointId == id ? true : false;
+        HandleReset();
+    }
 
-        if (IsActive)
+    public void HandleReset()
+    {
+        isActive = GameplayManager.Instance.lastSavepointId == id ? true : false;
+
+        if (isActive)
         {
             var trackEntry = skeletonAnimation.state.SetAnimation(0, "Save_on", false);
             trackEntry.TrackTime = trackEntry.AnimationEnd;
         }
         else
         {
-            skeletonAnimation.state.SetAnimation(0, "Off", false);
+            var trackEntry = skeletonAnimation.state.SetAnimation(0, "Off", false);
+            trackEntry.TrackTime = trackEntry.AnimationEnd;
         }
+
+        // 애니메이션 즉시 적용
+        skeletonAnimation.state.Apply(skeletonAnimation.skeleton);
+        skeletonAnimation.skeleton.UpdateWorldTransform();
     }
 
     public void OnCollision(Player player)
     {
-        if (!IsActive)
+        if (!isActive)
         {
             // 프로필 저장
             ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint = playerSpawnpoint;
-            ProfileManager.Instance.playerProfile.progressSave.lastSavepointId = GameplayManager.Instance.lastSavepointId;
+            ProfileManager.Instance.playerProfile.progressSave.lastSavepointId = id;
             ProfileManager.Instance.playerProfile.progressSave.lastSavepointProgressPortalCount = GameplayManager.Instance.lastSavepointProgressPortalCount;
             ProfileManager.Instance.playerProfile.progressSave.elapsedTime = GameplayManager.Instance.ElapsedTime;
             ProfileManager.Instance.playerProfile.progressSave.progressPortalCount = GameplayManager.Instance.CurrentProgressPortalCount;
@@ -79,7 +70,8 @@ public class Savepoint : BasePlayerSpawnpoint, ICollisionable
                 Savepoint sp = savepoint.GetComponent<Savepoint>();
                 if (sp.id == GameplayManager.Instance.lastSavepointId)
                 {
-                    sp.IsActive = false;
+                    sp.isActive = false;
+                    sp.skeletonAnimation.state.SetAnimation(0, "Save_off", false);
                     break;
                 }
             }
@@ -91,7 +83,10 @@ public class Savepoint : BasePlayerSpawnpoint, ICollisionable
             GameplayManager.Instance.lastSavepointProgressPortalCount = GameplayManager.Instance.CurrentProgressPortalCount;
 
             // 세이브 포인트 활성화
-            IsActive = true;
+            isActive = true;
+
+            // 애니메이션 재생
+            skeletonAnimation.state.SetAnimation(0, "Save_on", false);
         }
     }
 }

@@ -2,9 +2,8 @@ using Newtonsoft.Json;
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class LeaderboardManager : MonoBehaviour
+public class LeaderboardManager : MonoBehaviour, IResetable
 {
     // 컴포넌트
     [SerializeField] private TextMeshProUGUI lastRecordText;
@@ -13,13 +12,22 @@ public class LeaderboardManager : MonoBehaviour
 
     private void Start()
     {
-        GameplayManager.Instance.IsGameRunning = false;
+        HandleReset();
+    }
+
+    public void HandleReset()
+    {
+        UpdateLastRecord();
         StartCoroutine(ScoreAPIUtils.GetScoresCoroutine(OnGetScoresSuccess, OnGetScoresError));
     }
 
     public void OnClickReturnToTitleButton()
     {
-        SceneManager.LoadScene("Scene_Title");
+        if (!TransitionManager.Instance.isTransition)
+        {
+            SceneTransition titleSceneTransition = new SceneTransition { sceneName = "Scene_Title", transitionType = TransitionType.FadeInOut };
+            TransitionManager.Instance.LoadScene(titleSceneTransition);
+        }
     }
 
     private void UpdateLastRecord()

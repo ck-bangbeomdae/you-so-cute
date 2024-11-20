@@ -23,7 +23,7 @@ public class BeltPlatform : MonoBehaviour
 
         foreach (Transform gear in gearTransforms)
         {
-            gear.Rotate(0, 0, rotationAngle);
+            gear.Rotate(0f, 0f, rotationAngle);
         }
     }
 }

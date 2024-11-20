@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
@@ -17,14 +16,9 @@ public class TitleManager : MonoBehaviour
         renameModalInputField = renameModal.GetComponentInChildren<TMP_InputField>();
     }
 
-    private void Start()
-    {
-        GameplayManager.Instance.IsGameRunning = false;
-    }
-
     public void OnClickNewGameButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
             GameplayManager.Instance.IsGameRunning = true;
             TransitionManager.Instance.LoadScene(newGameSceneTransition);
@@ -33,7 +27,7 @@ public class TitleManager : MonoBehaviour
 
     public void OnClickContinueButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
             if (!string.IsNullOrEmpty(ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint.sceneTransition.sceneName))
             {
@@ -53,9 +47,10 @@ public class TitleManager : MonoBehaviour
 
     public void OnClickLeaderboardButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
-            SceneManager.LoadScene("Scene_Leaderboard");
+            SceneTransition leaderboardSceneTransition = new SceneTransition { sceneName = "Scene_Leaderboard", transitionType = TransitionType.FadeInOut };
+            TransitionManager.Instance.LoadScene(leaderboardSceneTransition);
         }
     }
 

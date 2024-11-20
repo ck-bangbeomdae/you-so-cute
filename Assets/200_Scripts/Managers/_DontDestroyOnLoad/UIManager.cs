@@ -7,9 +7,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    private GameObject canvas;
-    private TextMeshProUGUI elapsedTimeText;
-    private Slider progressPortalCountSlider;
+    [SerializeField] private GameObject canvas;
+    [SerializeField] private TextMeshProUGUI elapsedTimeText;
+    [SerializeField] private Slider progressPortalCountSlider;
 
     private void Awake()
     {
@@ -19,10 +19,6 @@ public class UIManager : MonoBehaviour
         }
 
         Instance = this;
-
-        canvas = transform.Find("Canvas").gameObject;
-        elapsedTimeText = transform.Find("Canvas/ElapsedTimeText").GetComponent<TextMeshProUGUI>();
-        progressPortalCountSlider = transform.Find("Canvas/ProgressPortalCountSlider").GetComponent<Slider>();
     }
 
     public void ToggleGameplayUI(bool isGameRunning)

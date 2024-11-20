@@ -121,6 +121,12 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        if (gameObject.scene != SceneManager.GetActiveScene() && gameObject.scene.name != "Scene_정윤희_01")
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // 컴포넌트 초기화
         rb2d = GetComponent<Rigidbody2D>();
         skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
@@ -149,28 +155,14 @@ public class Player : MonoBehaviour
         skeletonAnimation.AnimationState.Event += HandleAnimationEvent;
     }
 
-    private void HandleAnimationEvent(TrackEntry trackEntry, Spine.Event e)
-    {
-        if (e.Data.Name == "run")
-        {
-            // 달리기 파티클 재생
-            if (IsGravityFlipped)
-                r_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
-            else
-                s_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
-
-            // TODO : 달리기 효과음 재생
-        }
-    }
-
     private void Start()
     {
         playerStateMachine.Setup(this, playerStates[PlayerState.Idle]);
 
-        // 디버그 : 플레이어 스폰포인트 설정
+        // 플레이어 스폰포인트 설정
         if (!GameplayManager.Instance.hasPlayerSavepoint)
         {
-            GameplayManager.Instance.playerSavepoint.sceneTransition.sceneName = SceneManager.GetActiveScene().name;
+            GameplayManager.Instance.playerSavepoint.sceneTransition.sceneName = gameObject.scene.name;
             GameplayManager.Instance.playerSavepoint.spawnPosition = transform.position;
             GameplayManager.Instance.hasPlayerSavepoint = true;
         }
@@ -178,12 +170,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // 씬 전환 중이거나 플레이어가 사망한 경우 상태 업데이트 중지
-        if (TransitionManager.Instance.isTransition || isDead)
-        {
-            return;
-        }
-
         // 발판의 이동량을 계산하여 플레이어의 위치를 부드럽게 업데이트
         if (currentPlatform != null)
         {
@@ -294,6 +280,20 @@ public class Player : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out BeltPlatform beltPlatform))
         {
             currentBeltSpeed = 0f;
+        }
+    }
+
+    private void HandleAnimationEvent(TrackEntry trackEntry, Spine.Event e)
+    {
+        if (e.Data.Name == "run")
+        {
+            // 달리기 파티클 재생
+            if (IsGravityFlipped)
+                r_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
+            else
+                s_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
+
+            // TODO : 달리기 효과음 재생
         }
     }
 

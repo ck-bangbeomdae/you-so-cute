@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MovingTrap : MonoBehaviour
+public class MovingTrap : MonoBehaviour, IResetable
 {
     // 정적 데이터
     [SerializeField] private float speed = 8f;
@@ -12,23 +12,19 @@ public class MovingTrap : MonoBehaviour
     [SerializeField] private bool canFlip = true;
 
     // 이동
-    private Vector2 moveDirection;
+    private Vector2 initialPosition;
     private Vector3 initialLocalScale;
+    private Vector2 moveDirection;
+
+    private void Awake()
+    {
+        initialPosition = transform.position;
+        initialLocalScale = transform.localScale;
+    }
 
     private void Start()
     {
-        // 시작 방향 설정
-        if (movementDirection == CommonEnums.MovementDirection.Horizontal)
-        {
-            moveDirection = (initialDirection == CommonEnums.InitialDirection.RightOrUp) ? Vector2.right : Vector2.left;
-        }
-        else
-        {
-            moveDirection = (initialDirection == CommonEnums.InitialDirection.RightOrUp) ? Vector2.up : Vector2.down;
-        }
-
-        // 초기 localScale 저장
-        initialLocalScale = transform.localScale;
+        SetMoveDirection();
     }
 
     private void FixedUpdate()
@@ -40,7 +36,50 @@ public class MovingTrap : MonoBehaviour
     private void Update()
     {
         Rotate();
+        Flip();
+    }
 
+    public void HandleReset()
+    {
+        SetMoveDirection();
+        transform.position = initialPosition;
+    }
+
+    private void SetMoveDirection()
+    {
+        if (movementDirection == CommonEnums.MovementDirection.Horizontal)
+        {
+            moveDirection = (initialDirection == CommonEnums.InitialDirection.RightOrUp) ? Vector2.right : Vector2.left;
+        }
+        else
+        {
+            moveDirection = (initialDirection == CommonEnums.InitialDirection.RightOrUp) ? Vector2.up : Vector2.down;
+        }
+    }
+
+    private void Move()
+    {
+        Vector3 targetPosition = transform.position + (Vector3)moveDirection * speed * Time.fixedDeltaTime;
+        transform.position = targetPosition;
+    }
+
+    private void DetectCollision()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDirection, speed * Time.fixedDeltaTime, groundLayer);
+        if (hit.collider != null)
+        {
+            moveDirection = -moveDirection;
+        }
+    }
+
+    private void Rotate()
+    {
+        int directionMultiplier = rotationDirection == CommonEnums.RotationDirection.Clockwise ? -1 : 1;
+        transform.Rotate(Vector3.forward, directionMultiplier * rotationSpeed);
+    }
+
+    private void Flip()
+    {
         if (canFlip)
         {
             Vector3 localScale = initialLocalScale;
@@ -55,28 +94,6 @@ public class MovingTrap : MonoBehaviour
             }
 
             transform.localScale = localScale;
-        }
-    }
-
-    private void Move()
-    {
-        Vector3 newPosition = transform.position + (Vector3)moveDirection * speed * Time.fixedDeltaTime;
-        transform.position = newPosition;
-    }
-
-    private void Rotate()
-    {
-        float directionMultiplier = rotationDirection == CommonEnums.RotationDirection.Clockwise ? -1 : 1;
-        transform.Rotate(Vector3.forward, directionMultiplier * rotationSpeed);
-    }
-
-    private void DetectCollision()
-    {
-        // Raycast를 사용하여 충돌 감지
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, moveDirection, speed * Time.fixedDeltaTime, groundLayer);
-        if (hit.collider != null)
-        {
-            moveDirection = -moveDirection;
         }
     }
 }

@@ -2,7 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using UnityEngine;
 
-public class BreakablePlatform : MonoBehaviour, IRespawnable
+public class BreakablePlatform : MonoBehaviour, IResetable
 {
     [SerializeField] private float destructionDelay = 1f;
 
@@ -28,7 +28,7 @@ public class BreakablePlatform : MonoBehaviour, IRespawnable
         }
     }
 
-    public void HandleRespawn()
+    public void HandleReset()
     {
         isbreaking = false;
 

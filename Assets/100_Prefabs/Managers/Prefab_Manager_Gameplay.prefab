@@ -315,6 +315,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0dfc8f2e19f4034984dd51ccc4efaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameplayScenes:
+  - Scene_Title
+  - Scene_Leaderboard
+  - "Scene_\uC815\uC724\uD76C_01"
+  - "Scene_\uC815\uC724\uD76C_02"
+  - "Scene_\uC815\uC724\uD76C_03"
+  - "Scene_\uC815\uC724\uD76C_04"
+  - "Scene_\uC815\uC724\uD76C_05"
+  - "Scene_\uC815\uC724\uD76C_06"
+  - "Scene_\uC815\uC724\uD76C_07"
+  - "Scene_\uC815\uC724\uD76C_08"
+  - "Scene_\uC815\uC724\uD76C_09"
+  - "Scene_\uC815\uC724\uD76C_10"
+  - "Scene_\uC815\uC724\uD76C_11"
+  - "Scene_\uC815\uC724\uD76C_12"
+  - "Scene_\uC815\uC724\uD76C_13"
+  - "Scene_\uC815\uC724\uD76C_14"
+  - "Scene_\uC815\uC724\uD76C_15"
+  - "Scene_\uC815\uC724\uD76C_16"
+  - "Scene_\uC815\uC724\uD76C_17"
+  - "Scene_\uC815\uC724\uD76C_18"
+  - "Scene_\uC815\uC724\uD76C_19"
+  - "Scene_\uC815\uC724\uD76C_20"
+  - "Scene_\uC815\uC724\uD76C_21"
+  - "Scene_\uCD5C\uC6C5\uADDC_01"
+  - "Scene_\uCD5C\uC6C5\uADDC_02"
+  - "Scene_\uCD5C\uC6C5\uADDC_03"
+  - "Scene_\uCD5C\uC6C5\uADDC_04"
+  - "Scene_\uCD5C\uC6C5\uADDC_05"
+  - "Scene_\uCD5C\uC6C5\uADDC_06"
+  - "Scene_\uCD5C\uC6C5\uADDC_07"
+  - "Scene_\uCD5C\uC6C5\uADDC_08"
+  - "Scene_\uCD5C\uC6C5\uADDC_09"
+  - "Scene_\uCD5C\uC6C5\uADDC_10"
+  - "Scene_\uCD5C\uC6C5\uADDC_11"
+  - "Scene_\uCD5C\uC6C5\uADDC_12"
+  - "Scene_\uCD5C\uC6C5\uADDC_13"
+  - "Scene_\uCD5C\uC6C5\uADDC_14"
+  - "Scene_\uCD5C\uC6C5\uADDC_15"
+  - "Scene_\uCD5C\uC6C5\uADDC_16"
+  - "Scene_\uCD5C\uC6C5\uADDC_17"
+  - "Scene_\uCD5C\uC6C5\uADDC_18"
+  - "Scene_\uCD5C\uC6C5\uADDC_19"
+  - "Scene_\uCD5C\uC6C5\uADDC_20"
+  - "Scene_\uCD5C\uC6C5\uADDC_21"
+  - "Scene_\uCD5C\uC6C5\uADDC_22"
+  - "Scene_\uCD5C\uC6C5\uADDC_23"
+  - "Scene_\uCD5C\uC6C5\uADDC_24"
+  - "Scene_\uCD5C\uC6C5\uADDC_25"
+  - "Scene_\uCD5C\uC6C5\uADDC_26"
+  - "Scene_\uCD5C\uC6C5\uADDC_27"
+  - "Scene_\uCD5C\uC6C5\uADDC_28"
+  - "Scene_\uCD5C\uC6C5\uADDC_29"
+  - "Scene_\uCD5C\uC6C5\uADDC_30"
+  - "Scene_\uCD5C\uC6C5\uADDC_31"
   playerPrefab: {fileID: 1076663625399861909, guid: 88bbe6fa3b1a8cf4ca8ebb750edd9760, type: 3}
   isTransition: 0
   isFadingIn: 0
@@ -438,6 +493,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b934c7cbe553d68459e4c9f6edca6cb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 8412607400682740624}
+  elapsedTimeText: {fileID: 1766780294919995365}
+  progressPortalCountSlider: {fileID: 1376857788277475526}
 --- !u!1 &5105792786737975671
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +798,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1900bd86b7a653446b45563f3c177745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxProgressPortalCount: 50
+  isGodMode: 0
   playerSavepoint:
     sceneTransition:
       transitionType: 0
@@ -753,7 +813,6 @@ MonoBehaviour:
   hasPlayerSavepoint: 0
   lastSavepointId: 0
   lastSavepointProgressPortalCount: 0
-  isGodMode: 0
   flipCount: 0
   deathCount: 0
 --- !u!1 &6975788330149952805

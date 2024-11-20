@@ -22,6 +22,7 @@ public class Goal : MonoBehaviour, ICollisionable
         );
 
         // 로컬에 마지막 기록 업데이트
+        ProfileManager.Instance.playerProfile.progressSave = new ProgressSave();
         ProfileManager.Instance.playerProfile.lastRecord = newRecord;
         ProfileManager.Instance.SaveProfile();
 
@@ -44,8 +45,6 @@ public class Goal : MonoBehaviour, ICollisionable
     private void ResetProgressAndTransition()
     {
         // 진행사항 초기화
-        ProfileManager.Instance.playerProfile.progressSave = new ProgressSave();
-
         GameplayManager.Instance.playerSavepoint = new PlayerSpawnpoint();
         GameplayManager.Instance.hasPlayerSavepoint = false;
         GameplayManager.Instance.lastSavepointId = 0;
