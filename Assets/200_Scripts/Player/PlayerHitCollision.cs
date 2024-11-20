@@ -4,6 +4,7 @@ public class PlayerHitCollision : MonoBehaviour
 {
     // 컴포넌트
     private Player player;
+    Vector3 playPosition;
 
     private void Awake()
     {
@@ -31,10 +32,16 @@ public class PlayerHitCollision : MonoBehaviour
                 // 레이저에 의한 중력 반전 파티클 재생
                 if (player.IsGravityFlipped)
                 {
+                    playPosition = player.transform.position;
+                    playPosition.x = gravityFlip.gameObject.transform.position.x;
+                    player.r_laserflippingParticlePrefab.transform.position = playPosition;
                     player.r_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
                 }
                 else
                 {
+                    playPosition = player.transform.position;
+                    playPosition.x = gravityFlip.gameObject.transform.position.x;
+                    player.s_laserflippingParticlePrefab.transform.position = playPosition;
                     player.s_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
                 }
             }

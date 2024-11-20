@@ -17,15 +17,15 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject s_landingParticlePrefab;
     [SerializeField] public GameObject s_laserflippingParticlePrefab;
     [SerializeField] private GameObject s_deadParticlePrefab;
-    [SerializeField] public GameObject s_dustParticlePrefab;
-    [SerializeField] public GameObject[] s_flipDustParticlePrefab = null;
+    [SerializeField] private GameObject s_dustParticlePrefab;
+    [SerializeField] private GameObject[] s_flipDustParticlePrefab = null;
 
     [SerializeField] private GameObject r_runningParticlePrefab;
     [SerializeField] private GameObject r_landingParticlePrefab;
     [SerializeField] public GameObject r_laserflippingParticlePrefab;
     [SerializeField] private GameObject r_deadParticlePrefab;
-    [SerializeField] public GameObject r_dustParticlePrefab;
-    [SerializeField] public GameObject[] r_flipDustParticlePrefab = null;
+    [SerializeField] private GameObject r_dustParticlePrefab;
+    [SerializeField] private GameObject[] r_flipDustParticlePrefab = null;
 
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
@@ -309,24 +309,30 @@ public class Player : MonoBehaviour
         IsGravityFlipped = !IsGravityFlipped;
         IsGrounded = false;
 
-        // 중력 반전시 먼지 떨어지는 파티클 재생
-        //if (r_dustParticlePrefab != null && s_dustParticlePrefab != null)
-        //{
-        //    if (isGravityFlipped)
-        //    {
-        //        foreach (GameObject p in r_flipDustParticlePrefab)
-        //        {
-        //            p.GetComponent<ParticleSystem>().Play();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        foreach (GameObject p in s_flipDustParticlePrefab)
-        //        {
-        //            p.GetComponent<ParticleSystem>().Play();
-        //        }
-        //    }
-        //}
+        // 중력 반전시 바닥 먼지 파티클 재생
+        if (r_dustParticlePrefab != null && s_dustParticlePrefab != null)
+        {
+            if (IsGravityFlipped)
+            {
+                s_dustParticlePrefab.GetComponent<ParticleSystem>().Stop();
+                r_dustParticlePrefab.GetComponent<ParticleSystem>().Play();
+
+                foreach (GameObject p in r_flipDustParticlePrefab)
+                {
+                    p.GetComponent<ParticleSystem>().Play();
+                }
+            }
+            else
+            {
+                r_dustParticlePrefab.GetComponent<ParticleSystem>().Stop();
+                s_dustParticlePrefab.GetComponent<ParticleSystem>().Play();
+
+                foreach (GameObject p in s_flipDustParticlePrefab)
+                {
+                    p.GetComponent<ParticleSystem>().Play();
+                }
+            }
+        }
 
         // 애니메이션 재생
         skeletonAnimation.state.SetAnimation(0, "flipping", false);
