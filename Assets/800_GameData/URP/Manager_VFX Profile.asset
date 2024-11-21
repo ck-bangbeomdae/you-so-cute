@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e1dc532bcb41949b58bc4f2abfbb7e, type: 3}
   m_Name: LensDistortion
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.149
+    m_Value: 0.08
   xMultiplier:
     m_OverrideState: 0
     m_Value: 1
@@ -135,22 +135,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   postExposure:
     m_OverrideState: 0
     m_Value: 0.09
   contrast:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: -4
   colorFilter:
     m_OverrideState: 0
-    m_Value: {r: 0.9277965, g: 1, b: 0.9103774, a: 1}
+    m_Value: {r: 0.8537736, g: 0.98398083, b: 1, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: -11
   saturation:
     m_OverrideState: 1
-    m_Value: 5
+    m_Value: 10
 --- !u!114 &994072240955725799
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eb4b772797da9440885e8bd939e9560, type: 3}
   m_Name: ColorCurves
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   master:
     m_OverrideState: 1
     m_Value:
@@ -186,7 +186,7 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
+          inSlope: 0.41935483
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
@@ -279,7 +279,7 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 0.8120409
+          inSlope: 0.6271932
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
@@ -370,29 +370,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 0
   redOutRedIn:
-    m_OverrideState: 1
-    m_Value: 30
+    m_OverrideState: 0
+    m_Value: 0
   redOutGreenIn:
-    m_OverrideState: 1
-    m_Value: 10
+    m_OverrideState: 0
+    m_Value: 0
   redOutBlueIn:
-    m_OverrideState: 1
-    m_Value: 4
+    m_OverrideState: 0
+    m_Value: 0
   greenOutRedIn:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   greenOutGreenIn:
-    m_OverrideState: 1
-    m_Value: 57
+    m_OverrideState: 0
+    m_Value: 0
   greenOutBlueIn:
-    m_OverrideState: 1
-    m_Value: 17
+    m_OverrideState: 0
+    m_Value: 0
   blueOutRedIn:
-    m_OverrideState: 1
-    m_Value: -13
+    m_OverrideState: 0
+    m_Value: 0
   blueOutGreenIn:
-    m_OverrideState: 1
-    m_Value: -29
+    m_OverrideState: 0
+    m_Value: 0
   blueOutBlueIn:
-    m_OverrideState: 1
-    m_Value: 100
+    m_OverrideState: 0
+    m_Value: 200
