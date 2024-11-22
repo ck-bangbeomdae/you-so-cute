@@ -35,6 +35,11 @@ public class MovingTrap : MonoBehaviour, IResetable
 
     private void Update()
     {
+        if (GameplayManager.Instance.isPaused)
+        {
+            return;
+        }
+
         Rotate();
         Flip();
     }

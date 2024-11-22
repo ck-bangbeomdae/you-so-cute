@@ -225,7 +225,8 @@ public class Player : MonoBehaviour
     private void Update()
     {
         // 씬 전환 중이거나 플레이어가 사망한 경우 상태 업데이트 중지
-        if (TransitionManager.Instance.isTransition || isDead)
+
+        if (TransitionManager.Instance.isTransition || GameplayManager.Instance.isPaused || isDead)
         {
             return;
         }
