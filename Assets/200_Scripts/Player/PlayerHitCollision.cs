@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class PlayerHitCollision : MonoBehaviour
 {
@@ -30,21 +31,47 @@ public class PlayerHitCollision : MonoBehaviour
                 player.isCollidingWithGravityFlip = true;
 
                 // 레이저에 의한 중력 반전 파티클 재생
-                if (player.IsGravityFlipped)
+                if (gravityFlip.direction == CommonEnums.MovementDirection.Vertical)
                 {
-                    playPosition = player.transform.position;
-                    playPosition.x = gravityFlip.gameObject.transform.position.x;
-                    Debug.Log(playPosition);
-                    Debug.Log(gravityFlip.gameObject.transform.position);
-                    player.r_laserflippingParticlePrefab.transform.position = playPosition;
-                    player.r_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                    if (player.IsGravityFlipped)
+                    {
+                        playPosition = player.transform.position;
+                        playPosition.x = gravityFlip.gameObject.transform.position.x;
+                        Debug.Log($"laser position : {gravityFlip.gameObject.transform.position}");
+                        Debug.Log($"particle position : {playPosition}");
+                        player.r_vLaserflippingParticlePrefab.transform.position = playPosition;
+                        player.r_vLaserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                    }
+                    else
+                    {
+                        playPosition = player.transform.position;
+                        playPosition.x = gravityFlip.gameObject.transform.position.x;
+                        Debug.Log($"laser position : {gravityFlip.gameObject.transform.position}");
+                        Debug.Log($"particle position : {playPosition}");
+                        player.s_vLaserflippingParticlePrefab.transform.position = playPosition;
+                        player.s_vLaserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                    } 
                 }
-                else
+                else if (gravityFlip.direction == CommonEnums.MovementDirection.Horizontal)
                 {
-                    playPosition = player.transform.position;
-                    playPosition.x = gravityFlip.gameObject.transform.position.x;
-                    player.s_laserflippingParticlePrefab.transform.position = playPosition;
-                    player.s_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                    if (player.IsGravityFlipped)
+                    {
+                        playPosition = player.transform.position;
+                        playPosition.y = gravityFlip.gameObject.transform.position.y;
+                        Debug.Log($"laser position : {gravityFlip.gameObject.transform.position}");
+                        Debug.Log($"particle position : {playPosition}");
+                        player.r_hLaserflippingParticlePrefab.transform.position = playPosition;
+                        player.r_hLaserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                    }
+                    else
+                    {
+                        playPosition = player.transform.position;
+                        playPosition.y = gravityFlip.gameObject.transform.position.y;
+                        Debug.Log($"laser position : {gravityFlip.gameObject.transform.position}");
+                        Debug.Log($"particle position : {playPosition}");
+                        player.s_hLaserflippingParticlePrefab.transform.position = playPosition;
+                        player.s_hLaserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
+                    }
                 }
             }
         }

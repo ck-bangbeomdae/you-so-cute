@@ -15,14 +15,16 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject s_runningParticlePrefab;
     [SerializeField] private GameObject s_landingParticlePrefab;
-    [SerializeField] public GameObject s_laserflippingParticlePrefab;
+    [SerializeField] public GameObject s_vLaserflippingParticlePrefab;
+    [SerializeField] public GameObject s_hLaserflippingParticlePrefab;
     [SerializeField] private GameObject s_deadParticlePrefab;
     [SerializeField] private GameObject s_dustParticlePrefab;
     [SerializeField] private GameObject[] s_flipDustParticlePrefab = null;
 
     [SerializeField] private GameObject r_runningParticlePrefab;
     [SerializeField] private GameObject r_landingParticlePrefab;
-    [SerializeField] public GameObject r_laserflippingParticlePrefab;
+    [SerializeField] public GameObject r_vLaserflippingParticlePrefab;
+    [SerializeField] public GameObject r_hLaserflippingParticlePrefab;
     [SerializeField] private GameObject r_deadParticlePrefab;
     [SerializeField] private GameObject r_dustParticlePrefab;
     [SerializeField] private GameObject[] r_flipDustParticlePrefab = null;
