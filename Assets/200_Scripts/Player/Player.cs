@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     private bool wasGrounded;
 
     public bool isCollideWithGravityFlip;
-    private int gravityFlipComboCount;
+    public int gravityFlipComboCount;
 
     public bool IsGrounded
     {
@@ -335,7 +335,6 @@ public class Player : MonoBehaviour
         GameplayManager.Instance.flipCount++;
         IsGravityFlipped = !IsGravityFlipped;
         IsGrounded = false;
-        gravityFlipComboCount++;
 
         // 중력 반전시 바닥 먼지 파티클 재생
         if (r_dustParticlePrefab != null && s_dustParticlePrefab != null)

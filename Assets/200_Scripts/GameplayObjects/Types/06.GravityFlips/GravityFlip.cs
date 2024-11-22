@@ -13,6 +13,7 @@ public class GravityFlip : MonoBehaviour, ICollisionable
 
         player.rb2d.velocity /= 4f;
         player.isCollideWithGravityFlip = true;
+        player.gravityFlipComboCount++;
         player.GravityFlip();
 
         // 애니메이션 재생

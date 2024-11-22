@@ -7,7 +7,7 @@ public class PlayerInAir : BaseState<Player>
         // 애니메이션 재생
         if (!player.isCollidingWithJumpPad)
         {
-            player.skeletonAnimation.state.SetAnimation(0,  "flipping_up", false);
+            player.skeletonAnimation.state.SetAnimation(0, "flipping_up", false);
         }
     }
 
