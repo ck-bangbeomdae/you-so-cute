@@ -34,6 +34,8 @@ public class PlayerHitCollision : MonoBehaviour
                 {
                     playPosition = player.transform.position;
                     playPosition.x = gravityFlip.gameObject.transform.position.x;
+                    Debug.Log(playPosition);
+                    Debug.Log(gravityFlip.gameObject.transform.position);
                     player.r_laserflippingParticlePrefab.transform.position = playPosition;
                     player.r_laserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
                 }
