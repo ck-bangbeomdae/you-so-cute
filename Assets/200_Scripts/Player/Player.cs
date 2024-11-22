@@ -51,15 +51,8 @@ public class Player : MonoBehaviour
     private bool isGrounded;
     private bool wasGrounded;
 
+    public bool isCollideWithGravityFlip;
     private int gravityFlipComboCount;
-    public int GravityFlipComboCount
-    {
-        get => gravityFlipComboCount;
-        set
-        {
-            gravityFlipComboCount = value;
-        }
-    }
 
     public bool IsGrounded
     {
@@ -71,6 +64,7 @@ public class Player : MonoBehaviour
 
             if (isGrounded && !wasGrounded)
             {
+                isCollideWithGravityFlip = false;
                 isCollidingWithJumpPad = false;
 
                 // 플레이어 착지 파티클 생성
@@ -80,7 +74,7 @@ public class Player : MonoBehaviour
                     s_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
 
                 // TODO : 착지 효과음 재생
-                GravityFlipComboCount = 0;
+                gravityFlipComboCount = 0;
             }
         }
     }
@@ -252,31 +246,27 @@ public class Player : MonoBehaviour
             }
         }
 
+        // 플레이어 눈 변경
         var eyeSlot = skeletonAnimation.Skeleton.FindSlot("eye");
-        if (isCollidingWithGravityFlip)
+        if (isCollideWithGravityFlip)
         {
-            if (GravityFlipComboCount <= 1)
+            if (gravityFlipComboCount <= 1)
             {
                 eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye_flip_1");
-                Debug.Log("eye_flip_1");
             }
-            else if (GravityFlipComboCount <= 2)
+            else if (gravityFlipComboCount <= 2)
             {
                 eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye_flip_2");
-                Debug.Log("eye_flip_2");
             }
             else
             {
                 eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye_flip_3");
-                Debug.Log("eye_flip_3");
             }
         }
         else
         {
             eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye");
         }
-
-        Debug.Log(eyeSlot.Attachment.Name);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -345,7 +335,7 @@ public class Player : MonoBehaviour
         GameplayManager.Instance.flipCount++;
         IsGravityFlipped = !IsGravityFlipped;
         IsGrounded = false;
-        GravityFlipComboCount++;
+        gravityFlipComboCount++;
 
         // 중력 반전시 바닥 먼지 파티클 재생
         if (r_dustParticlePrefab != null && s_dustParticlePrefab != null)
