@@ -5,7 +5,10 @@ public class PlayerInAir : BaseState<Player>
     public override void Enter(Player player)
     {
         // 애니메이션 재생
-        player.skeletonAnimation.state.SetAnimation(0, "flipping", false);
+        if (!player.isCollidingWithJumpPad)
+        {
+            player.skeletonAnimation.state.SetAnimation(0,  "flipping_up", false);
+        }
     }
 
     public override void Execute(Player player)

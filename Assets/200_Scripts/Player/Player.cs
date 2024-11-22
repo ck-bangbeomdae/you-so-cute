@@ -51,6 +51,16 @@ public class Player : MonoBehaviour
     private bool isGrounded;
     private bool wasGrounded;
 
+    private int gravityFlipComboCount;
+    public int GravityFlipComboCount
+    {
+        get => gravityFlipComboCount;
+        set
+        {
+            gravityFlipComboCount = value;
+        }
+    }
+
     public bool IsGrounded
     {
         get => isGrounded;
@@ -70,6 +80,7 @@ public class Player : MonoBehaviour
                     s_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
 
                 // TODO : 착지 효과음 재생
+                GravityFlipComboCount = 0;
             }
         }
     }
@@ -240,6 +251,32 @@ public class Player : MonoBehaviour
                 IsFacingLeft = false;
             }
         }
+
+        var eyeSlot = skeletonAnimation.Skeleton.FindSlot("eye");
+        if (isCollidingWithGravityFlip)
+        {
+            if (GravityFlipComboCount <= 1)
+            {
+                eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye_flip_1");
+                Debug.Log("eye_flip_1");
+            }
+            else if (GravityFlipComboCount <= 2)
+            {
+                eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye_flip_2");
+                Debug.Log("eye_flip_2");
+            }
+            else
+            {
+                eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye_flip_3");
+                Debug.Log("eye_flip_3");
+            }
+        }
+        else
+        {
+            eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye");
+        }
+
+        Debug.Log(eyeSlot.Attachment.Name);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -308,6 +345,7 @@ public class Player : MonoBehaviour
         GameplayManager.Instance.flipCount++;
         IsGravityFlipped = !IsGravityFlipped;
         IsGrounded = false;
+        GravityFlipComboCount++;
 
         // 중력 반전시 바닥 먼지 파티클 재생
         if (r_dustParticlePrefab != null && s_dustParticlePrefab != null)
@@ -333,9 +371,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
-        // 애니메이션 재생
-        skeletonAnimation.state.SetAnimation(0, "flipping", false);
 
         // TODO : 중력 반전 효과음 재생
     }

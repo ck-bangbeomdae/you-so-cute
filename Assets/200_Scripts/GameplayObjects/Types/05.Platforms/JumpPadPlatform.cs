@@ -25,11 +25,17 @@ public class JumpPadPlatform : MonoBehaviour, ICollisionable
         // 설정된 방향으로 힘을 가함
         player.rb2d.AddForce(jumpDirection.normalized * jumpForce, ForceMode2D.Impulse);
 
+        // 설정된 방향으로 반전
+        player.IsFacingLeft = jumpDirection.x < 0;
+
         // 점프 패드 충돌했을 때의 마찰력 설정
         player.jumpPadFriction = jumpPadFriction;
 
-        player.IsGrounded = false;
         player.isCollidingWithJumpPad = true;
+        player.IsGrounded = false;
+
+        // 플레이어 애니메이션 재생
+        player.skeletonAnimation.state.SetAnimation(0, "jumppad", true);
 
         // 경직 시간 설정
         player.stunTimer = 0.5f;
