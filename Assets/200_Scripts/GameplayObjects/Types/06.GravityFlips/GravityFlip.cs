@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GravityFlip : MonoBehaviour, ICollisionable
 {
+    public CommonEnums.MovementDirection direction;
+
     public void OnCollision(Player player)
     {
         if (player.isCollidingWithGravityFlip)
