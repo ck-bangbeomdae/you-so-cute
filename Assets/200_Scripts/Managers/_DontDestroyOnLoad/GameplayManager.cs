@@ -83,7 +83,7 @@ public class GameplayManager : MonoBehaviour
             // 무적모드
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                isGodMode = !isGodMode;
+                //isGodMode = !isGodMode;
             }
 
             // 세이브 포인트로 돌아가기
