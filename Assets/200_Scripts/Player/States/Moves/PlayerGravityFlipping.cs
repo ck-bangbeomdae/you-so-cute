@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class PlayerGravityFlipping : BaseState<Player>
 {
     public override void Enter(Player player)
