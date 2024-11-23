@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class PlayerHitCollision : MonoBehaviour
 {
@@ -50,7 +49,7 @@ public class PlayerHitCollision : MonoBehaviour
                         Debug.Log($"particle position : {playPosition}");
                         player.s_vLaserflippingParticlePrefab.transform.position = playPosition;
                         player.s_vLaserflippingParticlePrefab.GetComponent<ParticleSystem>().Play();
-                    } 
+                    }
                 }
                 else if (gravityFlip.direction == CommonEnums.MovementDirection.Horizontal)
                 {
