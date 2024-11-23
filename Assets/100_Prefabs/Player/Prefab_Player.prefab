@@ -137,7 +137,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  groundCheckDistance: 0.7
+  groundCheckDistance: 1
   s_runningParticlePrefab: {fileID: 5869001775561881955}
   s_landingParticlePrefab: {fileID: 6232305637528723198}
   s_vLaserflippingParticlePrefab: {fileID: 3883407948756550300}
@@ -160,6 +160,8 @@ MonoBehaviour:
   currentSpeed: 0
   currentBeltSpeed: 0
   jumpPadFriction: 0
+  isCollideWithGravityFlip: 0
+  gravityFlipComboCount: 0
   isFacingLeft: 0
   isCollidingWithGravityFlip: 0
   isCollidingWithJumpPad: 0
