@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     // FSM
     public readonly Dictionary<PlayerState, BaseState<Player>> playerStates = new Dictionary<PlayerState, BaseState<Player>>();
     public readonly StateMachine<Player> playerStateMachine = new StateMachine<Player>();
-    private bool isDead;
+    public bool isDead;
 
     // 이동
     private Vector3 lastPlatformPosition;
@@ -253,11 +253,11 @@ public class Player : MonoBehaviour
         var eyeSlot = skeletonAnimation.Skeleton.FindSlot("eye");
         if (isCollideWithGravityFlip)
         {
-            if (gravityFlipComboCount <= 1)
+            if (gravityFlipComboCount <= 2)
             {
                 eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye_flip_1");
             }
-            else if (gravityFlipComboCount <= 2)
+            else if (gravityFlipComboCount >= 3 && gravityFlipComboCount <= 4)
             {
                 eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye_flip_2");
             }
@@ -329,11 +329,6 @@ public class Player : MonoBehaviour
 
     public void GravityFlip()
     {
-        if (isDead)
-        {
-            return;
-        }
-
         // 중력 반전
         GameplayManager.Instance.flipCount++;
         IsGravityFlipped = !IsGravityFlipped;
@@ -369,11 +364,6 @@ public class Player : MonoBehaviour
 
     public void Dead()
     {
-        if (isDead)
-        {
-            return;
-        }
-
         GameplayManager.Instance.deathCount++;
 
         // 물리 시뮬레이션 정지
