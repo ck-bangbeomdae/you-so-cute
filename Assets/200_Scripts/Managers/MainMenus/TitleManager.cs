@@ -54,6 +54,16 @@ public class TitleManager : MonoBehaviour
         }
     }
 
+    public void OnClickOptionButton()
+    {
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
+        {
+            // TODO : 옵션 창 열리기
+        }
+    }
+
+    // TODO : 버튼 호버 되었을 떄 안되었을 때 애니메이션 재생
+
     public void OnClickExitButton()
     {
         if (!isModalOpen)
