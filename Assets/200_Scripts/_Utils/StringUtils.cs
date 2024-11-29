@@ -2,11 +2,6 @@ using UnityEngine;
 
 public static class StringUtils
 {
-    public static string FormatRecord(Record record)
-    {
-        return $"{(string.IsNullOrEmpty(record.playerName) ? "noname" : record.playerName)} | {FormatElapsedTime(record.elapsedTime)} | {record.flipCount} | {record.deathCount}";
-    }
-
     public static string FormatElapsedTime(float time)
     {
         int minutes = Mathf.FloorToInt(time / 60F);
