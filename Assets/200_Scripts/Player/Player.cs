@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject s_vLaserflippingParticlePrefab;
     [SerializeField] public GameObject s_hLaserflippingParticlePrefab;
     [SerializeField] private GameObject s_deadParticlePrefab;
-    [SerializeField] private GameObject s_dustParticlePrefab;
+    [SerializeField] private GameObject[] s_dustParticlePrefab = null;
     [SerializeField] private GameObject[] s_flipDustParticlePrefab = null;
 
     [SerializeField] private GameObject r_runningParticlePrefab;
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     [SerializeField] public GameObject r_vLaserflippingParticlePrefab;
     [SerializeField] public GameObject r_hLaserflippingParticlePrefab;
     [SerializeField] private GameObject r_deadParticlePrefab;
-    [SerializeField] private GameObject r_dustParticlePrefab;
+    [SerializeField] private GameObject[] r_dustParticlePrefab = null;
     [SerializeField] private GameObject[] r_flipDustParticlePrefab = null;
 
     // 컴포넌트
@@ -339,8 +339,14 @@ public class Player : MonoBehaviour
         {
             if (IsGravityFlipped)
             {
-                s_dustParticlePrefab.GetComponent<ParticleSystem>().Stop();
-                r_dustParticlePrefab.GetComponent<ParticleSystem>().Play();
+                foreach (GameObject sd in s_dustParticlePrefab)
+                {
+                    sd.GetComponent<ParticleSystem>().Stop();
+                }
+                foreach (GameObject rd in r_dustParticlePrefab)
+                {
+                    rd.GetComponent<ParticleSystem>().Play();
+                }
 
                 foreach (GameObject p in r_flipDustParticlePrefab)
                 {
@@ -349,8 +355,14 @@ public class Player : MonoBehaviour
             }
             else
             {
-                r_dustParticlePrefab.GetComponent<ParticleSystem>().Stop();
-                s_dustParticlePrefab.GetComponent<ParticleSystem>().Play();
+                foreach (GameObject rd in r_dustParticlePrefab)
+                {
+                    rd.GetComponent<ParticleSystem>().Stop();
+                }
+                foreach (GameObject sd in s_dustParticlePrefab)
+                {
+                    sd.GetComponent<ParticleSystem>().Play();
+                }
 
                 foreach (GameObject p in s_flipDustParticlePrefab)
                 {
