@@ -32,12 +32,12 @@ public class Savepoint : BasePlayerSpawnpoint, IResetable, ICollisionable
 
         if (isActive)
         {
-            var trackEntry = skeletonAnimation.state.SetAnimation(0, "Save_on", false);
+            var trackEntry = skeletonAnimation.state.SetAnimation(0, "Save_on_idle", true);
             trackEntry.TrackTime = trackEntry.AnimationEnd;
         }
         else
         {
-            var trackEntry = skeletonAnimation.state.SetAnimation(0, "Off", false);
+            var trackEntry = skeletonAnimation.state.SetAnimation(0, "Save_off_idle", true);
             trackEntry.TrackTime = trackEntry.AnimationEnd;
         }
 
@@ -71,7 +71,8 @@ public class Savepoint : BasePlayerSpawnpoint, IResetable, ICollisionable
                 if (sp.id == GameplayManager.Instance.lastSavepointId)
                 {
                     sp.isActive = false;
-                    sp.skeletonAnimation.state.SetAnimation(0, "Save_off", false);
+                    var trackEntry = sp.skeletonAnimation.state.SetAnimation(0, "Save_off", false);
+                    trackEntry.Complete += (entry) => sp.skeletonAnimation.state.SetAnimation(0, "Save_off_idle", true);
                     break;
                 }
             }
@@ -86,7 +87,8 @@ public class Savepoint : BasePlayerSpawnpoint, IResetable, ICollisionable
             isActive = true;
 
             // 애니메이션 재생
-            skeletonAnimation.state.SetAnimation(0, "Save_on", false);
+            var activeTrackEntry = skeletonAnimation.state.SetAnimation(0, "Save_on", false);
+            activeTrackEntry.Complete += (entry) => skeletonAnimation.state.SetAnimation(0, "Save_on_idle", true);
         }
     }
 }

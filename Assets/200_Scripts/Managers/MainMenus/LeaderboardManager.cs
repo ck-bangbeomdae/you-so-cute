@@ -6,9 +6,14 @@ using UnityEngine;
 public class LeaderboardManager : MonoBehaviour, IResetable
 {
     // 컴포넌트
-    [SerializeField] private TextMeshProUGUI lastRecordText;
+    [SerializeField] private TextMeshProUGUI lastRecordNoText;
+    [SerializeField] private TextMeshProUGUI lastRecordNameText;
+    [SerializeField] private TextMeshProUGUI lastRecordTimeText;
+    [SerializeField] private TextMeshProUGUI lastRecordDeadText;
+
     [SerializeField] private GameObject highScores;
-    [SerializeField] private GameObject recordPrefab;
+    [SerializeField] private GameObject goldRecordPrefab;
+    [SerializeField] private GameObject blueRecordPrefab;
 
     private void Start()
     {
@@ -17,7 +22,6 @@ public class LeaderboardManager : MonoBehaviour, IResetable
 
     public void HandleReset()
     {
-        //UpdateLastRecord();
         StartCoroutine(ScoreAPIUtils.GetScoresCoroutine(OnGetScoresSuccess, OnGetScoresError));
     }
 
@@ -30,24 +34,49 @@ public class LeaderboardManager : MonoBehaviour, IResetable
         }
     }
 
-    private void UpdateLastRecord()
-    {
-        Record lastRecord = ProfileManager.Instance.playerProfile.lastRecord;
-        lastRecordText.text = lastRecord.flipCount == 0 ? "NO RECORD" : StringUtils.FormatRecord(lastRecord);
-    }
-
     private void OnGetScoresSuccess(string jsonResponse)
     {
         Record[] records = JsonConvert.DeserializeObject<Record[]>(jsonResponse);
 
         Array.Sort(records, (x, y) => x.elapsedTime.CompareTo(y.elapsedTime));
 
+        Record lastRecord = ProfileManager.Instance.playerProfile.lastRecord;
+        Debug.Log($"{lastRecord.playerName}, {lastRecord.deathCount}, {lastRecord.flipCount}, {StringUtils.FormatElapsedTime(lastRecord.elapsedTime)}");
+
         for (int i = 0; i < records.Length; i++)
         {
             Record record = records[i];
-            GameObject recordInstance = Instantiate(recordPrefab, highScores.transform);
-            TextMeshProUGUI recordText = recordInstance.GetComponentInChildren<TextMeshProUGUI>();
-            recordText.text = $"{i + 1}. {StringUtils.FormatRecord(record)}";
+
+            if (record.playerName == lastRecord.playerName &&
+                Math.Abs(record.elapsedTime - lastRecord.elapsedTime) < 0.01f &&
+                record.flipCount == lastRecord.flipCount &&
+                record.deathCount == lastRecord.deathCount)
+            {
+                lastRecordNoText.text = $"{i + 1}";
+                lastRecordNameText.text = string.IsNullOrEmpty(record.playerName) ? "noname" : record.playerName;
+                lastRecordTimeText.text = $"{StringUtils.FormatElapsedTime(record.elapsedTime)}";
+                lastRecordDeadText.text = $"{record.deathCount}";
+            }
+
+            GameObject recordInstance;
+
+            if (i == 0)
+            {
+                recordInstance = Instantiate(goldRecordPrefab, highScores.transform);
+            }
+            else
+            {
+                recordInstance = Instantiate(blueRecordPrefab, highScores.transform);
+            }
+
+            TextMeshProUGUI noText = recordInstance.transform.Find("NoText").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI nameText = recordInstance.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI timeText = recordInstance.transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI deadText = recordInstance.transform.Find("DeadText").GetComponent<TextMeshProUGUI>();
+            noText.text = $"{i + 1}";
+            nameText.text = string.IsNullOrEmpty(record.playerName) ? "noname" : record.playerName;
+            timeText.text = $"{StringUtils.FormatElapsedTime(record.elapsedTime)}";
+            deadText.text = $"{record.deathCount}";
         }
     }
 
