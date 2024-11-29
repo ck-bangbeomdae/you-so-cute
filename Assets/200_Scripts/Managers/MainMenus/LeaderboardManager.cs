@@ -17,7 +17,7 @@ public class LeaderboardManager : MonoBehaviour, IResetable
 
     public void HandleReset()
     {
-        UpdateLastRecord();
+        //UpdateLastRecord();
         StartCoroutine(ScoreAPIUtils.GetScoresCoroutine(OnGetScoresSuccess, OnGetScoresError));
     }
 
