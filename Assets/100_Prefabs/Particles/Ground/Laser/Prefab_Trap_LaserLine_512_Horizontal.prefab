@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7021768270745797974
+--- !u!1 &2456461734163476397
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7965866161577414266}
-  - component: {fileID: 6523891020899707235}
-  - component: {fileID: 801504708314749134}
-  - component: {fileID: 1926043387325999563}
+  - component: {fileID: 1062516961186718273}
+  - component: {fileID: 7892019785906148916}
+  - component: {fileID: 216421680054798036}
+  - component: {fileID: 4172112513256778249}
   m_Layer: 0
-  m_Name: Particle_Laser_1024
+  m_Name: Prefab_Trap_LaserLine_512_Horizontal
   m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7965866161577414266
+--- !u!4 &1062516961186718273
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7021768270745797974}
+  m_GameObject: {fileID: 2456461734163476397}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -34,13 +34,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!198 &6523891020899707235
+--- !u!198 &7892019785906148916
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7021768270745797974}
+  m_GameObject: {fileID: 2456461734163476397}
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 10
@@ -288,7 +288,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 6
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1546,11 +1546,11 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: -2090804031, guid: efbf409e5155b7f4c85fb5722173b0a3, type: 3}
-    - sprite: {fileID: 1611044887, guid: efbf409e5155b7f4c85fb5722173b0a3, type: 3}
-    - sprite: {fileID: 1958258066, guid: efbf409e5155b7f4c85fb5722173b0a3, type: 3}
-    - sprite: {fileID: 1073509896, guid: efbf409e5155b7f4c85fb5722173b0a3, type: 3}
-    - sprite: {fileID: 970861268, guid: efbf409e5155b7f4c85fb5722173b0a3, type: 3}
+    - sprite: {fileID: 1985814308, guid: 43429a89123cc54459ed93e21790271e, type: 3}
+    - sprite: {fileID: -523681654, guid: 43429a89123cc54459ed93e21790271e, type: 3}
+    - sprite: {fileID: -1896211806, guid: 43429a89123cc54459ed93e21790271e, type: 3}
+    - sprite: {fileID: -487517801, guid: 43429a89123cc54459ed93e21790271e, type: 3}
+    - sprite: {fileID: -503034765, guid: 43429a89123cc54459ed93e21790271e, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -4819,14 +4819,14 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &801504708314749134
+--- !u!199 &216421680054798036
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7021768270745797974}
+  m_GameObject: {fileID: 2456461734163476397}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -4893,13 +4893,13 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!61 &1926043387325999563
+--- !u!61 &4172112513256778249
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7021768270745797974}
+  m_GameObject: {fileID: 2456461734163476397}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -4936,5 +4936,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 6, y: 0.3}
+  m_Size: {x: 1, y: 0.1}
   m_EdgeRadius: 0
