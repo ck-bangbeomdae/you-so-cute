@@ -1,19 +1,67 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class TitleManager : MonoBehaviour
+public class TitleManager : MonoBehaviour, IResetable
 {
     // 컴포넌트
     [SerializeField] private GameObject renameModal;
+    [SerializeField] private GameObject optionsModal;
+
+    [SerializeField] private GameObject newGameSelect;
+    [SerializeField] private GameObject continueSelect;
+    [SerializeField] private GameObject leaderboardSelect;
+    [SerializeField] private GameObject optionsSelect;
+    [SerializeField] private GameObject exitSelect;
+
+    [SerializeField] private Button newGameButton;
+    [SerializeField] private Button continueButton;
+    [SerializeField] private Button leaderboardButton;
+    [SerializeField] private Button optionsButton;
+    [SerializeField] private Button exitButton;
+
+    [SerializeField] private TMP_InputField renameModalInputField;
+    [SerializeField] private Slider optionsModalBGMSlider;
+    [SerializeField] private Slider optionsModalSFXSlider;
+
     [SerializeField] private SceneTransition newGameSceneTransition;
 
-    private TMP_InputField renameModalInputField;
+    private Vector2 newGameTargetTransform;
+    private Vector2 continueTargetTransform;
+    private Vector2 leaderboardTargetTransform;
+    private Vector2 optionsTargetTransform;
+    private Vector2 exitTargetTransform;
 
     private bool isModalOpen;
 
     private void Awake()
     {
-        renameModalInputField = renameModal.GetComponentInChildren<TMP_InputField>();
+        newGameTargetTransform = newGameSelect.transform.position;
+        continueTargetTransform = continueSelect.transform.position;
+        leaderboardTargetTransform = leaderboardSelect.transform.position;
+        optionsTargetTransform = optionsSelect.transform.position;
+        exitTargetTransform = exitSelect.transform.position;
+    }
+
+    private void Start()
+    {
+        HandleReset();
+    }
+
+    public void HandleReset()
+    {
+        newGameSelect.transform.position = new Vector2(1800f, newGameSelect.transform.position.y);
+        continueSelect.transform.position = new Vector2(1800f, continueSelect.transform.position.y);
+        leaderboardSelect.transform.position = new Vector2(1800f, leaderboardSelect.transform.position.y);
+        optionsSelect.transform.position = new Vector2(1800f, optionsSelect.transform.position.y);
+        exitSelect.transform.position = new Vector2(1800f, exitSelect.transform.position.y);
+
+        newGameButton.image.color = new Color(0.72f, 0.72f, 0.73f);
+        continueButton.image.color = new Color(0.72f, 0.72f, 0.73f);
+        leaderboardButton.image.color = new Color(0.72f, 0.72f, 0.73f);
+        optionsButton.image.color = new Color(0.72f, 0.72f, 0.73f);
+        exitButton.image.color = new Color(0.72f, 0.72f, 0.73f);
     }
 
     public void OnClickNewGameButton()
@@ -54,6 +102,36 @@ public class TitleManager : MonoBehaviour
         }
     }
 
+    public void OnClickOptionButton()
+    {
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
+        {
+            optionsModalBGMSlider.value = ProfileManager.Instance.playerProfile.bgmVolume;
+            optionsModalSFXSlider.value = ProfileManager.Instance.playerProfile.sfxVolume;
+
+            optionsModal.SetActive(true);
+
+            // TODO : 블러 효과 적용
+
+            newGameSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            newGameButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
+            continueSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            continueButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
+            leaderboardSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            leaderboardButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
+            optionsSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            optionsButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
+            exitSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            exitButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
+            isModalOpen = true;
+        }
+    }
+
     public void OnClickExitButton()
     {
         if (!isModalOpen)
@@ -61,7 +139,7 @@ public class TitleManager : MonoBehaviour
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-            Application.Quit();
+                Application.Quit();
 #endif
         }
     }
@@ -93,7 +171,23 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    private void CreateRenameModal()
+    public void OnClickConfirmOptionsModal()
+    {
+        if (isModalOpen)
+        {
+            ProfileManager.Instance.playerProfile.bgmVolume = optionsModalBGMSlider.value;
+            ProfileManager.Instance.playerProfile.sfxVolume = optionsModalSFXSlider.value;
+            ProfileManager.Instance.SaveProfile();
+
+            optionsModal.SetActive(false);
+
+            // TODO : 블러 효과 해제
+
+            isModalOpen = false;
+        }
+    }
+
+    public void CreateRenameModal()
     {
         if (!isModalOpen)
         {
@@ -103,7 +197,114 @@ public class TitleManager : MonoBehaviour
 
             // TODO : 블러 효과 적용
 
+            newGameSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            newGameButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
+            continueSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            continueButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
+            leaderboardSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            leaderboardButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
+            optionsSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            optionsButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
+            exitSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            exitButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+
             isModalOpen = true;
         }
     }
+
+    #region 마우스 이벤트
+    public void OnMouseEnterNewGameButton()
+    {
+        if (!isModalOpen)
+        {
+            newGameSelect.transform.DOMoveX(newGameTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
+            newGameButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public void OnMouseOverNewGameButton()
+    {
+        if (!isModalOpen)
+        {
+            newGameSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            newGameButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public void OnMouseEnterContinueButton()
+    {
+        if (!isModalOpen)
+        {
+            continueSelect.transform.DOMoveX(continueTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
+            continueButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public void OnMouseOverContinueButton()
+    {
+        if (!isModalOpen)
+        {
+            continueSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            continueButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public void OnMouseEnterLeaderboardButton()
+    {
+        if (!isModalOpen)
+        {
+            leaderboardSelect.transform.DOMoveX(leaderboardTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
+            leaderboardButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public void OnMouseOverLeaderboardButton()
+    {
+        if (!isModalOpen)
+        {
+            leaderboardSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            leaderboardButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public void OnMouseEnterOptionsButton()
+    {
+        if (!isModalOpen)
+        {
+            optionsSelect.transform.DOMoveX(optionsTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
+            optionsButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public void OnMouseOverOptionsGameButton()
+    {
+        if (!isModalOpen)
+        {
+            optionsSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            optionsButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public void OnMouseEnterExitButton()
+    {
+        if (!isModalOpen)
+        {
+            exitSelect.transform.DOMoveX(exitTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
+            exitButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+
+    public void OnMouseOverExitButton()
+    {
+        if (!isModalOpen)
+        {
+            exitSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            exitButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
+        }
+    }
+    #endregion
 }
