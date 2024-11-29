@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
     [HideInInspector] public SkeletonAnimation skeletonAnimation;
+    [HideInInspector] public GameObject spineAnimationObject;
     private DarkEvent darkEvent;
     private ScrollEvent scrollEvent;
 
@@ -54,6 +55,7 @@ public class Player : MonoBehaviour
     private bool wasGrounded;
 
     public bool isCollideWithGravityFlip;
+    public bool isTriggerGravityFlipKeyboard;
     public int gravityFlipComboCount;
 
     public bool IsGrounded
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour
             if (isGrounded && !wasGrounded)
             {
                 isCollideWithGravityFlip = false;
+                isTriggerGravityFlipKeyboard = false;
                 isCollidingWithJumpPad = false;
 
                 // 플레이어 착지 파티클 생성
@@ -76,6 +79,8 @@ public class Player : MonoBehaviour
                     s_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
 
                 // TODO : 착지 효과음 재생
+
+				spineAnimationObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 gravityFlipComboCount = 0;
             }
         }
@@ -135,6 +140,7 @@ public class Player : MonoBehaviour
         }
 
         // 컴포넌트 초기화
+        spineAnimationObject = transform.Find("SpineAnimation").gameObject;
         rb2d = GetComponent<Rigidbody2D>();
         skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 

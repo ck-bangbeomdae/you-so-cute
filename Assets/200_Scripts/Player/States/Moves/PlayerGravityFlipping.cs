@@ -3,6 +3,8 @@ public class PlayerGravityFlipping : BaseState<Player>
     public override void Enter(Player player)
     {
         // 중력 반전
+        player.isTriggerGravityFlipKeyboard = true;
+        player.skeletonAnimation.state.SetAnimation(0, "flipping_jump", false);
         player.GravityFlip();
     }
 
