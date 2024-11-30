@@ -7,10 +7,10 @@ public class PlayerGravityFlipping : BaseState<Player>
 
         player.skeletonAnimation.state.SetAnimation(0, "flipping_jump", false);
 
-        var saveSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
-        saveSoundInstance.setParameterByNameWithLabel("Player", "Flip");
-        saveSoundInstance.start();
-        saveSoundInstance.release();
+        var sfxSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
+        sfxSoundInstance.setParameterByNameWithLabel("Player", "Flip");
+        sfxSoundInstance.start();
+        sfxSoundInstance.release();
 
         player.GravityFlip();
     }

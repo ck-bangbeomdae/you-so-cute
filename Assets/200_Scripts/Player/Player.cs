@@ -79,10 +79,10 @@ public class Player : MonoBehaviour
                     s_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
 
                 // 착지 효과음 재생
-                var saveSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
-                saveSoundInstance.setParameterByNameWithLabel("Player", "Land");
-                saveSoundInstance.start();
-                saveSoundInstance.release();
+                var sfxSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
+                sfxSoundInstance.setParameterByNameWithLabel("Player", "Land");
+                sfxSoundInstance.start();
+                sfxSoundInstance.release();
 
                 spineAnimationObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 gravityFlipComboCount = 0;
@@ -338,10 +338,10 @@ public class Player : MonoBehaviour
                 s_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
 
             // 달리기 효과음 재생
-            var saveSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
-            saveSoundInstance.setParameterByNameWithLabel("Player", "Run");
-            saveSoundInstance.start();
-            saveSoundInstance.release();
+            var sfxSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
+            sfxSoundInstance.setParameterByNameWithLabel("Player", "Run");
+            sfxSoundInstance.start();
+            sfxSoundInstance.release();
         }
     }
 
@@ -422,10 +422,10 @@ public class Player : MonoBehaviour
         }
 
         // 사망 효과음 재생
-        var saveSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
-        saveSoundInstance.setParameterByNameWithLabel("Player", "Death");
-        saveSoundInstance.start();
-        saveSoundInstance.release();
+        var sfxSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
+        sfxSoundInstance.setParameterByNameWithLabel("Player", "Death");
+        sfxSoundInstance.start();
+        sfxSoundInstance.release();
 
         if (scrollEvent != null)
         {
