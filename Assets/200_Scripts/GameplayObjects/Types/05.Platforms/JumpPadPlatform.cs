@@ -44,7 +44,7 @@ public class JumpPadPlatform : MonoBehaviour, ICollisionable
         skeletonAnimation.timeScale = 1f;
 
         // 점프패드 애니메이션 재생
-        skeletonAnimation.state.SetAnimation(0, jumpPadType == JumpPadType.Low ? "Jump_Pad_2" : "Jump_Pad_1", false);
+        skeletonAnimation.state.SetAnimation(0, jumpPadType == JumpPadType.Low ? "jumppad_2" : "jumppad_1", false);
     }
 
     private enum JumpPadType
