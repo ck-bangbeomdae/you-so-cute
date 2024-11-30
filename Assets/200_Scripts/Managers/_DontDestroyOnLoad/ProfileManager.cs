@@ -12,6 +12,9 @@ public class ProfileManager : MonoBehaviour
 
     public PlayerProfile playerProfile;
 
+    private FMOD.Studio.Bus sfxBus;
+    private FMOD.Studio.Bus bgmBus;
+
     private void Awake()
     {
         if (Instance != null)
@@ -25,11 +28,24 @@ public class ProfileManager : MonoBehaviour
         LoadProfile();
     }
 
+    private void Start()
+    {
+        // Bus 인스턴스 가져오기 (FMOD Studio에서 설정한 Bus 이름 사용)
+        sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX_Bus");
+        bgmBus = FMODUnity.RuntimeManager.GetBus("bus:/BGM_Bus");
+
+        sfxBus.setVolume(playerProfile.sfxVolume);
+        bgmBus.setVolume(playerProfile.bgmVolume);
+    }
+
     public void SaveProfile()
     {
         string filePath = Path.Combine(Application.persistentDataPath, PROFILE_FILE_NAME);
         string json = JsonUtility.ToJson(playerProfile, true);
         File.WriteAllText(filePath, json);
+
+        sfxBus.setVolume(playerProfile.sfxVolume);
+        bgmBus.setVolume(playerProfile.bgmVolume);
     }
 
     public void LoadProfile()

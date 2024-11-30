@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8441945093483858673}
   - component: {fileID: 1559104175058792699}
   - component: {fileID: 796911360081269064}
+  - component: {fileID: 7807589764388318996}
   m_Layer: 0
   m_Name: CinemachineBrain
   m_TagString: MainCamera
@@ -163,6 +164,20 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7807589764388318996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6198927580505126661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &6672510288512077222
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,7 +48,7 @@ public class BreakablePlatform : MonoBehaviour, IResetable
 
         yield return new WaitForSeconds(destructionDelay);
 
-        // TODO : 플랫폼 파괴 효과음 재생
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/BreakBlock");
 
         spriteRenderer.enabled = false;
         collider2d.enabled = false;

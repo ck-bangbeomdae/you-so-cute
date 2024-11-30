@@ -14,9 +14,11 @@ public class GravityFlip : MonoBehaviour, ICollisionable
         player.rb2d.velocity /= 4f;
         player.isCollideWithGravityFlip = true;
         player.gravityFlipComboCount++;
-        player.GravityFlip();
 
         // 애니메이션 재생
         player.skeletonAnimation.state.SetAnimation(0, "lazer_flip", false);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/FlipLazer");
+
+        player.GravityFlip();
     }
 }

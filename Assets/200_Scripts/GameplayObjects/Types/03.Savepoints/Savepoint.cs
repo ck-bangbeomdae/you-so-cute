@@ -89,6 +89,8 @@ public class Savepoint : BasePlayerSpawnpoint, IResetable, ICollisionable
             // 애니메이션 재생
             var activeTrackEntry = skeletonAnimation.state.SetAnimation(0, "Save_on", false);
             activeTrackEntry.Complete += (entry) => skeletonAnimation.state.SetAnimation(0, "Save_on_idle", true);
+
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SavePoint");
         }
     }
 }

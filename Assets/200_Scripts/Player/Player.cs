@@ -78,7 +78,11 @@ public class Player : MonoBehaviour
                 else
                     s_landingParticlePrefab.GetComponent<ParticleSystem>().Play();
 
-                // TODO : 착지 효과음 재생
+                // 착지 효과음 재생
+                var saveSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
+                saveSoundInstance.setParameterByNameWithLabel("Player", "Land");
+                saveSoundInstance.start();
+                saveSoundInstance.release();
 
                 spineAnimationObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 gravityFlipComboCount = 0;
@@ -333,7 +337,11 @@ public class Player : MonoBehaviour
             else
                 s_runningParticlePrefab.GetComponent<ParticleSystem>().Play();
 
-            // TODO : 달리기 효과음 재생
+            // 달리기 효과음 재생
+            var saveSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
+            saveSoundInstance.setParameterByNameWithLabel("Player", "Run");
+            saveSoundInstance.start();
+            saveSoundInstance.release();
         }
     }
 
@@ -380,8 +388,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
-        // TODO : 중력 반전 효과음 재생
     }
 
     public void Dead()
@@ -415,7 +421,11 @@ public class Player : MonoBehaviour
             s_deadParticlePrefab.GetComponent<ParticleSystem>().Play();
         }
 
-        // TODO : 사망 효과음 재생
+        // 사망 효과음 재생
+        var saveSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Player");
+        saveSoundInstance.setParameterByNameWithLabel("Player", "Death");
+        saveSoundInstance.start();
+        saveSoundInstance.release();
 
         if (scrollEvent != null)
         {

@@ -37,6 +37,8 @@ public class JumpPadPlatform : MonoBehaviour, ICollisionable
         // 플레이어 애니메이션 재생
         player.skeletonAnimation.state.SetAnimation(0, "jumppad", true);
 
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/JumpPad");
+
         // 경직 시간 설정
         player.stunTimer = 0.5f;
 
