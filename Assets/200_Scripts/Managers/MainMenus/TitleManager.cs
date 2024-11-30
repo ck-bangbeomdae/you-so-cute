@@ -25,7 +25,7 @@ public class TitleManager : MonoBehaviour, IResetable
     [SerializeField] private Slider optionsModalBGMSlider;
     [SerializeField] private Slider optionsModalSFXSlider;
 
-    [SerializeField] private SceneTransition newGameSceneTransition;
+    [SerializeField] private PlayerSpawnpoint newGameSceneTransition;
 
     private Vector2 newGameTargetTransform;
     private Vector2 continueTargetTransform;
@@ -51,6 +51,8 @@ public class TitleManager : MonoBehaviour, IResetable
 
     public void HandleReset()
     {
+        CreateRenameModal();
+
         newGameSelect.transform.position = new Vector2(2200f, newGameSelect.transform.position.y);
         continueSelect.transform.position = new Vector2(2200f, continueSelect.transform.position.y);
         leaderboardSelect.transform.position = new Vector2(2200f, leaderboardSelect.transform.position.y);
@@ -69,7 +71,7 @@ public class TitleManager : MonoBehaviour, IResetable
         if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
             GameplayManager.Instance.IsGameRunning = true;
-            TransitionManager.Instance.LoadScene(newGameSceneTransition);
+            TransitionManager.Instance.LoadSceneWithPlayer(newGameSceneTransition);
         }
     }
 
@@ -80,6 +82,7 @@ public class TitleManager : MonoBehaviour, IResetable
             if (!string.IsNullOrEmpty(ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint.sceneTransition.sceneName))
             {
                 GameplayManager.Instance.IsGameRunning = true;
+                GameplayManager.Instance.playerSavepoint = ProfileManager.Instance.playerProfile.progressSave.playerSpawnpoint;
                 GameplayManager.Instance.hasPlayerSavepoint = true;
                 GameplayManager.Instance.lastSavepointId = ProfileManager.Instance.playerProfile.progressSave.lastSavepointId;
                 GameplayManager.Instance.lastSavepointProgressPortalCount = ProfileManager.Instance.playerProfile.progressSave.lastSavepointProgressPortalCount;

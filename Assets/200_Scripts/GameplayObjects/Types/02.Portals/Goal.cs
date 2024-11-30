@@ -45,14 +45,7 @@ public class Goal : MonoBehaviour, ICollisionable
     private void ResetProgressAndTransition()
     {
         // 진행사항 초기화
-        GameplayManager.Instance.playerSavepoint = new PlayerSpawnpoint();
-        GameplayManager.Instance.hasPlayerSavepoint = false;
-        GameplayManager.Instance.lastSavepointId = 0;
-        GameplayManager.Instance.lastSavepointProgressPortalCount = 0;
-        GameplayManager.Instance.ElapsedTime = 0f;
-        GameplayManager.Instance.CurrentProgressPortalCount = 0;
-        GameplayManager.Instance.flipCount = 0;
-        GameplayManager.Instance.deathCount = 0;
+        GameplayManager.Instance.ResetProgress();
 
         // 메인메뉴로 씬 전환
         TransitionManager.Instance.LoadScene(sceneTransition);

@@ -22,6 +22,12 @@ public class LeaderboardManager : MonoBehaviour, IResetable
 
     public void HandleReset()
     {
+        // highScores 자식 인스턴스 전부 삭제
+        foreach (Transform child in highScores.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
         StartCoroutine(ScoreAPIUtils.GetScoresCoroutine(OnGetScoresSuccess, OnGetScoresError));
     }
 

@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        if (gameObject.scene != SceneManager.GetActiveScene() && gameObject.scene.name != "Scene_정윤희_01")
+        if (gameObject.scene != SceneManager.GetActiveScene())
         {
             Destroy(gameObject);
             return;
@@ -232,8 +232,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // 씬 전환 중이거나 플레이어가 사망한 경우 상태 업데이트 중지
+        if (!GameplayManager.Instance.IsGameRunning)
+        {
+            rb2d.simulated = false;
+        }
 
+        // 씬 전환 중이거나 플레이어가 사망한 경우 상태 업데이트 중지
         if (TransitionManager.Instance.isTransition || GameplayManager.Instance.isPaused || isDead)
         {
             return;
@@ -391,11 +395,14 @@ public class Player : MonoBehaviour
         var trackEntry = skeletonAnimation.state.SetAnimation(0, "death", false);
         trackEntry.Complete += (entry) =>
         {
-            // 플레이어 리스폰
-            TransitionManager.Instance.LoadSceneWithPlayer(GameplayManager.Instance.playerSavepoint);
+            if (GameplayManager.Instance.IsGameRunning)
+            {
+                // 플레이어 리스폰
+                TransitionManager.Instance.LoadSceneWithPlayer(GameplayManager.Instance.playerSavepoint);
 
-            // 진행사항 되돌리기
-            GameplayManager.Instance.CurrentProgressPortalCount = GameplayManager.Instance.lastSavepointProgressPortalCount;
+                // 진행사항 되돌리기
+                GameplayManager.Instance.CurrentProgressPortalCount = GameplayManager.Instance.lastSavepointProgressPortalCount;
+            }
         };
 
         // 사망 파티클 재생

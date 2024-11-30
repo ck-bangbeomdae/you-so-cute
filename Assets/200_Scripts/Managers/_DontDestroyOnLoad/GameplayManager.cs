@@ -5,8 +5,9 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager Instance { get; private set; }
 
-    public bool isPaused;
+    [SerializeField] private GameObject optionsModal;
 
+    public bool isPaused;
     public int MaxProgressPortalCount = 50;
     public bool isGodMode;
 
@@ -74,13 +75,18 @@ public class GameplayManager : MonoBehaviour
 
     private void Update()
     {
+        if (!IsGameRunning)
+        {
+            return;
+        }
+
         // 게임 일시정지
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
         }
 
-        if (IsGameRunning && !isPaused)
+        if (!isPaused)
         {
             ElapsedTime += Time.deltaTime;
 
@@ -99,11 +105,22 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    private void TogglePause()
+    public void TogglePause()
     {
-        // TODO : Pause UI 구현
-
         isPaused = !isPaused;
+        optionsModal.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
+    }
+
+    public void ResetProgress()
+    {
+        playerSavepoint = new PlayerSpawnpoint();
+        hasPlayerSavepoint = false;
+        lastSavepointId = 0;
+        lastSavepointProgressPortalCount = 0;
+        ElapsedTime = 0f;
+        CurrentProgressPortalCount = 0;
+        flipCount = 0;
+        deathCount = 0;
     }
 }

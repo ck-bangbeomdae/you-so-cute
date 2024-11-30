@@ -11,10 +11,10 @@ public struct PlayerSpawnpoint
 {
     public SceneTransition sceneTransition;
     public bool isGravityFlipped;
-    [HideInInspector] public Vector2 spawnPosition;
-    [HideInInspector] public Vector2 velocity;
-    [HideInInspector] public bool isFacingLeft;
-    [HideInInspector] public bool isCollidingWithGravityFlip;
+    public Vector2 spawnPosition;
+    public Vector2 velocity;
+    public bool isFacingLeft;
+    public bool isCollidingWithGravityFlip;
 
     public override int GetHashCode()
     {
