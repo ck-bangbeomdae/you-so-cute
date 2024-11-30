@@ -34,6 +34,8 @@ public class Portal : BasePlayerSpawnpoint, ICollisionable
 
         // 게임 진행사항 업데이트
         GameplayManager.Instance.CurrentProgressPortalCount += (int)pathType;
+
+        UIManager.Instance.CloseManual();
     }
 
     private enum PathType

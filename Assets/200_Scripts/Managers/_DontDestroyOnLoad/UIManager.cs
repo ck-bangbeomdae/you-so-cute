@@ -14,8 +14,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider progressPortalCountSliderBottom;
     [SerializeField] private GameObject progressPortalCountIcon;
     [SerializeField] private List<Transform> pathObjects = new List<Transform>();
+    [SerializeField] private GameObject manual;
 
     private List<Vector3> pathPoints = new List<Vector3>();
+    private Vector2 newManualTargetTransform;
 
     private void Awake()
     {
@@ -25,6 +27,9 @@ public class UIManager : MonoBehaviour
         }
 
         Instance = this;
+
+        newManualTargetTransform = manual.transform.position;
+        manual.transform.position = new Vector2(-420f, manual.transform.position.y);
     }
 
     private void Start()
@@ -58,6 +63,16 @@ public class UIManager : MonoBehaviour
         {
             // TODO : 역주행시 효과 추가
         }
+    }
+
+    public void OpenManual()
+    {
+        manual.transform.DOMoveX(newManualTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
+    }
+
+    public void CloseManual()
+    {
+        manual.transform.DOMoveX(-420f, 0.5f).SetEase(Ease.OutBack);
     }
 
     private Vector3 GetPointOnPath(float t)

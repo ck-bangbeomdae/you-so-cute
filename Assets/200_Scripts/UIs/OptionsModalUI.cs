@@ -20,6 +20,8 @@ public class OptionsModalUI : MonoBehaviour
         GameplayManager.Instance.IsGameRunning = false;
         GameplayManager.Instance.ResetProgress();
 
+        UIManager.Instance.CloseManual();
+
         SceneTransition titleSceneTransition = new SceneTransition { sceneName = "Scene_Title", transitionType = TransitionType.FadeInOut };
         TransitionManager.Instance.LoadScene(titleSceneTransition);
     }
