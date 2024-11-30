@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
 
                 // TODO : 착지 효과음 재생
 
-				spineAnimationObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                spineAnimationObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 gravityFlipComboCount = 0;
             }
         }

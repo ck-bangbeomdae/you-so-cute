@@ -37,7 +37,7 @@ public class GameplayManager : MonoBehaviour
         }
     }
 
-    private int currentProgressPortalCount;
+    public int currentProgressPortalCount;
     public int CurrentProgressPortalCount
     {
         get => currentProgressPortalCount;
@@ -69,10 +69,7 @@ public class GameplayManager : MonoBehaviour
     {
         // UI 초기화
         IsGameRunning = (SceneManager.GetActiveScene().name == "Scene_Title" || SceneManager.GetActiveScene().name == "Scene_Leaderboard") ? false : true;
-
-        isGodMode = false;
-        flipCount = 0;
-        deathCount = 0;
+        CurrentProgressPortalCount = 0;
     }
 
     private void Update()
