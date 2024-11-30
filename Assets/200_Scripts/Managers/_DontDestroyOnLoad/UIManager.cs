@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
 
         Instance = this;
 
+        manual.SetActive(true);
         newManualTargetTransform = manual.transform.position;
         manual.transform.position = new Vector2(-420f, manual.transform.position.y);
     }
