@@ -21,15 +21,6 @@ public class OrbitalTrap : MonoBehaviour, IResetable
     private void FixedUpdate()
     {
         Orbit();
-    }
-
-    private void Update()
-    {
-        if (GameplayManager.Instance.isPaused)
-        {
-            return;
-        }
-
         Rotate();
     }
 
@@ -51,6 +42,6 @@ public class OrbitalTrap : MonoBehaviour, IResetable
     private void Rotate()
     {
         int directionMultiplier = rotationDirection == CommonEnums.RotationDirection.Clockwise ? -1 : 1;
-        transform.Rotate(Vector3.forward, directionMultiplier * rotationSpeed);
+        transform.Rotate(Vector3.forward, directionMultiplier * rotationSpeed * Time.fixedDeltaTime);
     }
 }

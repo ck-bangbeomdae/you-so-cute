@@ -31,15 +31,6 @@ public class MovingTrap : MonoBehaviour, IResetable
     {
         Move();
         DetectCollision();
-    }
-
-    private void Update()
-    {
-        if (GameplayManager.Instance.isPaused)
-        {
-            return;
-        }
-
         Rotate();
         Flip();
     }
@@ -80,7 +71,7 @@ public class MovingTrap : MonoBehaviour, IResetable
     private void Rotate()
     {
         int directionMultiplier = rotationDirection == CommonEnums.RotationDirection.Clockwise ? -1 : 1;
-        transform.Rotate(Vector3.forward, directionMultiplier * rotationSpeed);
+        transform.Rotate(Vector3.forward, directionMultiplier * rotationSpeed * Time.fixedDeltaTime);
     }
 
     private void Flip()
