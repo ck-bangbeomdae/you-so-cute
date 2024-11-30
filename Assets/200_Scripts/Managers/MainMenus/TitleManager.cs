@@ -25,8 +25,6 @@ public class TitleManager : MonoBehaviour, IResetable
     [SerializeField] private Slider optionsModalBGMSlider;
     [SerializeField] private Slider optionsModalSFXSlider;
 
-    [SerializeField] private PlayerSpawnpoint newGameSceneTransition;
-
     private Vector2 newGameTargetTransform;
     private Vector2 continueTargetTransform;
     private Vector2 leaderboardTargetTransform;
@@ -70,8 +68,8 @@ public class TitleManager : MonoBehaviour, IResetable
     {
         if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
-            GameplayManager.Instance.IsGameRunning = true;
-            TransitionManager.Instance.LoadSceneWithPlayer(newGameSceneTransition);
+            SceneTransition sceneTransition = new SceneTransition { sceneName = "Scene_CutScene", transitionType = TransitionType.FadeInOut };
+            TransitionManager.Instance.LoadScene(sceneTransition);
         }
     }
 

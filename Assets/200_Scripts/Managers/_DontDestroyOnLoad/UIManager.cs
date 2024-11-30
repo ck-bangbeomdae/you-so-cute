@@ -68,12 +68,12 @@ public class UIManager : MonoBehaviour
 
     public void OpenManual()
     {
-        manual.transform.DOMoveX(newManualTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
+        manual.transform.DOMoveX(newManualTargetTransform.x, 1.5f).SetEase(Ease.OutBack);
     }
 
     public void CloseManual()
     {
-        manual.transform.DOMoveX(-420f, 0.5f).SetEase(Ease.OutBack);
+        manual.transform.DOMoveX(-420f, 1f).SetEase(Ease.InOutBack);
     }
 
     private Vector3 GetPointOnPath(float t)

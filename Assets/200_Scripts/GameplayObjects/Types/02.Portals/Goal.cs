@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour, ICollisionable
 {
-    [SerializeField] private SceneTransition sceneTransition;
-
     public void OnCollision(Player player)
     {
         GameplayManager.Instance.IsGameRunning = false;
@@ -47,7 +45,8 @@ public class Goal : MonoBehaviour, ICollisionable
         // 진행사항 초기화
         GameplayManager.Instance.ResetProgress();
 
-        // 메인메뉴로 씬 전환
+        // 엔딩씬 전환
+        SceneTransition sceneTransition = new SceneTransition { sceneName = "Scene_Ending", transitionType = TransitionType.FadeInOut };
         TransitionManager.Instance.LoadScene(sceneTransition);
     }
 }
