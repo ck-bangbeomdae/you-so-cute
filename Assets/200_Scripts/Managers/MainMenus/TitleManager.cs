@@ -51,11 +51,11 @@ public class TitleManager : MonoBehaviour, IResetable
 
     public void HandleReset()
     {
-        newGameSelect.transform.position = new Vector2(1800f, newGameSelect.transform.position.y);
-        continueSelect.transform.position = new Vector2(1800f, continueSelect.transform.position.y);
-        leaderboardSelect.transform.position = new Vector2(1800f, leaderboardSelect.transform.position.y);
-        optionsSelect.transform.position = new Vector2(1800f, optionsSelect.transform.position.y);
-        exitSelect.transform.position = new Vector2(1800f, exitSelect.transform.position.y);
+        newGameSelect.transform.position = new Vector2(2200f, newGameSelect.transform.position.y);
+        continueSelect.transform.position = new Vector2(2200f, continueSelect.transform.position.y);
+        leaderboardSelect.transform.position = new Vector2(2200f, leaderboardSelect.transform.position.y);
+        optionsSelect.transform.position = new Vector2(2200f, optionsSelect.transform.position.y);
+        exitSelect.transform.position = new Vector2(2200f, exitSelect.transform.position.y);
 
         newGameButton.image.color = new Color(0.72f, 0.72f, 0.73f);
         continueButton.image.color = new Color(0.72f, 0.72f, 0.73f);
@@ -113,19 +113,19 @@ public class TitleManager : MonoBehaviour, IResetable
 
             // TODO : 블러 효과 적용
 
-            newGameSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            newGameSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             newGameButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
-            continueSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            continueSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             continueButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
-            leaderboardSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            leaderboardSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             leaderboardButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
-            optionsSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            optionsSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             optionsButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
-            exitSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            exitSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             exitButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
             isModalOpen = true;
@@ -197,19 +197,19 @@ public class TitleManager : MonoBehaviour, IResetable
 
             // TODO : 블러 효과 적용
 
-            newGameSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            newGameSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             newGameButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
-            continueSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            continueSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             continueButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
-            leaderboardSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            leaderboardSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             leaderboardButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
-            optionsSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            optionsSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             optionsButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
-            exitSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            exitSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             exitButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
 
             isModalOpen = true;
@@ -219,7 +219,7 @@ public class TitleManager : MonoBehaviour, IResetable
     #region 마우스 이벤트
     public void OnMouseEnterNewGameButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
             newGameSelect.transform.DOMoveX(newGameTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
             newGameButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
@@ -228,16 +228,16 @@ public class TitleManager : MonoBehaviour, IResetable
 
     public void OnMouseOverNewGameButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
-            newGameSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            newGameSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             newGameButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
         }
     }
 
     public void OnMouseEnterContinueButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
             continueSelect.transform.DOMoveX(continueTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
             continueButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
@@ -246,16 +246,16 @@ public class TitleManager : MonoBehaviour, IResetable
 
     public void OnMouseOverContinueButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
-            continueSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            continueSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             continueButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
         }
     }
 
     public void OnMouseEnterLeaderboardButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
             leaderboardSelect.transform.DOMoveX(leaderboardTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
             leaderboardButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
@@ -264,16 +264,16 @@ public class TitleManager : MonoBehaviour, IResetable
 
     public void OnMouseOverLeaderboardButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
-            leaderboardSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            leaderboardSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             leaderboardButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
         }
     }
 
     public void OnMouseEnterOptionsButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
             optionsSelect.transform.DOMoveX(optionsTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
             optionsButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
@@ -282,16 +282,16 @@ public class TitleManager : MonoBehaviour, IResetable
 
     public void OnMouseOverOptionsGameButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
-            optionsSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            optionsSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             optionsButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
         }
     }
 
     public void OnMouseEnterExitButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
             exitSelect.transform.DOMoveX(exitTargetTransform.x, 0.5f).SetEase(Ease.OutBack);
             exitButton.image.DOColor(new Color(0f, 0f, 0f, 1f), 0.5f).SetEase(Ease.InOutQuad);
@@ -300,9 +300,9 @@ public class TitleManager : MonoBehaviour, IResetable
 
     public void OnMouseOverExitButton()
     {
-        if (!isModalOpen)
+        if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
-            exitSelect.transform.DOMoveX(1800f, 0.5f).SetEase(Ease.OutBack);
+            exitSelect.transform.DOMoveX(2200f, 0.5f).SetEase(Ease.OutBack);
             exitButton.image.DOColor(new Color(0.72f, 0.72f, 0.73f, 1f), 0.5f).SetEase(Ease.InOutQuad);
         }
     }
