@@ -22,6 +22,12 @@ public class LeaderboardManager : MonoBehaviour, IResetable
 
     public void HandleReset()
     {
+        // 로컬 기록 초기화
+        lastRecordNoText.text = "";
+        lastRecordNameText.text = "";
+        lastRecordTimeText.text = "";
+        lastRecordDeadText.text = "";
+
         // highScores 자식 인스턴스 전부 삭제
         foreach (Transform child in highScores.transform)
         {

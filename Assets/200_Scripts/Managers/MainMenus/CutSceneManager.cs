@@ -25,9 +25,6 @@ public class CutSceneManager : MonoBehaviour, IResetable
     IEnumerator Delay(float delay)
     {
         yield return new WaitForSeconds(delay);
-
-        GameplayManager.Instance.IsGameRunning = true;
-        UIManager.Instance.OpenManual();
         TransitionManager.Instance.LoadSceneWithPlayer(newGameSceneTransition);
     }
 }

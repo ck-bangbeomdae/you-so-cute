@@ -30,11 +30,8 @@ public class UIManager : MonoBehaviour
 
         manual.SetActive(true);
         newManualTargetTransform = manual.transform.position;
-        manual.transform.position = new Vector2(-420f, manual.transform.position.y);
-    }
+        manual.transform.position = new Vector2(-460f, manual.transform.position.y);
 
-    private void Start()
-    {
         foreach (Transform pathObject in pathObjects)
         {
             pathPoints.Add(pathObject.transform.position);
@@ -73,7 +70,7 @@ public class UIManager : MonoBehaviour
 
     public void CloseManual()
     {
-        manual.transform.DOMoveX(-420f, 1f).SetEase(Ease.InOutBack);
+        manual.transform.DOMoveX(-460f, 1f).SetEase(Ease.InOutBack);
     }
 
     private Vector3 GetPointOnPath(float t)
