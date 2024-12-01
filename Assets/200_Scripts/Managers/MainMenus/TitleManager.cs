@@ -184,10 +184,15 @@ public class TitleManager : MonoBehaviour, IResetable
         }
     }
 
-    public void OnChangedVolume()
+    public void OnChangedSFXVolume()
+    {
+        ProfileManager.Instance.playerProfile.sfxVolume = optionsModalSFXSlider.value;
+        ProfileManager.Instance.SaveProfile();
+    }
+
+    public void OnChangedBGMVolume()
     {
         ProfileManager.Instance.playerProfile.bgmVolume = optionsModalBGMSlider.value;
-        ProfileManager.Instance.playerProfile.sfxVolume = optionsModalSFXSlider.value;
         ProfileManager.Instance.SaveProfile();
     }
 

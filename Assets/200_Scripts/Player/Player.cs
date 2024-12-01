@@ -293,7 +293,7 @@ public class Player : MonoBehaviour
 
         GameObject closestBelt = FindClosestBelt();
         GameObject closestMovingPlatform = FindClosestMovingPlatform();
-        float maxDistance = 30f;
+        float maxDistance = 40f;
 
         if (closestBelt != null)
         {
