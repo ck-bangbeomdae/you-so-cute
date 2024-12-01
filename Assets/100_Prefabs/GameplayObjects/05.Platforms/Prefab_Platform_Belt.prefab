@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3176042814508872751}
   m_Layer: 7
   m_Name: LeftBelt
-  m_TagString: Untagged
+  m_TagString: Belt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 3226788325466127525}
   m_Layer: 7
   m_Name: RightBelt
-  m_TagString: Untagged
+  m_TagString: Belt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -312,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationDirection: 0
   beltSpeed: 8
+  gearRotationMultiplier: 40
 --- !u!50 &6953180580569241363
 Rigidbody2D:
   serializedVersion: 4
@@ -429,7 +430,7 @@ GameObject:
   - component: {fileID: 5938321163033269326}
   m_Layer: 7
   m_Name: CenterBelt
-  m_TagString: Untagged
+  m_TagString: Belt
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

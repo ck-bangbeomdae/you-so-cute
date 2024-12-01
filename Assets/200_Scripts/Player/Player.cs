@@ -170,9 +170,22 @@ public class Player : MonoBehaviour
         skeletonAnimation.AnimationState.Event += HandleAnimationEvent;
     }
 
+    // AMB 사운드
+    private FMOD.Studio.EventInstance beltSoundInstance;
+    private FMOD.Studio.EventInstance platformSoundInstance;
+
     private void Start()
     {
         playerStateMachine.Setup(this, playerStates[PlayerState.Idle]);
+
+        // AMB 사운드 재생
+        beltSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/AMB/Belt");
+        beltSoundInstance.setParameterByName("Distance", 0f);
+        beltSoundInstance.start();
+
+        platformSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/AMB/MovingPlatform");
+        platformSoundInstance.setParameterByName("Distance", 0f);
+        platformSoundInstance.start();
 
         // 플레이어 스폰포인트 설정
         if (!GameplayManager.Instance.hasPlayerSavepoint)
@@ -237,6 +250,22 @@ public class Player : MonoBehaviour
         if (!GameplayManager.Instance.IsGameRunning)
         {
             rb2d.simulated = false;
+        }
+
+        GameObject closestBelt = FindClosestBelt();
+        GameObject closestMovingPlatform = FindClosestMovingPlatform();
+        float maxDistance = 30f;
+
+        if (closestBelt != null)
+        {
+            float distance = Vector2.Distance(closestBelt.transform.position, transform.position) * 1.2f;
+            beltSoundInstance.setParameterByName("Distance", Mathf.Max(0, maxDistance - distance));
+        }
+
+        if (closestMovingPlatform != null)
+        {
+            float distance = Vector2.Distance(closestMovingPlatform.transform.position, transform.position) * 1.2f;
+            platformSoundInstance.setParameterByName("Distance", Mathf.Max(0, maxDistance - distance));
         }
 
         // 씬 전환 중이거나 플레이어가 사망한 경우 상태 업데이트 중지
@@ -323,6 +352,15 @@ public class Player : MonoBehaviour
         {
             currentBeltSpeed = 0f;
         }
+    }
+
+    private void OnDestroy()
+    {
+        beltSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        beltSoundInstance.release();
+
+        platformSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        platformSoundInstance.release();
     }
 
     private void HandleAnimationEvent(TrackEntry trackEntry, Spine.Event e)
@@ -437,6 +475,46 @@ public class Player : MonoBehaviour
         }
 
         isDead = true;
+    }
+
+    private GameObject FindClosestMovingPlatform()
+    {
+        GameObject[] movingPlatforms = GameObject.FindGameObjectsWithTag("MovingPlatform");
+        GameObject closestPlatform = null;
+        float closestDistance = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+
+        foreach (GameObject platform in movingPlatforms)
+        {
+            float distance = Vector3.Distance(platform.transform.position, currentPosition);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPlatform = platform;
+            }
+        }
+
+        return closestPlatform;
+    }
+
+    private GameObject FindClosestBelt()
+    {
+        GameObject[] belts = GameObject.FindGameObjectsWithTag("Belt");
+        GameObject closestBelt = null;
+        float closestDistance = Mathf.Infinity;
+        Vector3 currentPosition = transform.position;
+
+        foreach (GameObject belt in belts)
+        {
+            float distance = Vector3.Distance(belt.transform.position, currentPosition);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestBelt = belt;
+            }
+        }
+
+        return closestBelt;
     }
 }
 
