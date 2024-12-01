@@ -23,6 +23,8 @@ public class BreakablePlatform : MonoBehaviour, IResetable
         {
             if (CollisionUtils.IsCollisionFromTopOrBottom(collision))
             {
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/BreakBlock");
+
                 StartCoroutine(DeactivateAfterDelay());
             }
         }
@@ -47,8 +49,6 @@ public class BreakablePlatform : MonoBehaviour, IResetable
         spriteRenderer.DOFade(0, destructionDelay).SetEase(Ease.InSine);
 
         yield return new WaitForSeconds(destructionDelay);
-
-        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/BreakBlock");
 
         spriteRenderer.enabled = false;
         collider2d.enabled = false;
