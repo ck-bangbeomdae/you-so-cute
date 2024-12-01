@@ -197,6 +197,12 @@ public class TransitionManager : MonoBehaviour
         // 씬 로드
         if (SceneManager.GetActiveScene().name != playerSpawnpoint.sceneTransition.sceneName)
         {
+            GameObject _playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (_playerObject != null)
+            {
+                _playerObject.GetComponent<Player>().StopAudio();
+            }
+
             // 현재 씬 비활성화
             Scene currentScene = SceneManager.GetActiveScene();
             foreach (GameObject go in currentScene.GetRootGameObjects())

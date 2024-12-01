@@ -395,11 +395,7 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
-        beltSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        beltSoundInstance.release();
-
-        platformSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        platformSoundInstance.release();
+        StopAudio();
     }
 
     private void HandleAnimationEvent(TrackEntry trackEntry, Spine.Event e)
@@ -529,6 +525,15 @@ public class Player : MonoBehaviour
         }
 
         isDead = true;
+    }
+
+    public void StopAudio()
+    {
+        beltSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        beltSoundInstance.release();
+
+        platformSoundInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        platformSoundInstance.release();
     }
 
     private GameObject FindClosestMovingPlatform()
