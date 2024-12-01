@@ -194,6 +194,45 @@ public class Player : MonoBehaviour
             GameplayManager.Instance.playerSavepoint.spawnPosition = transform.position;
             GameplayManager.Instance.hasPlayerSavepoint = true;
         }
+
+        // 바닥 먼지 프리팹 세팅
+        if (GameObject.Find("Particle_Ground_S_Dust"))
+        {
+            s_dustParticlePrefab[0] = GameObject.Find("Particle_Ground_S_Dust");
+        }
+        if (GameObject.Find("Particle_Ground_R_Dust"))
+        {
+            r_dustParticlePrefab[0] = GameObject.Find("Particle_Ground_R_Dust");
+        }
+        if (GameObject.Find("Particle_Ground_S_FlipDust"))
+        {
+            s_flipDustParticlePrefab[0] = GameObject.Find("Particle_Ground_S_FlipDust");
+        }
+        if (GameObject.Find("Particle_Ground_R_FlipDust"))
+        {
+            r_flipDustParticlePrefab[0] = GameObject.Find("Particle_Ground_R_FlipDust");
+        }
+
+        if (IsGravityFlipped)
+        {
+            if (r_dustParticlePrefab[0])
+            {
+                foreach (GameObject rd in r_dustParticlePrefab)
+                {
+                    rd.GetComponent<ParticleSystem>().Play();
+                }
+            }
+        }
+        else
+        {
+            if (s_dustParticlePrefab[0])
+            {
+                foreach (GameObject sd in s_dustParticlePrefab)
+                {
+                    sd.GetComponent<ParticleSystem>().Play();
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -389,38 +428,53 @@ public class Player : MonoBehaviour
         IsGrounded = false;
 
         // 중력 반전시 바닥 먼지 파티클 재생
-        if (r_dustParticlePrefab != null && s_dustParticlePrefab != null)
+        if (IsGravityFlipped)
         {
-            if (IsGravityFlipped)
+            if (s_dustParticlePrefab[0])
             {
                 foreach (GameObject sd in s_dustParticlePrefab)
                 {
                     sd.GetComponent<ParticleSystem>().Stop();
                 }
+            }
+            if (r_dustParticlePrefab[0])
+            {
                 foreach (GameObject rd in r_dustParticlePrefab)
                 {
                     rd.GetComponent<ParticleSystem>().Play();
                 }
+            }
 
-                foreach (GameObject p in r_flipDustParticlePrefab)
+            if (r_flipDustParticlePrefab[0])
+            {
+                foreach (GameObject rfd in r_flipDustParticlePrefab)
                 {
-                    p.GetComponent<ParticleSystem>().Play();
+                    rfd.GetComponent<ParticleSystem>().Play();
                 }
             }
-            else
+        }
+        else
+        {
+            if (r_dustParticlePrefab[0])
             {
                 foreach (GameObject rd in r_dustParticlePrefab)
                 {
                     rd.GetComponent<ParticleSystem>().Stop();
                 }
+            }
+            if (s_dustParticlePrefab[0])
+            {
                 foreach (GameObject sd in s_dustParticlePrefab)
                 {
                     sd.GetComponent<ParticleSystem>().Play();
                 }
+            }
 
-                foreach (GameObject p in s_flipDustParticlePrefab)
+            if (s_flipDustParticlePrefab[0])
+            {
+                foreach (GameObject sfd in s_flipDustParticlePrefab)
                 {
-                    p.GetComponent<ParticleSystem>().Play();
+                    sfd.GetComponent<ParticleSystem>().Play();
                 }
             }
         }
