@@ -5,7 +5,7 @@ public class PlayerInAir : BaseState<Player>
     public override void Enter(Player player)
     {
         // 애니메이션 재생
-        if (!player.isCollidingWithJumpPad && !player.isTriggerGravityFlipKeyboard)
+        if (!player.isCollidingWithJumpPad)
         {
             player.skeletonAnimation.state.SetAnimation(0, "flipping_up", false);
         }
@@ -27,11 +27,6 @@ public class PlayerInAir : BaseState<Player>
         if (player.IsGrounded)
         {
             player.playerStateMachine.ChangeState(player.playerStates[PlayerState.Idle]);
-        }
-
-        if (player.isTriggerGravityFlipKeyboard)
-        {
-            player.spineAnimationObject.transform.Rotate(new Vector3(0f, 0f, player.spineAnimationObject.transform.rotation.z + 1.5f));
         }
     }
 

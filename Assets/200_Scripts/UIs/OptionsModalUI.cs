@@ -15,7 +15,7 @@ public class OptionsModalUI : MonoBehaviour
     public void OnClickExitButton()
     {
         GameplayManager.Instance.TogglePause();
-        
+
         // 진행사항 초기화
         GameplayManager.Instance.IsGameRunning = false;
         GameplayManager.Instance.ResetProgress();
