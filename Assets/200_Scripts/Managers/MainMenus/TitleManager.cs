@@ -176,16 +176,19 @@ public class TitleManager : MonoBehaviour, IResetable
     {
         if (isModalOpen)
         {
-            ProfileManager.Instance.playerProfile.bgmVolume = optionsModalBGMSlider.value;
-            ProfileManager.Instance.playerProfile.sfxVolume = optionsModalSFXSlider.value;
-            ProfileManager.Instance.SaveProfile();
-
             optionsModal.SetActive(false);
 
             // TODO : 블러 효과 해제
 
             isModalOpen = false;
         }
+    }
+
+    public void OnChangedVolume()
+    {
+        ProfileManager.Instance.playerProfile.bgmVolume = optionsModalBGMSlider.value;
+        ProfileManager.Instance.playerProfile.sfxVolume = optionsModalSFXSlider.value;
+        ProfileManager.Instance.SaveProfile();
     }
 
     public void CreateRenameModal()

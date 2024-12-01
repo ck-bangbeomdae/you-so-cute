@@ -14,8 +14,8 @@ public class OptionsModalUI : MonoBehaviour
 
     public void OnClickExitButton()
     {
-        Save();
-
+        GameplayManager.Instance.TogglePause();
+        
         // 진행사항 초기화
         GameplayManager.Instance.IsGameRunning = false;
         GameplayManager.Instance.ResetProgress();
@@ -28,14 +28,13 @@ public class OptionsModalUI : MonoBehaviour
 
     public void OnClickResumeButton()
     {
-        Save();
+        GameplayManager.Instance.TogglePause();
     }
 
-    private void Save()
+    public void OnChangedVolume()
     {
         ProfileManager.Instance.playerProfile.bgmVolume = optionsModalBGMSlider.value;
         ProfileManager.Instance.playerProfile.sfxVolume = optionsModalSFXSlider.value;
         ProfileManager.Instance.SaveProfile();
-        GameplayManager.Instance.TogglePause();
     }
 }
