@@ -49,8 +49,6 @@ public class TitleManager : MonoBehaviour, IResetable
 
     public void HandleReset()
     {
-        CreateRenameModal();
-
         newGameSelect.transform.position = new Vector2(2200f, newGameSelect.transform.position.y);
         continueSelect.transform.position = new Vector2(2200f, continueSelect.transform.position.y);
         leaderboardSelect.transform.position = new Vector2(2200f, leaderboardSelect.transform.position.y);
@@ -68,8 +66,7 @@ public class TitleManager : MonoBehaviour, IResetable
     {
         if (!TransitionManager.Instance.isTransition && !isModalOpen)
         {
-            SceneTransition sceneTransition = new SceneTransition { sceneName = "Scene_CutScene", transitionType = TransitionType.FadeInOut };
-            TransitionManager.Instance.LoadScene(sceneTransition);
+            CreateRenameModal();
         }
     }
 
@@ -153,6 +150,9 @@ public class TitleManager : MonoBehaviour, IResetable
             ProfileManager.Instance.SaveProfile();
 
             renameModal.SetActive(false);
+
+            SceneTransition sceneTransition = new SceneTransition { sceneName = "Scene_CutScene", transitionType = TransitionType.FadeInOut };
+            TransitionManager.Instance.LoadScene(sceneTransition);
 
             // TODO : 블러 효과 해제
 
