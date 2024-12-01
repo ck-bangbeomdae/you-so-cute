@@ -1,5 +1,6 @@
 using Spine;
 using Spine.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,6 +29,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject r_deadParticlePrefab;
     [SerializeField] private GameObject[] r_dustParticlePrefab = null;
     [SerializeField] private GameObject[] r_flipDustParticlePrefab = null;
+
+    [SerializeField] private float reviveDuration = 1.5f;
 
     // 컴포넌트
     [HideInInspector] public Rigidbody2D rb2d;
@@ -399,8 +402,14 @@ public class Player : MonoBehaviour
 
         // 사망 애니메이션 재생
         var trackEntry = skeletonAnimation.state.SetAnimation(0, "death", false);
-        trackEntry.Complete += (entry) =>
+
+
+        // 리스폰 타이머 시작
+        StartCoroutine(ExecuteAfterDelay(reviveDuration));
+        IEnumerator ExecuteAfterDelay(float delay)
         {
+            yield return new WaitForSeconds(delay);
+
             if (GameplayManager.Instance.IsGameRunning)
             {
                 // 플레이어 리스폰
@@ -409,7 +418,7 @@ public class Player : MonoBehaviour
                 // 진행사항 되돌리기
                 GameplayManager.Instance.CurrentProgressPortalCount = GameplayManager.Instance.lastSavepointProgressPortalCount;
             }
-        };
+        }
 
         // 사망 파티클 재생
         if (IsGravityFlipped)

@@ -156,14 +156,17 @@ MonoBehaviour:
   - {fileID: 0}
   r_flipDustParticlePrefab:
   - {fileID: 0}
+  reviveDuration: 1.5
   rb2d: {fileID: 0}
   skeletonAnimation: {fileID: 0}
+  spineAnimationObject: {fileID: 0}
   isDead: 0
   currentMoveDirection: {x: 0, y: 0}
   currentSpeed: 0
   currentBeltSpeed: 0
   jumpPadFriction: 0
   isCollideWithGravityFlip: 0
+  isTriggerGravityFlipKeyboard: 0
   gravityFlipComboCount: 0
   isFacingLeft: 0
   isCollidingWithGravityFlip: 0
@@ -473,7 +476,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 0230a98fda0ea4f4c854a229aa0458d2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
