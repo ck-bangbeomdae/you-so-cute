@@ -131,7 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5566298870664963621}
   - component: {fileID: 8572819023800036188}
-  - component: {fileID: 5038758976273614100}
+  - component: {fileID: 1223667929296580600}
   m_Layer: 0
   m_Name: Prefab_Platform_JumpPad_Low
   m_TagString: Untagged
@@ -171,8 +171,8 @@ MonoBehaviour:
   jumpDirection: {x: 1, y: 1}
   jumpForce: 24
   jumpPadFriction: 0.04
---- !u!58 &5038758976273614100
-CircleCollider2D:
+--- !u!70 &1223667929296580600
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -203,6 +203,6 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.10241389, y: 0.5819895}
-  serializedVersion: 2
-  m_Radius: 0.5994656
+  m_Offset: {x: -0.007395592, y: 0.2864279}
+  m_Size: {x: 1.3495573, y: 0.61643916}
+  m_Direction: 1
