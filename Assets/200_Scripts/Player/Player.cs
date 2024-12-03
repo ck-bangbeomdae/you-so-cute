@@ -8,11 +8,13 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     // 정적 데이터
+    [SerializeField] public float currentTime = 0f;
+    [SerializeField] public float sleepTime = 5f;
     [SerializeField] public float moveSpeed = 9f;
     [SerializeField] private float friction = 0.2f;
     [SerializeField] private float maxVerticalSpeed = 30f;
-    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float groundCheckDistance = 2.38f;
+    [SerializeField] private LayerMask groundLayer;
 
     [SerializeField] private GameObject s_runningParticlePrefab;
     [SerializeField] private GameObject s_landingParticlePrefab;
@@ -349,6 +351,19 @@ public class Player : MonoBehaviour
         else
         {
             eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye");
+        }
+
+        // 슬립 애니메이션
+        if (InputManager.MoveAction.IsPressed())
+        {
+            currentTime = 0;
+        }
+
+        currentTime += Time.deltaTime;
+
+        if (currentTime >= sleepTime)
+        {
+            var trackEntry = skeletonAnimation.state.SetAnimation(0, "sleep_stand", true);
         }
     }
 
