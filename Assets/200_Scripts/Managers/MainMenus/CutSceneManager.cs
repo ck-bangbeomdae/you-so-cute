@@ -14,6 +14,15 @@ public class CutSceneManager : MonoBehaviour, IResetable
         videoPlayer = GetComponent<VideoPlayer>();
     }
 
+    private void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            StopCoroutine(Delay(delayInSeconds));
+            TransitionManager.Instance.LoadSceneWithPlayer(newGameSceneTransition);
+        }
+    }
+
     public void HandleReset()
     {
         videoPlayer.time = 0;
