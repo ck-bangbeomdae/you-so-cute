@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public static class ScoreAPIUtils
 {
-    private const string baseUrl = "http://118.216.60.162:3000/scores";
+    private const string baseUrl = "http://58.120.78.203:3000/scores";
 
     // GET 요청으로 모든 점수 가져오기
     public static IEnumerator GetScoresCoroutine(System.Action<string> onSuccess, System.Action<string> onError)
