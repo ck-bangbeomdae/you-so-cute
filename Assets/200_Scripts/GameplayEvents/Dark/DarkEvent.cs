@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -31,7 +32,7 @@ public class DarkEvent : MonoBehaviour
                 playerLightDictionary[light] = light.pointLightOuterRadius;
                 light.pointLightOuterRadius *= defaultLightRadiusMultiplier;
             }
-            else
+            else if (!light.CompareTag("EnterExit"))
             {
                 light.intensity = 0f;
             }
