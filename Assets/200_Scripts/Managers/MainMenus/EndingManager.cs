@@ -4,6 +4,7 @@ using UnityEngine;
 public class EndingManager : MonoBehaviour, IResetable
 {
     [SerializeField] private float delayInSeconds = 10f;
+
     public void HandleReset()
     {
         StartCoroutine(Delay(delayInSeconds));

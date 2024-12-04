@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FadeInOutTransition : BaseTransition
 {
@@ -34,6 +35,12 @@ public class FadeInOutTransition : BaseTransition
         // 최종적으로 알파 값을 1로 설정
         fadeColor.a = 1f;
         fadeImage.color = fadeColor;
+
+        if (SceneManager.GetActiveScene().name == "Scene_최웅규_21")
+        {
+            Destroy(GameObject.FindGameObjectWithTag("Player"));
+            yield return new WaitForSeconds(GameObject.Find("Prefab_Goal").GetComponent<Goal>().delayInSeconds);
+        }
     }
 
     public override IEnumerator FadeOut()

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour, ICollisionable
 {
+    public float delayInSeconds = 3;
+
     public void OnCollision(Player player)
     {
         GameplayManager.Instance.IsGameRunning = false;
