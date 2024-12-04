@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float lookingAroundTime = 5f;
     [SerializeField] private float sleepTime = 10f;
     [SerializeField] private float currentTime = 0f;
+    [SerializeField] private float delayInSeconds = 0f;
     [SerializeField] public float moveSpeed = 9f;
     [SerializeField] private float friction = 0.2f;
     [SerializeField] private float maxVerticalSpeed = 30f;
@@ -369,17 +370,32 @@ public class Player : MonoBehaviour
             isSleep = false;
         }
 
-        currentTime += Time.fixedDeltaTime;
+        if (IsGrounded)
+        {
+            currentTime += Time.fixedDeltaTime;
+        }
         if (currentTime >= lookingAroundTime && !isLookingAround)
         {
-            skeletonAnimation.state.SetAnimation(0, "looking_around", true);
+            skeletonAnimation.state.SetAnimation(0, "looking", false);
+            skeletonAnimation.state.AddAnimation(0, "looking_around", false, 0.4f);
+            StartCoroutine(Delay(delayInSeconds));
+            skeletonAnimation.state.AddAnimation(0, "looking_around", false, 1.333f);
+
             isLookingAround = true;
         }
         else if (currentTime >= sleepTime && !isSleep)
         {
+            IsFacingLeft = !IsFacingLeft;
             skeletonAnimation.state.SetAnimation(0, "sleep_stand", true);
             isSleep = true;
         }
+    }
+
+    IEnumerator Delay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        IsFacingLeft = !IsFacingLeft;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

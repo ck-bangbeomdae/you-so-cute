@@ -131,13 +131,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca0c7569b28816547ab9a0643a60afee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLookingAround: 0
+  isSleep: 0
+  lookingAroundTime: 10
+  sleepTime: 24
+  currentTime: 0
+  delayInSeconds: 1.733
   moveSpeed: 9
   friction: 0.2
   maxVerticalSpeed: 30
+  groundCheckDistance: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  groundCheckDistance: 1
   s_runningParticlePrefab: {fileID: 5869001775561881955}
   s_landingParticlePrefab: {fileID: 6232305637528723198}
   s_vLaserflippingParticlePrefab: {fileID: 3883407948756550300}
@@ -166,6 +172,7 @@ MonoBehaviour:
   jumpPadFriction: 0
   isCollideWithGravityFlip: 0
   gravityFlipComboCount: 0
+  isGravityFlipped: 0
   isFacingLeft: 0
   isCollidingWithGravityFlip: 0
   isCollidingWithJumpPad: 0
