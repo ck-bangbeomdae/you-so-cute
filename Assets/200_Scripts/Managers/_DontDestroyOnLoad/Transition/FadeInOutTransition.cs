@@ -4,7 +4,7 @@ using UnityEngine;
 public class FadeInOutTransition : BaseTransition
 {
     [Tooltip("페이드 인/아웃 색상")]
-    public Color fadeColor = new Color(0f, 0f, 0f);
+    public Color fadeColor = new Color(255f, 255f, 255f);
 
     [Range(1, 100), Tooltip("페이드 인/아웃 속도: 높을수록 빠름")]
     public byte stepRate = 10;
