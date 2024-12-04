@@ -16,6 +16,7 @@ public class CutSceneManager : MonoBehaviour, IResetable
 
     private void Update()
     {
+        // 컷 씬 건너뛰기
         if (Input.GetButtonDown("Cancel"))
         {
             StopCoroutine(Delay(delayInSeconds));
@@ -27,6 +28,12 @@ public class CutSceneManager : MonoBehaviour, IResetable
     {
         videoPlayer.time = 0;
         videoPlayer.Play();
+
+        // 컷 씬 BGM 재생
+        var bgmSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/BGM/CutScene");
+        bgmSoundInstance.setParameterByNameWithLabel("BGM", "CutScene");
+        bgmSoundInstance.start();
+        bgmSoundInstance.release();
 
         StartCoroutine(Delay(delayInSeconds));
     }
