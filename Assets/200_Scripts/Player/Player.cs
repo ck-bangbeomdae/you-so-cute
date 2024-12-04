@@ -357,7 +357,7 @@ public class Player : MonoBehaviour
         }
 
         // 잠수 애니메이션
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown || Input.anyKey)
         {
             if (isLookingAround || isSleep)
             {
