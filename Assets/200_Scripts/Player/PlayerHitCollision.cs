@@ -31,7 +31,7 @@ public class PlayerHitCollision : MonoBehaviour
 
             if (collision.TryGetComponent(out GravityFlip gravityFlip))
             {
-                if (!player.isCollidingWithGravityFlip)
+                if (player.isCollidingWithGravityFlip == false)
                 {
                     // 레이저에 의한 중력 반전 파티클 재생
                     if (gravityFlip.direction == CommonEnums.MovementDirection.Vertical)
@@ -39,7 +39,14 @@ public class PlayerHitCollision : MonoBehaviour
                         if (player.IsGravityFlipped)
                         {
                             playPosition = player.transform.position;
-                            playPosition.x = gravityFlip.gameObject.transform.position.x;
+                            if (player.transform.position.x < gravityFlip.gameObject.transform.position.x)
+                            {
+                                playPosition.x = gravityFlip.gameObject.transform.position.x + 0.1f;
+                            }
+                            else if (player.transform.position.x > gravityFlip.gameObject.transform.position.x)
+                            {
+                                playPosition.x = gravityFlip.gameObject.transform.position.x - 0.1f;
+                            }
                             Debug.Log($"laser position : {gravityFlip.gameObject.transform.position}");
                             Debug.Log($"particle position : {playPosition}");
                             player.r_vLaserflippingParticlePrefab.transform.position = playPosition;
@@ -48,7 +55,14 @@ public class PlayerHitCollision : MonoBehaviour
                         else
                         {
                             playPosition = player.transform.position;
-                            playPosition.x = gravityFlip.gameObject.transform.position.x;
+                            if (player.transform.position.x < gravityFlip.gameObject.transform.position.x)
+                            {
+                                playPosition.x = gravityFlip.gameObject.transform.position.x + 0.1f;
+                            }
+                            else if (player.transform.position.x > gravityFlip.gameObject.transform.position.x)
+                            {
+                                playPosition.x = gravityFlip.gameObject.transform.position.x - 0.1f;
+                            }
                             Debug.Log($"laser position : {gravityFlip.gameObject.transform.position}");
                             Debug.Log($"particle position : {playPosition}");
                             player.s_vLaserflippingParticlePrefab.transform.position = playPosition;
@@ -60,7 +74,14 @@ public class PlayerHitCollision : MonoBehaviour
                         if (player.IsGravityFlipped)
                         {
                             playPosition = player.transform.position;
-                            playPosition.y = gravityFlip.gameObject.transform.position.y;
+                            if (player.transform.position.y < gravityFlip.gameObject.transform.position.y)
+                            {
+                                playPosition.y = gravityFlip.gameObject.transform.position.y + 0.55f;
+                            }
+                            else if (player.transform.position.y > gravityFlip.gameObject.transform.position.y)
+                            {
+                                playPosition.y = gravityFlip.gameObject.transform.position.y - 0.55f;
+                            }
                             Debug.Log($"laser position : {gravityFlip.gameObject.transform.position}");
                             Debug.Log($"particle position : {playPosition}");
                             player.r_hLaserflippingParticlePrefab.transform.position = playPosition;
@@ -69,7 +90,14 @@ public class PlayerHitCollision : MonoBehaviour
                         else
                         {
                             playPosition = player.transform.position;
-                            playPosition.y = gravityFlip.gameObject.transform.position.y;
+                            if (player.transform.position.y < gravityFlip.gameObject.transform.position.y)
+                            {
+                                playPosition.y = gravityFlip.gameObject.transform.position.y + 0.55f;
+                            }
+                            else if (player.transform.position.y > gravityFlip.gameObject.transform.position.y)
+                            {
+                                playPosition.y = gravityFlip.gameObject.transform.position.y - 0.55f;
+                            }
                             Debug.Log($"laser position : {gravityFlip.gameObject.transform.position}");
                             Debug.Log($"particle position : {playPosition}");
                             player.s_hLaserflippingParticlePrefab.transform.position = playPosition;
