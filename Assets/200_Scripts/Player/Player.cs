@@ -8,8 +8,11 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     // 정적 데이터
-    [SerializeField] public float currentTime = 0f;
-    [SerializeField] public float sleepTime = 5f;
+    [SerializeField] private bool isLookingAround = false;
+    [SerializeField] private bool isSleep = false;
+    [SerializeField] private float lookingAroundTime = 5f;
+    [SerializeField] private float sleepTime = 10f;
+    [SerializeField] private float currentTime = 0f;
     [SerializeField] public float moveSpeed = 9f;
     [SerializeField] private float friction = 0.2f;
     [SerializeField] private float maxVerticalSpeed = 30f;
@@ -91,7 +94,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private bool isGravityFlipped;
+    public bool isGravityFlipped;
     public bool IsGravityFlipped
     {
         get => isGravityFlipped;
@@ -353,17 +356,29 @@ public class Player : MonoBehaviour
             eyeSlot.Attachment = skeletonAnimation.Skeleton.GetAttachment("eye", "eye");
         }
 
-        // 슬립 애니메이션
-        if (InputManager.MoveAction.IsPressed())
+        // 잠수 애니메이션
+        if (Input.anyKeyDown)
         {
+            if (isLookingAround || isSleep)
+            {
+                playerStateMachine.ChangeState(playerStates[PlayerState.Idle]);
+            }
+
             currentTime = 0;
+            isLookingAround = false;
+            isSleep = false;
         }
 
-        currentTime += Time.deltaTime;
-
-        if (currentTime >= sleepTime)
+        currentTime += Time.fixedDeltaTime;
+        if (currentTime >= lookingAroundTime && !isLookingAround)
         {
-            var trackEntry = skeletonAnimation.state.SetAnimation(0, "sleep_stand", true);
+            skeletonAnimation.state.SetAnimation(0, "looking_around", true);
+            isLookingAround = true;
+        }
+        else if (currentTime >= sleepTime && !isSleep)
+        {
+            skeletonAnimation.state.SetAnimation(0, "sleep_stand", true);
+            isSleep = true;
         }
     }
 
