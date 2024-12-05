@@ -35,6 +35,7 @@ public class OptionsModalUI : MonoBehaviour
     public void OnChangedSFXVolume()
     {
         ProfileManager.Instance.playerProfile.sfxVolume = optionsModalSFXSlider.value;
+        ProfileManager.Instance.playerProfile.ambVolume = optionsModalSFXSlider.value;
         ProfileManager.Instance.SaveProfile();
     }
 

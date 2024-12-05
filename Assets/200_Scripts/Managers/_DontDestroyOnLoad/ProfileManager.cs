@@ -78,6 +78,7 @@ public struct PlayerProfile
     public ProgressSave progressSave;
     public string playerName;
     public float sfxVolume;
+    public float ambVolume;
     public float bgmVolume;
     public Record lastRecord;
 
@@ -86,6 +87,7 @@ public struct PlayerProfile
         this.progressSave = progressSave;
         this.playerName = playerName;
         this.sfxVolume = sfxVolume;
+        this.ambVolume = sfxVolume;
         this.bgmVolume = bgmVolume;
         this.lastRecord = new Record();
     }
