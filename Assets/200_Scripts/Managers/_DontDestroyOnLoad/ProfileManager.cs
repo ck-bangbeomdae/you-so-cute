@@ -13,6 +13,7 @@ public class ProfileManager : MonoBehaviour
     public PlayerProfile playerProfile;
 
     private FMOD.Studio.Bus sfxBus;
+    private FMOD.Studio.Bus ambBus;
     private FMOD.Studio.Bus bgmBus;
 
     private void Awake()
@@ -35,6 +36,7 @@ public class ProfileManager : MonoBehaviour
         bgmBus = FMODUnity.RuntimeManager.GetBus("bus:/BGM_Bus");
 
         sfxBus.setVolume(playerProfile.sfxVolume);
+        ambBus.setVolume(playerProfile.sfxVolume);
         bgmBus.setVolume(playerProfile.bgmVolume);
     }
 
@@ -45,6 +47,7 @@ public class ProfileManager : MonoBehaviour
         File.WriteAllText(filePath, json);
 
         sfxBus.setVolume(playerProfile.sfxVolume);
+        ambBus.setVolume(playerProfile.sfxVolume);
         bgmBus.setVolume(playerProfile.bgmVolume);
     }
 
