@@ -33,8 +33,8 @@ public class CutSceneManager : MonoBehaviour, IResetable
         videoPlayer.Play();
 
         // 컷 씬 BGM 재생
-        bgmSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/BGM/CutScene");
-        bgmSoundInstance.setParameterByNameWithLabel("BGM", "CutScene");
+        bgmSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/CutScene");
+        bgmSoundInstance.setParameterByNameWithLabel("SFX", "CutScene");
         bgmSoundInstance.start();
         bgmSoundInstance.release();
 
