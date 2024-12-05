@@ -19,6 +19,7 @@ public class OptionsModalUI : MonoBehaviour
         // 진행사항 초기화
         GameplayManager.Instance.IsGameRunning = false;
         GameplayManager.Instance.ResetProgress();
+        GameObject.FindWithTag("Player").GetComponent<Player>().StopAudio();
 
         UIManager.Instance.CloseManual();
 
