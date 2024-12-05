@@ -34,6 +34,7 @@ public class ProfileManager : MonoBehaviour
         // Bus 인스턴스 가져오기 (FMOD Studio에서 설정한 Bus 이름 사용)
         sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX_Bus");
         bgmBus = FMODUnity.RuntimeManager.GetBus("bus:/BGM_Bus");
+        ambBus = FMODUnity.RuntimeManager.GetBus("bus:/AMB_Bus");
 
         sfxBus.setVolume(playerProfile.sfxVolume);
         ambBus.setVolume(playerProfile.sfxVolume);
