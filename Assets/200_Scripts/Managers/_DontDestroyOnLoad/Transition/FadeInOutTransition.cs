@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class FadeInOutTransition : BaseTransition
 {
     [Tooltip("페이드 인/아웃 색상")]
-    public Color fadeColor = new Color(0f, 0f, 0f);
+    public Color fadeColor = new Color(255f, 255f, 255f);
 
     [Range(1, 100), Tooltip("페이드 인/아웃 속도: 높을수록 빠름")]
     public byte stepRate = 10;
@@ -20,9 +20,10 @@ public class FadeInOutTransition : BaseTransition
     public override IEnumerator FadeIn()
     {
         // 엔딩 씬 색상 변경
-        if (SceneManager.GetActiveScene().name == "Scene_최웅규_21")
+        if (SceneManager.GetActiveScene().name == "Scene_최웅규_21" || SceneManager.GetActiveScene().name == "Scene_Ending")
         {
-            fadeColor = new Color(255f, 255f, 255f);
+            fadeColor = new Color(0f, 0f, 0f);
+            Debug.Log("fadeColor Changed");
         }
 
         // FadeImage의 색상을 가져와서 알파 값을 0으로 설정
