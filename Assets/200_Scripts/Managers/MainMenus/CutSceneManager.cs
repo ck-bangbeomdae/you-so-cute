@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Video;
@@ -8,6 +9,7 @@ public class CutSceneManager : MonoBehaviour, IResetable
     [SerializeField] private PlayerSpawnpoint newGameSceneTransition;
 
     private VideoPlayer videoPlayer;
+    private EventInstance bgmSoundInstance;
 
     private void Awake()
     {
@@ -19,6 +21,7 @@ public class CutSceneManager : MonoBehaviour, IResetable
         // 컷 씬 건너뛰기
         if (Input.GetButtonDown("Cancel"))
         {
+            bgmSoundInstance.stop(STOP_MODE.IMMEDIATE);
             StopCoroutine(Delay(delayInSeconds));
             TransitionManager.Instance.LoadSceneWithPlayer(newGameSceneTransition);
         }
@@ -30,7 +33,7 @@ public class CutSceneManager : MonoBehaviour, IResetable
         videoPlayer.Play();
 
         // 컷 씬 BGM 재생
-        var bgmSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/BGM/CutScene");
+        bgmSoundInstance = FMODUnity.RuntimeManager.CreateInstance("event:/BGM/CutScene");
         bgmSoundInstance.setParameterByNameWithLabel("BGM", "CutScene");
         bgmSoundInstance.start();
         bgmSoundInstance.release();
