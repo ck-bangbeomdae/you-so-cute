@@ -15,6 +15,8 @@ public class LeaderboardManager : MonoBehaviour, IResetable
     [SerializeField] private GameObject goldRecordPrefab;
     [SerializeField] private GameObject blueRecordPrefab;
 
+    private int skipCount = 0;
+
     private void Start()
     {
         HandleReset();
@@ -59,36 +61,42 @@ public class LeaderboardManager : MonoBehaviour, IResetable
         {
             Record record = records[i];
 
-            if (record.playerName == lastRecord.playerName &&
-                Math.Abs(record.elapsedTime - lastRecord.elapsedTime) < 0.01f &&
-                record.flipCount == lastRecord.flipCount &&
-                record.deathCount == lastRecord.deathCount)
+            if (record.elapsedTime > 120)
             {
-                lastRecordNoText.text = $"{i + 1}";
-                lastRecordNameText.text = string.IsNullOrEmpty(record.playerName) ? "noname" : record.playerName;
-                lastRecordTimeText.text = $"{StringUtils.FormatElapsedTime(record.elapsedTime)}";
-                lastRecordDeadText.text = $"{record.deathCount}";
-            }
+                if (record.playerName == lastRecord.playerName &&
+                    Math.Abs(record.elapsedTime - lastRecord.elapsedTime) < 0.01f &&
+                    record.flipCount == lastRecord.flipCount &&
+                    record.deathCount == lastRecord.deathCount)
+                {
+                    lastRecordNoText.text = $"{i + 1 - skipCount}";
+                    lastRecordNameText.text = string.IsNullOrEmpty(record.playerName) ? "noname" : record.playerName;
+                    lastRecordTimeText.text = $"{StringUtils.FormatElapsedTime(record.elapsedTime)}";
+                    lastRecordDeadText.text = $"{record.deathCount}";
+                }
 
-            GameObject recordInstance;
+                GameObject recordInstance;
+                if (i == 0)
+                {
+                    recordInstance = Instantiate(goldRecordPrefab, highScores.transform);
+                }
+                else
+                {
+                    recordInstance = Instantiate(blueRecordPrefab, highScores.transform);
+                }
 
-            if (i == 0)
-            {
-                recordInstance = Instantiate(goldRecordPrefab, highScores.transform);
+                TextMeshProUGUI noText = recordInstance.transform.Find("NoText").GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI nameText = recordInstance.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI timeText = recordInstance.transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI deadText = recordInstance.transform.Find("DeadText").GetComponent<TextMeshProUGUI>();
+                noText.text = $"{i + 1 - skipCount}";
+                nameText.text = string.IsNullOrEmpty(record.playerName) ? "noname" : record.playerName;
+                timeText.text = $"{StringUtils.FormatElapsedTime(record.elapsedTime)}";
+                deadText.text = $"{record.deathCount}";
             }
             else
             {
-                recordInstance = Instantiate(blueRecordPrefab, highScores.transform);
+                skipCount++;
             }
-
-            TextMeshProUGUI noText = recordInstance.transform.Find("NoText").GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI nameText = recordInstance.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI timeText = recordInstance.transform.Find("TimeText").GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI deadText = recordInstance.transform.Find("DeadText").GetComponent<TextMeshProUGUI>();
-            noText.text = $"{i + 1}";
-            nameText.text = string.IsNullOrEmpty(record.playerName) ? "noname" : record.playerName;
-            timeText.text = $"{StringUtils.FormatElapsedTime(record.elapsedTime)}";
-            deadText.text = $"{record.deathCount}";
         }
     }
 
