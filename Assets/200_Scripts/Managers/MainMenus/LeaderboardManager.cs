@@ -16,6 +16,7 @@ public class LeaderboardManager : MonoBehaviour, IResetable
     [SerializeField] private GameObject blueRecordPrefab;
 
     private int skipCount = 0;
+    private bool isFirst = true;
 
     private void Start()
     {
@@ -77,9 +78,10 @@ public class LeaderboardManager : MonoBehaviour, IResetable
                 }
 
                 GameObject recordInstance;
-                if (i == 0)
+                if (isFirst)
                 {
                     recordInstance = Instantiate(goldRecordPrefab, highScores.transform);
+                    isFirst = false;
                 }
                 else
                 {
