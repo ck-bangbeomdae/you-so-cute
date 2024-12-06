@@ -50,6 +50,8 @@ public class LeaderboardManager : MonoBehaviour, IResetable
 
     private void OnGetScoresSuccess(string jsonResponse)
     {
+        skipCount = 0;
+
         Record[] records = JsonConvert.DeserializeObject<Record[]>(jsonResponse);
 
         Array.Sort(records, (x, y) => x.elapsedTime.CompareTo(y.elapsedTime));
