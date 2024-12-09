@@ -52,6 +52,7 @@ public class LeaderboardManager : MonoBehaviour, IResetable
     private void OnGetScoresSuccess(string jsonResponse)
     {
         skipCount = 0;
+        isFirst = true;
 
         Record[] records = JsonConvert.DeserializeObject<Record[]>(jsonResponse);
 
